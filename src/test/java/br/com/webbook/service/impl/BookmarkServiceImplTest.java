@@ -52,7 +52,7 @@ public class BookmarkServiceImplTest {
      */
     @Test
     public void testSave() {
-        System.out.println("save");
+        System.out.println("Test of save method, of class BookmarkServiceImpl");
         Bookmark bookmark = new Bookmark("http://www.webbook.com.br");
 
         Bookmark result = service.save(bookmark);
@@ -64,7 +64,7 @@ public class BookmarkServiceImplTest {
      */
     @Test
     public void testRemove() {
-        System.out.println("remove");
+        System.out.println("Test of remove method, of class BookmarkServiceImpl");
         Bookmark bookmark = new Bookmark("http://www.webbook.com.br");
         Bookmark result = service.save(bookmark);
 
@@ -76,7 +76,7 @@ public class BookmarkServiceImplTest {
      */
     @Test
     public void testFindById() {
-        System.out.println("findById");
+        System.out.println("Test of findById method, of class BookmarkServiceImpl");
         Bookmark bookmark = new Bookmark("http://www.webbook.com.br");
         bookmark = service.save(bookmark);
 
@@ -96,7 +96,7 @@ public class BookmarkServiceImplTest {
      */
     @Test
     public void testList() {
-        System.out.println("list");
+        System.out.println("Test of list method, of class BookmarkServiceImpl");
         List<Bookmark> resultList = service.list();
         assertNotNull(resultList);
     }
