@@ -53,12 +53,10 @@ public class BookmarkServiceImplTest {
     @Test
     public void testSave() {
         System.out.println("save");
-        Bookmark bookmark = null;
-        Bookmark expResult = null;
+        Bookmark bookmark = new Bookmark("http://www.webbook.com.br");
+
         Bookmark result = service.save(bookmark);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
     /**
@@ -67,10 +65,10 @@ public class BookmarkServiceImplTest {
     @Test
     public void testRemove() {
         System.out.println("remove");
-        Bookmark bookmark = null;
-        service.remove(bookmark);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Bookmark bookmark = new Bookmark("http://www.webbook.com.br");
+        Bookmark result = service.save(bookmark);
+
+        service.remove(result);
     }
 
     /**
@@ -79,12 +77,18 @@ public class BookmarkServiceImplTest {
     @Test
     public void testFindById() {
         System.out.println("findById");
-        Long id = null;
-        Bookmark expResult = null;
-        Bookmark result = service.findById(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Bookmark bookmark = new Bookmark("http://www.webbook.com.br");
+        bookmark = service.save(bookmark);
+
+        Bookmark bookmarkFind = service.findById(bookmark.getId());
+
+        assertNotNull(bookmarkFind);
+
+        try {
+            assertEquals(bookmark, bookmarkFind);
+        } catch (Exception e) {
+            fail("resultado não é igual ao esperado");
+        }
     }
 
     /**
@@ -93,10 +97,7 @@ public class BookmarkServiceImplTest {
     @Test
     public void testList() {
         System.out.println("list");
-        List expResult = null;
-        List result = service.list();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        List<Bookmark> resultList = service.list();
+        assertNotNull(resultList);
     }
 }
