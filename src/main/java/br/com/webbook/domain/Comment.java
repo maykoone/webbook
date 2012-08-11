@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -26,6 +28,11 @@ public class Comment implements Serializable {
     @SequenceGenerator(name = "wb_comment_seq", sequenceName = "wb_comment_seq", allocationSize = 1)
     private Long id;
     private String text;
+    @ManyToOne
+    private Bookmark bookmark;
+    @ManyToOne
+    @JoinColumn(name = "user_account")
+    private User user;
 
     //<editor-fold defaultstate="collapsed" desc="getters, setters and other methods">
     public Long getId() {
@@ -49,6 +56,22 @@ public class Comment implements Serializable {
         int hash = 7;
         hash = 13 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
+    }
+
+    public Bookmark getBookmark() {
+        return bookmark;
+    }
+
+    public void setBookmark(Bookmark bookmark) {
+        this.bookmark = bookmark;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

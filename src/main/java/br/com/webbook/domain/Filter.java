@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -30,6 +32,9 @@ public class Filter implements Serializable {
     private String title;
     @ElementCollection
     private Set<String> tags;
+    @ManyToOne
+    @JoinColumn(name = "user_account")
+    private User user;
 
     public Long getId() {
         return id;

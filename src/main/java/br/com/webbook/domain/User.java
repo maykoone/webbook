@@ -5,10 +5,13 @@
 package br.com.webbook.domain;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -32,6 +35,10 @@ public class User implements Serializable {
     private String password;
     private String email;
     private String userName;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<Bookmark> bookmarks;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<Filter> filters;
 
     //<editor-fold defaultstate="collapsed" desc="constructors">
     public User() {
@@ -91,6 +98,22 @@ public class User implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public Set<Bookmark> getBookmarks() {
+        return bookmarks;
+    }
+
+    public void setBookmarks(Set<Bookmark> bookmarks) {
+        this.bookmarks = bookmarks;
+    }
+
+    public Set<Filter> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(Set<Filter> filters) {
+        this.filters = filters;
     }
 
     @Override
