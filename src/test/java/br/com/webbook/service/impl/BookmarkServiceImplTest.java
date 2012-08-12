@@ -27,7 +27,7 @@ public class BookmarkServiceImplTest {
 
     public BookmarkServiceImplTest() {
         ctx = new ClassPathXmlApplicationContext(
-                "classpath:META-INF/applicationContext.xml");
+                "classpath:META-INF/beans.xml");
         service = (BookmarkService) ctx.getBean("bookmarkService");
     }
 
