@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE decorators PUBLIC
+"-//OpenSymphony//SiteMesh 1.5 Decorators//EN"
+"http://www.opensymphony.com/sitemesh/dtd/sitemesh_1_5_decorators.dtd">
+
+<decorators defaultdir="/WEB-INF/decorators">
+    <excludes>
+        <pattern>/css/*</pattern>
+        <pattern>/img/*</pattern>
+        <pattern>/js/*</pattern>
+
+    </excludes>
+
+    <decorator name="main-layout" page="decorator.jsp">
+        <pattern>*</pattern>
+    </decorator>
+
+    <!--	<decorator name="layoutModal" page="layoutModal.jsp">
+          		<pattern>/resources1/*</pattern>
+   	</decorator>-->
+
+
+
+</decorators>
