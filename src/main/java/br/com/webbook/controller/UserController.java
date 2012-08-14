@@ -6,8 +6,10 @@ package br.com.webbook.controller;
 
 import br.com.webbook.domain.User;
 import br.com.webbook.service.UserService;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,13 +31,16 @@ public class UserController {
         return new ModelAndView("user/list", "userList", service.list());
     }
 
-    @RequestMapping(value = "/form", method = RequestMethod.GET)
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView create() {
         return new ModelAndView("user/create", "contato", new User());
     }
 
     @RequestMapping( method = RequestMethod.POST)
-    public String save(User user) {
+    public String save(@Valid User user, BindingResult result) {
+        if(result.hasErrors()){
+            return "user/create";
+        }
         service.save(user);
         return "redirect:/users";
     }

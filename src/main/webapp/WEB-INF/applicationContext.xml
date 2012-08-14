@@ -24,8 +24,9 @@
     <security:http auto-config="true" use-expressions="true">
         <security:intercept-url pattern="/login" access="permitAll" />
         <security:intercept-url pattern="/logout" access="permitAll" />
+        <security:intercept-url pattern="/register" access="permitAll" />
         <security:intercept-url pattern="/denied" access="hasRole('ROLE_USER')" />
-        <security:intercept-url pattern="/" access="hasRole('ROLE_USER')" />
+        <security:intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
         <security:intercept-url pattern="/index" access="hasRole('ROLE_USER')" />
         <security:intercept-url pattern="/home" access="hasRole('ROLE_USER')" />
 

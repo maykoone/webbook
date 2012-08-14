@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.URL;
 
 /**
  *
@@ -32,9 +34,12 @@ public class Bookmark implements Serializable {
     @SequenceGenerator(name = "wb_bookmark_seq", sequenceName = "wb_bookmark_seq", allocationSize = 1)
     private Long id;
     private String title;
+    @URL(message = "entre com uma URL válida")
+    @NotNull(message = "url é um campo obrigatório")
     private String url;
     private String description;
-    @ElementCollection
+    private Boolean visible;
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> tags;
     @ManyToOne
     @JoinColumn(name = "user_account")
@@ -106,6 +111,14 @@ public class Bookmark implements Serializable {
 
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
+    }
+
+    public Boolean getVisible() {
+        return visible;
+    }
+
+    public void setVisible(Boolean visible) {
+        this.visible = visible;
     }
 
     @Override

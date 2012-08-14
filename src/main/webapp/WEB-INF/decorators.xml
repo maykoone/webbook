@@ -8,6 +8,9 @@
         <pattern>/css/*</pattern>
         <pattern>/img/*</pattern>
         <pattern>/js/*</pattern>
+        <pattern>*.json</pattern>
+        <pattern>*.xml</pattern>
+        <pattern>/rest/*</pattern>
 
     </excludes>
 

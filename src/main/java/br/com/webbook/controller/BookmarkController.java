@@ -6,11 +6,14 @@ package br.com.webbook.controller;
 
 import br.com.webbook.domain.Bookmark;
 import br.com.webbook.service.BookmarkService;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -26,41 +29,37 @@ public class BookmarkController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView list() {
-        return new ModelAndView("bookmark/list", "bookmarkList", bookmarkService.list());
-    }
-
-    @RequestMapping(value = "/form", method = RequestMethod.GET)
-    public ModelAndView create() {
-        return new ModelAndView("bookmark/create", "bookmark", new Bookmark());
+        ModelAndView mv = new ModelAndView("bookmark/list", "bookmarkList", bookmarkService.list());
+        mv.addObject("bookmark", new Bookmark());
+        return mv;
     }
 
     @RequestMapping( method = RequestMethod.POST)
-    public String save(Bookmark bookmark) {
+    public String save(@Valid Bookmark bookmark, BindingResult result) {
+        if(result.hasErrors()){
+            return "bookmark/list";
+        }
         bookmarkService.save(bookmark);
         return "redirect:/bookmarks";
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ModelAndView show(@PathVariable Long id) {
+    @ResponseBody
+    public Bookmark edit(@PathVariable Long id) {
         Bookmark bookmark = bookmarkService.findById(id);
-        return new ModelAndView("bookmark/show", "bookmark", bookmark);
+        return bookmark;
     }
 
-    @RequestMapping(value = "/{id}/form", method = RequestMethod.GET)
-    public ModelAndView edit(@PathVariable Long id) {
-        Bookmark bookmark = bookmarkService.findById(id);
-        return new ModelAndView("bookmark/edit", "bookmark", bookmark);
-    }
-
-    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
-    public String update(Bookmark bookmark) {
-        bookmarkService.save(bookmark);
-        return "redirect:/bookmarks";
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public String delete(@PathVariable Long id) {
         bookmarkService.remove(bookmarkService.findById(id));
         return "redirect:/bookmark";
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public String destroy(@PathVariable Long id) {
+        bookmarkService.remove(bookmarkService.findById(id));
+        return "sucess";
     }
 }
