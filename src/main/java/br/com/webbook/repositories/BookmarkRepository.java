@@ -6,8 +6,9 @@ package br.com.webbook.repositories;
 
 import br.com.webbook.domain.Bookmark;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -18,4 +19,6 @@ public interface BookmarkRepository extends CrudRepository<Bookmark, Long> {
 
     @Override
     List<Bookmark> findAll();
+    
+    Page<Bookmark> findAll(Pageable pageable);
 }

@@ -14,14 +14,9 @@
     <head>
         <meta charset="utf-8" />
         <title>Lista de favoritos</title>
-        <link rel="stylesheet" href="css/tagify-style.css" />
+        <!--<link rel="stylesheet" href="css/tagify-style.css" />-->
         <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/base/jquery-ui.css" />
-
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="js/jquery.simplemodal.1.4.2.min.js"></script>
-        <script type="text/javascript" src="js/jquery.tagify.js"></script>
-
+        <link rel="stylesheet" href="css/bootstrap.css" />
 
 
     </head>
@@ -37,7 +32,7 @@
                 <div class="user-info">
                     <a hreaf="" class="wb-font-big"><strong>@<sec:authentication property="principal.username" /></strong></a>&nbsp;<span class="wb-font-big">[Mayko B. Oliveira]</span>
                     <ul class="user-stats">
-                        <li class="wb-font-small"><a href="">${fn:length(bookmarkList)} Bookmarks</a></li>
+                        <li class="wb-font-small"><a href="">${fn:length(bookmarkList.content)} Bookmarks</a></li>
                         <li class="wb-font-small"><a href="">10 Amigos que você acompanha</a></li>
                         <li class="wb-font-small"><a href="">10 Amigos que te acompanham</a></li>
                         <li class="wb-font-small"><a href="">10 Filtros</a></li>
@@ -50,10 +45,10 @@
         <div class="grid_8">
             <section id="user-list-bookmark" class="wb-box-with-shadow popular-content">
                 <h4>Seus favoritos</h4>
-                <a href="#" id="add-bookmark">
+                <a href="#add-bookmark-modal" id="add-bookmark" data-toggle="modal">
                     Adicionar Favorito
                 </a>
-                <c:forEach items="${bookmarkList}" var="bookmark">
+                <c:forEach items="${bookmarkList.content}" var="bookmark">
                     <div class="bookmark-item">
                         <a href="" class="bookmark-thumbnail">
                             <div class="default-thumb"></div>
@@ -78,7 +73,45 @@
                         </div>
                     </div>
                 </c:forEach>
-
+                <c:url var="firstUrl" value="bookmarks?page=1" />
+                <c:url var="lastUrl" value="bookmarks?page=${bookmarkList.totalPages}" />
+                <c:url var="prevUrl" value="bookmarks?page=${currentIndex - 1}" />
+                <c:url var="nextUrl" value="bookmarks?page=${currentIndex + 1}" />
+                <div class="pagination">
+                    <ul>
+                        <c:choose>
+                            <c:when test="${currentIndex == 1}">
+                                <li class="disabled"><a href="#">&lt;&lt;</a></li>
+                                <li class="disabled"><a href="#">&lt;</a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li><a href="${firstUrl}">&lt;&lt;</a></li>
+                                <li><a href="${prevUrl}">&lt;</a></li>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:forEach var="i" begin="${beginIndex}" end="${endIndex}">
+                            <c:url var="pageUrl" value="bookmarks?page=${i}" />
+                            <c:choose>
+                                <c:when test="${i == currentIndex}">
+                                    <li class="active"><a href="${pageUrl}"><c:out value="${i}" /></a></li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li><a href="${pageUrl}"><c:out value="${i}" /></a></li>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                        <c:choose>
+                            <c:when test="${currentIndex == bookmarkList.totalPages}">
+                                <li class="disabled"><a href="#">&gt;</a></li>
+                                <li class="disabled"><a href="#">&gt;&gt;</a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li><a href="${nextUrl}">&gt;</a></li>
+                                <li><a href="${lastUrl}">&gt;&gt;</a></li>
+                            </c:otherwise>
+                        </c:choose>
+                    </ul>
+                </div>
             </section>
         </div>
         <div class="grid_4">
@@ -87,8 +120,6 @@
                 <p class="wb-font-medium">"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
             </div>
         </div>
-
-
 
         <div id="add-bookmark-modal" class="wb-box-with-shadow" style="display:none">
             <h4>Adicionar Favorito</h4>
@@ -139,19 +170,25 @@
                 </div>
             </form:form>
         </div>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <!--<script type="text/javascript" src="js/bootstrap.js"></script>-->
+        <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>-->
+        <script type="text/javascript" src="js/jquery.simplemodal.1.4.2.min.js"></script>
+        <!--<script type="text/javascript" src="js/jquery.tagify.js"></script>-->
         <script type="text/javascript">
             $(document).ready(function() {
+                
                 
                 function openModal(){
                     $('#add-bookmark-modal').modal({
                         opacity:60,
                         overlayCss: {backgroundColor:"#fff"},
                         overlayClose:true
-					
+                
                     });
                 }
                 $('#add-bookmark').click( function(){ 
-                     openModal();
+                    openModal();
                 });
                 
                 //                $('textarea#tags').tagify({outputDelimiter: ','});
@@ -163,7 +200,7 @@
                         $("#url").val(data.url);
                         $("#description").val(data.description);
                         $("#tags").val(data.tags);
-//                        $("#visible").val(data.reply.telefone);
+                        //                        $("#visible").val(data.reply.telefone);
                         openModal();
                     });
                 }
@@ -179,10 +216,10 @@
                             console.log($(caller).parents("div.bookmark-item"))
                             console.log(caller)
                         }
-                       $(caller).parents("div.bookmark-item").fadeOut("slow", function(){
-                           $(this).remove();
-                       });
-                       //$(caller).parents("div.bookmark-item").remove();
+                        $(caller).parents("div.bookmark-item").fadeOut("slow", function(){
+                            $(this).remove();
+                        });
+                        //$(caller).parents("div.bookmark-item").remove();
                     });
                 }
                 

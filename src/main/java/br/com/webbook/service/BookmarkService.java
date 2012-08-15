@@ -6,6 +6,7 @@ package br.com.webbook.service;
 
 import br.com.webbook.domain.Bookmark;
 import java.util.List;
+import org.springframework.data.domain.Page;
 
 /**
  *
@@ -20,4 +21,6 @@ public interface BookmarkService {
     Bookmark findById(Long id);
 
     List<Bookmark> list();
+    
+    Page<Bookmark> list(Integer pageNumber, Integer pageSize);
 }
