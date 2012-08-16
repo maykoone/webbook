@@ -15,8 +15,8 @@
         <meta charset="utf-8" />
         <title>Lista de favoritos</title>
         <!--<link rel="stylesheet" href="css/tagify-style.css" />-->
-        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/base/jquery-ui.css" />
-        <link rel="stylesheet" href="css/bootstrap.css" />
+        <!--<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/base/jquery-ui.css" />-->
+        <link rel="stylesheet" href="resources/css/bootstrap.css" />
 
 
     </head>
@@ -45,7 +45,7 @@
         <div class="grid_8">
             <section id="user-list-bookmark" class="wb-box-with-shadow popular-content">
                 <h4>Seus favoritos</h4>
-                <a href="#add-bookmark-modal" id="add-bookmark" data-toggle="modal">
+                <a href="#add-bookmark-modal" class="btn" id="add-bookmark" data-toggle="modal">
                     Adicionar Favorito
                 </a>
                 <c:forEach items="${bookmarkList.content}" var="bookmark">
@@ -121,75 +121,85 @@
             </div>
         </div>
 
-        <div id="add-bookmark-modal" class="wb-box-with-shadow" style="display:none">
-            <h4>Adicionar Favorito</h4>
-            <form:form action="${pageContext.request.contextPath}/bookmarks" commandName="bookmark" method="post" id="add-bookmark-form">
-                <form:hidden path="id" id="id" />
-                <div class="field-block">
-                    <div class="field-title">
-                        <label>Título</label>
+        <div id="add-bookmark-modal" class="modal hide" style="display: none">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4>Adicionar Favorito</h4>
+            </div>
+            <div class="modal-body">
+                <form:form action="${pageContext.request.contextPath}/bookmarks" commandName="bookmark" method="post" id="add-bookmark-form">
+                    <form:hidden path="id" id="id" />
+                    <div class="field-block">
+                        <div class="field-title">
+                            <label>Título</label>
+                        </div>
+                        <div class="field-input">
+                            <input class=""type="text" name="title" id="title">
+                        </div>
                     </div>
-                    <div class="field-input">
-                        <input class=""type="text" name="title" id="title">
+                    <div class="field-block">
+                        <div class="field-title">
+                            <label>Url</label>
+                        </div>
+                        <div class="field-input">
+                            <form:errors path="url" />
+                            <input class=""type="text" name="url" id="url">
+                        </div>
                     </div>
-                </div>
-                <div class="field-block">
-                    <div class="field-title">
-                        <label>Url</label>
+                    <div class="field-block">
+                        <div class="field-title">
+                            <label>Descrição</label>
+                        </div>
+                        <div class="field-input">
+                            <textarea name="description" id="description"></textarea>
+                        </div>
                     </div>
-                    <div class="field-input">
-                        <form:errors path="url" />
-                        <input class=""type="text" name="url" id="url">
+                    <div class="field-block">
+                        <div class="field-title">
+                            <label>Tags</label>
+                        </div>
+                        <div class="field-input">
+                            <input class=""type="text" name="tags" id="tags">
+                        </div>
                     </div>
-                </div>
-                <div class="field-block">
-                    <div class="field-title">
-                        <label>Descrição</label>
-                    </div>
-                    <div class="field-input">
-                        <textarea name="description" id="description"></textarea>
-                    </div>
-                </div>
-                <div class="field-block">
-                    <div class="field-title">
-                        <label>Tags</label>
-                    </div>
-                    <div class="field-input">
-                        <input class=""type="text" name="tags" id="tags">
-                    </div>
-                </div>
 
-                <div class="field-block">							
-                    <form:checkbox path="visible" id="visible"/>
-                    <label class="wb-font-small"><strong>Privado</strong></label>
-                </div>
-                <div class="controls">
-                    <div class="control">
-                        <input id="button-register" class="wb-border-radius-all" type="submit" value="Adicionar Favorito">
+                    <div class="field-block">							
+                        <form:checkbox path="visible" id="visible"/>
+                        <label class="wb-font-small"><strong>Privado</strong></label>
                     </div>
-                </div>
-            </form:form>
+                    <div class="controls">
+                        <div class="control">
+                            <input id="button-register" class="wb-border-radius-all" type="submit" value="Adicionar Favorito">
+                        </div>
+                    </div>
+                </form:form>
+            </div>
         </div>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-        <!--<script type="text/javascript" src="js/bootstrap.js"></script>-->
+        <script type="text/javascript" src="resources/js/bootstrap.js"></script>
         <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>-->
-        <script type="text/javascript" src="js/jquery.simplemodal.1.4.2.min.js"></script>
+        <!--<script type="text/javascript" src="js/jquery.simplemodal.1.4.2.min.js"></script>-->
         <!--<script type="text/javascript" src="js/jquery.tagify.js"></script>-->
         <script type="text/javascript">
             $(document).ready(function() {
                 
                 
+                //                function openModal(){
+                //                    $('#add-bookmark-modal').modal({
+                //                        opacity:60,
+                //                        overlayCss: {backgroundColor:"#fff"},
+                //                        overlayClose:true
+                //                
+                //                    });
+                //                }
+                //twitter bootstrap modal
                 function openModal(){
-                    $('#add-bookmark-modal').modal({
-                        opacity:60,
-                        overlayCss: {backgroundColor:"#fff"},
-                        overlayClose:true
-                
-                    });
+                    $('#add-bookmark-modal').modal();
                 }
-                $('#add-bookmark').click( function(){ 
-                    openModal();
-                });
+                
+//                $('#add-bookmark').click( function(){ 
+//                    openModal();
+//                });
                 
                 //                $('textarea#tags').tagify({outputDelimiter: ','});
                 function loadData(){

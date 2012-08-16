@@ -37,7 +37,7 @@
         <div class="grid_8" >
             <div class="wb-box-with-shadow popular-content" id="login-form-container">
                 <h3 class="wb-font-x-big">Descubra, Colecione e Compartilhe novos conteúdos da Web</h3>
-                <form:form action="${pageContext.request.contextPath}/users" commandName="user" id="login-form" method="post">
+                <form:form action="${pageContext.request.contextPath}/users/create_account" commandName="user" id="login-form" method="post">
 
                     <div class="field-block">
                         <div class="field-title">

@@ -9,6 +9,11 @@ import br.com.webbook.repositories.UserRepository;
 import br.com.webbook.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,13 +23,18 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public User save(User user) {
+        userRepository.save(user);
+        String encodePassword = passwordEncoder.encodePassword(user.getPassword(), user.getId());
+        user.setPassword(encodePassword);
         return userRepository.save(user);
     }
 
@@ -41,5 +51,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> list() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String string) throws UsernameNotFoundException, DataAccessException {
+        User user = userRepository.findByUserName(string);
+        if (user == null) {
+            throw new UsernameNotFoundException("não existe esse usuário cadastrado");
+        }
+        return new UserDetailsAdapter(user);
     }
 }

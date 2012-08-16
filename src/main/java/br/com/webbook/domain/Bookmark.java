@@ -18,6 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
 /**
@@ -36,7 +38,9 @@ public class Bookmark implements Serializable {
     private String title;
     @URL(message = "entre com uma URL válida")
     @NotNull(message = "url é um campo obrigatório")
+    @NotBlank(message = "url é um campo obrigatório")
     private String url;
+    @Size(max=140, message="A descrição pode ter no máximo 140 caracteres")
     private String description;
     private Boolean visible;
     @ElementCollection(fetch = FetchType.EAGER)

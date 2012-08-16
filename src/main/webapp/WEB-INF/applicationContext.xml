@@ -24,11 +24,12 @@
     <security:http auto-config="true" use-expressions="true">
         <security:intercept-url pattern="/login" access="permitAll" />
         <security:intercept-url pattern="/logout" access="permitAll" />
-        <security:intercept-url pattern="/register" access="permitAll" />
-        <security:intercept-url pattern="/denied" access="hasRole('ROLE_USER')" />
+        <security:intercept-url pattern="/home" access="permitAll" />
+        <security:intercept-url pattern="/users/register" access="permitAll" />
+        <security:intercept-url pattern="/users/create_account" access="permitAll" />
+        <security:intercept-url pattern="/resources/**" access="permitAll" />
         <security:intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
-        <security:intercept-url pattern="/index" access="hasRole('ROLE_USER')" />
-        <security:intercept-url pattern="/home" access="hasRole('ROLE_USER')" />
+        
 
         <security:form-login login-page="/login" authentication-failure-url="/login/failure"
                              default-target-url="/bookmarks" />
@@ -39,10 +40,10 @@
         <!--<remember-me user-service-ref="MyUserDetailsService" />-->
     </security:http>
     <security:authentication-manager>
-        <security:authentication-provider>
-            <security:user-service>
-                <security:user name="maykoone" password="mayko1989" authorities="ROLE_USER" />
-            </security:user-service>
+        <security:authentication-provider user-service-ref="userService">
+            <security:password-encoder ref="passwordEncoder">
+                <security:salt-source user-property="id" />
+            </security:password-encoder>
         </security:authentication-provider>
     </security:authentication-manager>
 

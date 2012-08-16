@@ -6,8 +6,11 @@
 <decorators defaultdir="/WEB-INF/decorators">
     <excludes>
         <pattern>/css/*</pattern>
+        <pattern>/resources/css/*</pattern>
         <pattern>/img/*</pattern>
+        <pattern>/resources/img/*</pattern>
         <pattern>/js/*</pattern>
+        <pattern>/resources/js/*</pattern>
         <pattern>*.json</pattern>
         <pattern>*.xml</pattern>
         <pattern>/rest/*</pattern>
