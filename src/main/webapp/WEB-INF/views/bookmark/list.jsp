@@ -16,7 +16,7 @@
         <title>Lista de favoritos</title>
         <!--<link rel="stylesheet" href="css/tagify-style.css" />-->
         <!--<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/base/jquery-ui.css" />-->
-        <link rel="stylesheet" href="resources/css/bootstrap.css" />
+        <!--<link rel="stylesheet" href="resources/css/bootstrap.css" />-->
 
 
     </head>
@@ -32,7 +32,7 @@
                 <div class="user-info">
                     <a hreaf="" class="wb-font-big"><strong>@<sec:authentication property="principal.username" /></strong></a>&nbsp;<span class="wb-font-big">[Mayko B. Oliveira]</span>
                     <ul class="user-stats">
-                        <li class="wb-font-small"><a href="">${fn:length(bookmarkList.content)} Bookmarks</a></li>
+                        <li class="wb-font-small"><a href="" rel="tooltip" title="first tooltip">${bookmarkList.totalElements} Bookmarks</a></li>
                         <li class="wb-font-small"><a href="">10 Amigos que você acompanha</a></li>
                         <li class="wb-font-small"><a href="">10 Amigos que te acompanham</a></li>
                         <li class="wb-font-small"><a href="">10 Filtros</a></li>
@@ -44,10 +44,12 @@
         <div class="clear"></div>
         <div class="grid_8">
             <section id="user-list-bookmark" class="wb-box-with-shadow popular-content">
-                <h4>Seus favoritos</h4>
-                <a href="#add-bookmark-modal" class="btn" id="add-bookmark" data-toggle="modal">
-                    Adicionar Favorito
-                </a>
+                <div class="list-header">
+                    <h4 class="wb-left-float">Seus favoritos</h4>
+                    <a href="#add-bookmark-modal" class="btn btn-primary wb-right-float" id="add-bookmark" data-toggle="modal">
+                        <i class="icon-plus icon-white"></i>Adicionar Favorito
+                    </a>
+                </div>
                 <c:forEach items="${bookmarkList.content}" var="bookmark">
                     <div class="bookmark-item">
                         <a href="" class="bookmark-thumbnail">
@@ -59,16 +61,16 @@
                             <p class="wb-font-small">${bookmark.description}</p>
                             <ul class="bookmark-tag-list">
                                 <c:forEach items="${bookmark.tags}" var="tag">
-                                    <li><a href="">#${tag}</a></li>
+                                    <li><a href=""><span class="tag">#${tag}</span></a></li>
                                 </c:forEach>
                             </ul>
                         </div>
                         <div class="bookmark-item-control">
                             <ul>
-                                <li><a href="bookmarks/${bookmark.id}" id="destroy" onclick="return false;">Excluir</a></li>
-                                <li><a href="bookmarks/${bookmark.id}" id="editMe" onclick="return false;">Editar</a></li>
-                                <li><a href="">10 Comentários</a></li>
-                                <li><a href="">Compartilhar</a></li>
+                                <li><a href="bookmarks/${bookmark.id}" id="destroy" onclick="return false;"><i class="icon-remove"></i>Excluir</a></li>
+                                <li><a href="bookmarks/${bookmark.id}" id="editMe" onclick="return false;"><i class="icon-edit"></i>Editar</a></li>
+                                <li><a href=""><i class="icon-comment"></i>10 Comentários</a></li>
+                                <li><a href=""><i class="icon-share"></i>Compartilhar</a></li>
                             </ul>
                         </div>
                     </div>
@@ -175,8 +177,8 @@
                 </form:form>
             </div>
         </div>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-        <script type="text/javascript" src="resources/js/bootstrap.js"></script>
+        <!--        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+                <script type="text/javascript" src="resources/js/bootstrap.js"></script>-->
         <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>-->
         <!--<script type="text/javascript" src="js/jquery.simplemodal.1.4.2.min.js"></script>-->
         <!--<script type="text/javascript" src="js/jquery.tagify.js"></script>-->
@@ -197,9 +199,9 @@
                     $('#add-bookmark-modal').modal();
                 }
                 
-//                $('#add-bookmark').click( function(){ 
-//                    openModal();
-//                });
+                //                $('#add-bookmark').click( function(){ 
+                //                    openModal();
+                //                });
                 
                 //                $('textarea#tags').tagify({outputDelimiter: ','});
                 function loadData(){

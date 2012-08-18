@@ -46,6 +46,20 @@ header nav ul li{
     float:left;
     margin-left:10px;
 }
+header nav ul#user-dropdown li{
+    float: none;
+    padding-top:10px;
+    margin: 0
+}
+header nav ul#user-dropdown li a{
+    text-shadow: none;
+    font-weight: bold;
+}
+header nav ul#user-dropdown li.dropdown-divider{
+    padding-top: 1px;
+    margin: 5px 1px 6px;
+    border-bottom: 1px solid #DDD;
+}
 #content{
     padding-top: 50px;
 }
@@ -325,7 +339,25 @@ textarea{}
     background-image: -moz-linear-gradient(#fff, #F7F7F7);
     background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #F7F7F7),color-stop(1, #fff));
 }
-
+.list-header{
+    padding: 9px 15px;
+    border-bottom: 1px solid #EEE;
+    height: 40px;
+}
+span.tag{
+    padding: 1px 4px 2px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    font-size: 10.998px;
+    font-weight: bold;
+    line-height: 14px;
+    color: white;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    white-space: nowrap;
+    vertical-align: baseline;
+    background-color:  #999;
+}
 .user-details{
 }
 .user-details a.avatar,
@@ -403,7 +435,9 @@ a.bookmark-url{
 }
 .bookmark-item .bookmark-item-control{
     font-size: 12px;
-    margin-left: 250px;
+    position: relative;
+    left: 220px;
+    /*margin-left: 230px;*/
 }
 .bookmark-item .bookmark-item-control ul li{
     display: inline;

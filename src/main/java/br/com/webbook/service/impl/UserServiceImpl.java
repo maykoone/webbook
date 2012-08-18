@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author maykoone
  */
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
@@ -31,6 +31,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
     @Override
+    @Transactional
     public User save(User user) {
         userRepository.save(user);
         String encodePassword = passwordEncoder.encodePassword(user.getPassword(), user.getId());
@@ -39,6 +40,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public void remove(User user) {
         userRepository.delete(user);
     }
@@ -49,13 +51,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public User findByUserName(String userName) {
+        return userRepository.findByUserName(userName);
+    }
+
+    @Override
     public List<User> list() {
         return userRepository.findAll();
     }
 
     @Override
-    public UserDetails loadUserByUsername(String string) throws UsernameNotFoundException, DataAccessException {
-        User user = userRepository.findByUserName(string);
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException, DataAccessException {
+        User user = userRepository.findByUserName(userName);
         if (user == null) {
             throw new UsernameNotFoundException("não existe esse usuário cadastrado");
         }

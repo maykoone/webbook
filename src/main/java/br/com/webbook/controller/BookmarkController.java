@@ -5,10 +5,16 @@
 package br.com.webbook.controller;
 
 import br.com.webbook.domain.Bookmark;
+import br.com.webbook.domain.User;
 import br.com.webbook.service.BookmarkService;
+import br.com.webbook.service.UserService;
+import br.com.webbook.service.impl.UserDetailsAdapter;
+import java.security.Principal;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,10 +34,13 @@ public class BookmarkController {
 
     @Autowired
     private BookmarkService bookmarkService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView list(@RequestParam(required = false) Integer page) {
-        Page<Bookmark> pageResult = bookmarkService.list(page == null ? 1 : page, 10);
+    public ModelAndView list(@RequestParam(required = false) Integer page, Principal principal) {
+        User user = userService.findByUserName(principal.getName());
+        Page<Bookmark> pageResult = bookmarkService.listByUser(user, page == null ? 1 : page, 10);
 
         ModelAndView model = new ModelAndView("bookmark/list", "bookmarkList", pageResult);
         model.addObject("bookmark", new Bookmark());
@@ -49,9 +58,12 @@ public class BookmarkController {
 
     @RequestMapping( method = RequestMethod.POST)
     public String save(@Valid Bookmark bookmark, BindingResult result) {
+        User user = loadCurrentUser();
+
         if (result.hasErrors()) {
             return "bookmark/list";
         }
+        bookmark.setUser(user);
         bookmarkService.save(bookmark);
         return "redirect:/bookmarks";
     }
@@ -59,20 +71,44 @@ public class BookmarkController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Bookmark edit(@PathVariable Long id) {
+        UserDetailsAdapter userDetails = (UserDetailsAdapter) ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getDetails());
+
         Bookmark bookmark = bookmarkService.findById(id);
+
+        if (!bookmark.getUser().getId().equals(userDetails.getId())) {
+            return null;
+        }
         return bookmark;
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public String delete(@PathVariable Long id) {
-        bookmarkService.remove(bookmarkService.findById(id));
-        return "redirect:/bookmark";
+        UserDetailsAdapter userDetails = (UserDetailsAdapter) SecurityContextHolder.getContext().getAuthentication().getDetails();
+
+        Bookmark bookmark = bookmarkService.findById(id);
+        if (!bookmark.getUser().getId().equals(userDetails.getId())) {
+            return null;
+        }
+        bookmarkService.remove(bookmark);
+        return "redirect:/bookmarks";
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public String destroy(@PathVariable Long id) {
-        bookmarkService.remove(bookmarkService.findById(id));
+        UserDetailsAdapter userDetails = (UserDetailsAdapter) SecurityContextHolder.getContext().getAuthentication().getDetails();
+
+        Bookmark bookmark = bookmarkService.findById(id);
+        if (!bookmark.getUser().getId().equals(userDetails.getId())) {
+            return null;
+        }
+        bookmarkService.remove(bookmark);
         return "sucess";
+    }
+
+    private User loadCurrentUser() {
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByUserName(userName);
+        return user;
     }
 }

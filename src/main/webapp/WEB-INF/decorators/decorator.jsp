@@ -12,6 +12,9 @@
         <link rel="stylesheet" href="<%= request.getContextPath()%>/resources/css/text.css" />
         <link rel="stylesheet" href="<%= request.getContextPath()%>/resources/css/960.css" />
         <link rel="stylesheet" href="<%= request.getContextPath()%>/resources/css/main.css" />
+        <link rel="stylesheet" href="<%= request.getContextPath()%>/resources/css/bootstrap.css" />
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="resources/js/bootstrap.js"></script>
         <decorator:head />
     </head>
 
@@ -31,7 +34,26 @@
                                 <img src="http://springpad.com/wp-content/themes/springpad/assets/homepage/images/avatars/scene1-3.jpg" alt="avatar" />
                             </a>
                         </li>
-                        <li><a href="#" class="">@maykoone</a></li>
+                        <li class="dropdown" id="dropdow-user">
+                            <a href="#dropdow-user" class="dropdown-toggle" data-toggle="dropdown">
+                                @<sec:authentication property="principal.username" />
+                                <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" id="user-dropdown">
+                                <li class="dropdown-caret">
+                                    <span class="caret-outer"></span>
+                                    <span class="caret-inner"></span>
+                                </li>
+                                <li><a href="<%= request.getContextPath()%>/bookmarks">Meus favoritos</a></li>
+                                <li><a href="#">Meus filtros</a></li>
+                                <li><a href="#">Meus amigos</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a href="">Meu Perfil</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a href="logout" class="">Sair</a></li>
+                            </ul>
+                        </li>
                         <li><a href="logout" class="">Sair</a></li>
                     </ul>    
                 </sec:authorize>
@@ -48,6 +70,7 @@
         <section id="content" class="container_12">
             <decorator:body />
         </section>
+
         <!--Rodapé-->
         <footer>
             <ul>
