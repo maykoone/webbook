@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -34,24 +35,34 @@ public class User implements Serializable {
     @GeneratedValue(generator = "wb_user_account_seq", strategy = GenerationType.AUTO)
     @SequenceGenerator(name = "wb_user_account_seq", sequenceName = "wb_user_account_seq", allocationSize = 1)
     private Long id;
+    
     @Size(min = 3, max = 30, message = "O nome deve ter no mínimo 3 e no máximo 30 caracteres.")
     private String name;
+    
     @Size(min = 3, max = 30, message = "O sobrenome deve ter no mínimo 3 e no máximo 30 caracteres.")
     private String lastName;
+    
     @NotNull(message = "A senha é obrigatória")
     @NotBlank(message = "A senha é obrigatória")
     @Size(min = 3, message = "A senha deve ter no mínimo 3 caracteres.")
+    @JsonIgnore
     private String password;
+    
     @NotNull(message = "O email é obrigatório")
     @NotBlank(message = "O email é obrigatória")
     @Email
     private String email;
+    
     @Size(min = 3, max = 20, message = "O nome de usuário deve ter no mínimo 3 e no máximo 20 caracteres")
     @NotBlank(message = "O nome de usuário é obrigatório")
     @NotNull(message = "O nome de usuário é obrigatório")
     private String userName;
+    
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @JsonIgnore
     private Set<Bookmark> bookmarks;
+    
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Filter> filters;
 

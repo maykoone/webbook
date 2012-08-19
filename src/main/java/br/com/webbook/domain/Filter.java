@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -34,6 +35,7 @@ public class Filter implements Serializable {
     private Set<String> tags;
     @ManyToOne
     @JoinColumn(name = "user_account")
+    @JsonIgnore
     private User user;
 
     public Long getId() {
@@ -58,6 +60,14 @@ public class Filter implements Serializable {
 
     public void setTags(Set<String> tags) {
         this.tags = tags;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

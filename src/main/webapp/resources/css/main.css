@@ -36,6 +36,12 @@ header{
         0px 1px 3px rgba(000,000,000,0.5),
         inset 0px 0px 2px rgba(220,220,220,1);		
     padding :10px 0;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1300
 }
 header nav ul{
     float: right;
@@ -62,6 +68,29 @@ header nav ul#user-dropdown li.dropdown-divider{
 }
 #content{
     padding-top: 50px;
+}
+.hero-unit {
+    padding: 60px;
+    margin-bottom: 30px;
+    margin-top: 20px;
+    background-color: 
+        #EEE;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+.hero-unit p {
+    font-size: 18px;
+    font-weight: 200;
+    line-height: 27px;
+    color: inherit;
+}
+.hero-unit h1 {
+    margin-bottom: 0;
+    font-size: 60px;
+    line-height: 1;
+    letter-spacing: -1px;
+    color: inherit;
 }
 footer{
     padding:20px 0;
@@ -91,7 +120,7 @@ footer li a {
     float: left;
     font-family: 'Metrophobic', sans-serif;
     font-weight: bolder;
-    font-size: 24px;
+    font-size: 20px;
     height: 40px;
     text-shadow: 0px 1px 1px #565656;
     /*text-indent: -9999px;*/
@@ -109,7 +138,7 @@ footer li a {
     height: 18px;
     width: 200px;
     /*border: 1px solid #a4c3ca;*/
-    font: normal 13px 'trebuchet MS', arial, helvetica;
+    font: normal 13px 'Metrophobic', arial, helvetica;
     background: #f1f1f1;
 
     border-width: 1px;
@@ -187,7 +216,7 @@ footer li a {
 
     text-shadow: 0 1px 0 rgba(255,255,255,0.5);
 
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
     font-size: 12px;
     font-weight:bold;
 
@@ -256,7 +285,7 @@ footer li a {
 
 .popular-content{
     color:#515151;
-    font-family: 'Metrophobic', sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
     margin: 10px 0px;
     padding:10px;	
 }
@@ -423,6 +452,10 @@ a.bookmark-url{
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: #AAA;
 }
+a.bookmark-title{
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #2F96B4;
+}
 .bookmark-tag-list{
     margin: 0px;
     padding: 0px;
@@ -435,8 +468,8 @@ a.bookmark-url{
 }
 .bookmark-item .bookmark-item-control{
     font-size: 12px;
-    position: relative;
-    left: 220px;
+    width: 100%;
+    text-align: right;
     /*margin-left: 230px;*/
 }
 .bookmark-item .bookmark-item-control ul li{

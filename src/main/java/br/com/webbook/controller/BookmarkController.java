@@ -8,14 +8,15 @@ import br.com.webbook.domain.Bookmark;
 import br.com.webbook.domain.User;
 import br.com.webbook.service.BookmarkService;
 import br.com.webbook.service.UserService;
-import br.com.webbook.service.impl.UserDetailsAdapter;
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,18 +43,28 @@ public class BookmarkController {
         User user = userService.findByUserName(principal.getName());
         Page<Bookmark> pageResult = bookmarkService.listByUser(user, page == null ? 1 : page, 10);
 
-        ModelAndView model = new ModelAndView("bookmark/list", "bookmarkList", pageResult);
+        ModelAndView model = new ModelAndView("bookmark/list");
         model.addObject("bookmark", new Bookmark());
-        //pagination
-        int current = pageResult.getNumber() + 1;
-        int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, pageResult.getTotalPages());
-
-        model.addObject("deploymentLog", page);
-        model.addObject("beginIndex", begin);
-        model.addObject("endIndex", end);
-        model.addObject("currentIndex", current);
+        model.addAllObjects(configurePagination(pageResult));
+        model.addObject("userInstance", user);
         return model;
+    }
+
+    @RequestMapping(value = "/{userName}", method = RequestMethod.GET)
+    public String listPublic(@PathVariable String userName, Model model, @RequestParam(required = false) Integer page, Principal principal) {
+        if (userName.equals(principal.getName())) {
+            return "redirect:/bookmarks";
+        }
+        User user = userService.findByUserName(userName);
+        if (user == null) {
+            return "error404";
+        }
+        Page<Bookmark> pageResult = bookmarkService.listPublicBookmarksByUser(user, page == null ? 1 : page, 10);
+        model.addAttribute("userSearch", user);
+        model.addAttribute("bookmark", new Bookmark());
+        model.addAllAttributes(configurePagination(pageResult));
+
+        return "bookmark/public-list";
     }
 
     @RequestMapping( method = RequestMethod.POST)
@@ -68,38 +79,31 @@ public class BookmarkController {
         return "redirect:/bookmarks";
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
     @ResponseBody
     public Bookmark edit(@PathVariable Long id) {
-        UserDetailsAdapter userDetails = (UserDetailsAdapter) ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getDetails());
+        String principalUserName = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Bookmark bookmark = bookmarkService.findById(id);
 
-        if (!bookmark.getUser().getId().equals(userDetails.getId())) {
-            return null;
+        if (!bookmark.getUser().getUserName().equals(principalUserName) && !bookmark.getPrivateBookmark()) {
+            //Criar um novo bookmark a a partir de um bookmark de outro usuário.
+            Bookmark bookmarkCopy = new Bookmark(bookmark.getUrl());
+            bookmarkCopy.setTitle(bookmark.getTitle());
+            bookmarkCopy.setTags(bookmark.getTags());
+            return bookmarkCopy;
         }
         return bookmark;
-    }
-
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public String delete(@PathVariable Long id) {
-        UserDetailsAdapter userDetails = (UserDetailsAdapter) SecurityContextHolder.getContext().getAuthentication().getDetails();
-
-        Bookmark bookmark = bookmarkService.findById(id);
-        if (!bookmark.getUser().getId().equals(userDetails.getId())) {
-            return null;
-        }
-        bookmarkService.remove(bookmark);
-        return "redirect:/bookmarks";
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public String destroy(@PathVariable Long id) {
-        UserDetailsAdapter userDetails = (UserDetailsAdapter) SecurityContextHolder.getContext().getAuthentication().getDetails();
+        String principalUserName = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Bookmark bookmark = bookmarkService.findById(id);
-        if (!bookmark.getUser().getId().equals(userDetails.getId())) {
+
+        if (!bookmark.getUser().getUserName().equals(principalUserName)) {
             return null;
         }
         bookmarkService.remove(bookmark);
@@ -110,5 +114,21 @@ public class BookmarkController {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUserName(userName);
         return user;
+    }
+
+    private Map<String, Object> configurePagination(Page<Bookmark> pageResult) {
+        //pagination
+        int current = pageResult.getNumber() + 1;
+        int begin = Math.max(1, current - 5);
+        int end = Math.min(begin + 10, pageResult.getTotalPages());
+
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+
+        modelMap.put("bookmarkList", pageResult);
+        modelMap.put("beginIndex", begin);
+        modelMap.put("endIndex", end);
+        modelMap.put("currentIndex", current);
+
+        return modelMap;
     }
 }

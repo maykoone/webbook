@@ -2,6 +2,7 @@
 <html lang="en">
     <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
     <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+    <%@taglib uri="/WEB-INF/tags/webbook.tld" prefix="wb" %>
     <head>
         <meta charset="utf-8" />
         <title><decorator:title /></title>
@@ -14,7 +15,7 @@
         <link rel="stylesheet" href="<%= request.getContextPath()%>/resources/css/main.css" />
         <link rel="stylesheet" href="<%= request.getContextPath()%>/resources/css/bootstrap.css" />
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-        <script type="text/javascript" src="resources/js/bootstrap.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
         <decorator:head />
     </head>
 
@@ -31,7 +32,7 @@
                     <ul class="user-account wb-right-float">
                         <li>
                             <a href="#" class="avatar">
-                                <img src="http://springpad.com/wp-content/themes/springpad/assets/homepage/images/avatars/scene1-3.jpg" alt="avatar" />
+                                <wb:gravatar email="${userInstance.email}" />
                             </a>
                         </li>
                         <li class="dropdown" id="dropdow-user">
@@ -45,16 +46,16 @@
                                     <span class="caret-outer"></span>
                                     <span class="caret-inner"></span>
                                 </li>
-                                <li><a href="<%= request.getContextPath()%>/bookmarks">Meus favoritos</a></li>
+                                <li><a href="<%= request.getContextPath()%>/bookmarks"><i class="icon-bookmark"></i>Meus favoritos</a></li>
                                 <li><a href="#">Meus filtros</a></li>
                                 <li><a href="#">Meus amigos</a></li>
                                 <li class="dropdown-divider"></li>
-                                <li><a href="">Meu Perfil</a></li>
+                                <li><a href="${pageContext.request.contextPath}/users/account/profile"><i class="icon-user"></i>Meu Perfil</a></li>
                                 <li class="dropdown-divider"></li>
-                                <li><a href="logout" class="">Sair</a></li>
+                                <li><a href="${pageContext.request.contextPath}/logout" class="">Sair</a></li>
                             </ul>
                         </li>
-                        <li><a href="logout" class="">Sair</a></li>
+                        <li><a href="${pageContext.request.contextPath}/logout" class="">Sair</a></li>
                     </ul>    
                 </sec:authorize>
                 <sec:authorize access="isAnonymous()">

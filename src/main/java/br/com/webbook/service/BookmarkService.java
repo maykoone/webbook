@@ -26,4 +26,8 @@ public interface BookmarkService {
     Page<Bookmark> list(Integer pageNumber, Integer pageSize);
 
     Page<Bookmark> listByUser(User user, Integer pageNumber, Integer pageSize);
+    
+    long countByUser(User user);
+    
+    Page<Bookmark> listPublicBookmarksByUser(User user, Integer pageNumber, Integer pageSize);
 }

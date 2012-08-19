@@ -19,6 +19,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
@@ -40,11 +41,12 @@ public class Bookmark implements Serializable {
     @NotNull(message = "url é um campo obrigatório")
     @NotBlank(message = "url é um campo obrigatório")
     private String url;
-    @Size(max=140, message="A descrição pode ter no máximo 140 caracteres")
+    @Size(max = 140, message = "A descrição pode ter no máximo 140 caracteres")
     private String description;
-    private Boolean visible;
+    private Boolean privateBookmark;
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> tags;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_account")
     private User user;
@@ -117,12 +119,12 @@ public class Bookmark implements Serializable {
         this.comments = comments;
     }
 
-    public Boolean getVisible() {
-        return visible;
+    public Boolean getPrivateBookmark() {
+        return privateBookmark;
     }
 
-    public void setVisible(Boolean visible) {
-        this.visible = visible;
+    public void setPrivateBookmark(Boolean privateBookmark) {
+        this.privateBookmark = privateBookmark != null ? privateBookmark : false;
     }
 
     @Override

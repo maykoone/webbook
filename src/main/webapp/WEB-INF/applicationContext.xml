@@ -37,7 +37,7 @@
         <security:logout invalidate-session="true" logout-success-url="/logout/success"
                          logout-url="/logout" />
 
-        <!--<remember-me user-service-ref="MyUserDetailsService" />-->
+        <security:remember-me user-service-ref="userService"  />
     </security:http>
     <security:authentication-manager>
         <security:authentication-provider user-service-ref="userService">

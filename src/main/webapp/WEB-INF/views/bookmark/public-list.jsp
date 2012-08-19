@@ -21,25 +21,25 @@
 
 
     </head>
-    <c:url var="currentUrl" value="bookmarks" />
-    <c:url var="rootUrl" value="${pageContext.request.contextPath}" />
+    <c:set var="currentUrl" value="${pageContext.request.contextPath}/bookmarks/${userSearch.userName}" />
+    <c:set var="rootUrl" value="${pageContext.request.contextPath}" />
     <body>
         <div class="grid_12">
             <section class="user-details wb-box-with-shadow popular-content">
                 <a href="" class="avatar">
                     <!-- <img src="http://springpad.com/api/users/maykoone/photo?w=80&h=80" alt="avatar" /> -->
-                    <wb:gravatar email="${userInstance.email}" />
+                    <wb:gravatar email="${userSearch.email}" />
                 </a>
                 <div class="user-info">
                     <a hreaf="" class="wb-font-big">
-                        <strong>@<sec:authentication property="principal.username" /></strong>
-                    </a>&nbsp;<span class="wb-font-big">[${userInstance.name}]</span>
+                        <strong>@${userSearch.userName}</strong>
+                    </a>&nbsp;<span class="wb-font-big">[${userSearch.name}]</span>
                     <ul class="user-stats">
-                        <li class="wb-font-small"><a href="" rel="tooltip" title="first tooltip">${bookmarkList.totalElements} Bookmarks</a></li>
-                        <li class="wb-font-small"><a href="users/following">10 Amigos que você acompanha</a></li>
-                        <li class="wb-font-small"><a href="users/followers">10 Amigos que te acompanham</a></li>
-                        <li class="wb-font-small"><a href="users/filters">10 Filtros</a></li>
-                        <li class="wb-font-small"><strong><a href="users/account/profile" class="btn">Edite seu Perfil</a></strong></li>
+                        <li class="wb-font-small"><a href="" rel="tooltip" title="first tooltip"><strong>${bookmarkList.totalElements}</strong> Bookmarks</a></li>
+                        <li class="wb-font-small"><a href="${rootUrl}/users/${userSearch.userName}/following"><strong>10</strong> seguindo</a></li>
+                        <li class="wb-font-small"><a href="${rootUrl}/users/${userSearch.userName}/followers"><strong>10</strong> seguidores</a></li>
+                        <li class="wb-font-small"><a href="${rootUrl}/filters/${userSearch.userName}"><strong>10</strong> Filtros</a></li>
+                        <li class="wb-font-small"><strong><a href="${rootUrl}/users/${userSearch.userName}/follow" class="btn btn-info">Acompanhar</a></strong></li>
                     </ul>
                 </div>
             </section>
@@ -48,10 +48,7 @@
         <div class="grid_8">
             <section id="user-list-bookmark" class="wb-box-with-shadow popular-content">
                 <div class="list-header">
-                    <h4 class="wb-left-float">Seus favoritos</h4>
-                    <a href="#add-bookmark-modal" class="btn btn-primary wb-right-float" id="add-bookmark" data-toggle="modal">
-                        <i class="icon-plus icon-white"></i>Adicionar Favorito
-                    </a>
+                    <h4 class="wb-left-float">Favoritos do ${userSearch.userName}</h4>
                 </div>
                 <c:forEach items="${bookmarkList.content}" var="bookmark">
                     <div class="bookmark-item">
@@ -59,29 +56,28 @@
                             <div class="default-thumb"></div>
                         </a>
                         <div class="bookmark-info">
-                            <h3><a href="" class="bookmark-title wb-font-medium">${bookmark.title}&nbsp;<c:if test="${bookmark.privateBookmark}"><i class="icon-lock"></i></c:if></a></h3>
+                            <h3><a href="" class="bookmark-title wb-font-medium">${bookmark.title}</a></h3>
                             <a href="" class="bookmark-url wb-font-small">${bookmark.url}</a>
                             <p class="wb-font-small">${bookmark.description}</p>
                             <ul class="bookmark-tag-list">
                                 <c:forEach items="${bookmark.tags}" var="tag">
-                                    <li><a href="${currentUrl}/tags/${tag}"><span class="tag">#${tag}</span></a></li>
+                                    <li><a href="${currentUrl}/tags/${fn:replace(tag, " ", "-")}"><span class="tag">#${tag}</span></a></li>
                                 </c:forEach>
                             </ul>
                         </div>
                         <div class="bookmark-item-control">
                             <ul>
-                                <li><a href="${currentUrl}/${bookmark.id}" id="destroy" onclick="return false;"><i class="icon-remove"></i>Excluir</a></li>
-                                <li><a href="${currentUrl}/${bookmark.id}/edit" id="editMe" onclick="return false;"><i class="icon-edit"></i>Editar</a></li>
+                                <li><a href="${rootUrl}/bookmarks/${bookmark.id}/edit" id="editMe" onclick="return false;" title="Adicione ao seus favoritos"><i class="icon-bookmark"></i>Salvar</a></li>
                                 <li><a href=""><i class="icon-comment"></i>10 Comentários</a></li>
                                 <li><a href=""><i class="icon-share"></i>Compartilhar</a></li>
                             </ul>
                         </div>
                     </div>
                 </c:forEach>
-                <c:url var="firstUrl" value="bookmarks?page=1" />
-                <c:url var="lastUrl" value="bookmarks?page=${bookmarkList.totalPages}" />
-                <c:url var="prevUrl" value="bookmarks?page=${currentIndex - 1}" />
-                <c:url var="nextUrl" value="bookmarks?page=${currentIndex + 1}" />
+                <c:url var="firstUrl" value="${userSearch.userName}?page=1" />
+                <c:url var="lastUrl" value="${userSearch.userName}?page=${bookmarkList.totalPages}" />
+                <c:url var="prevUrl" value="${userSearch.userName}?page=${currentIndex - 1}" />
+                <c:url var="nextUrl" value="${userSearch.userName}?page=${currentIndex + 1}" />
                 <div class="pagination">
                     <ul>
                         <c:choose>
@@ -95,7 +91,7 @@
                             </c:otherwise>
                         </c:choose>
                         <c:forEach var="i" begin="${beginIndex}" end="${endIndex}">
-                            <c:url var="pageUrl" value="bookmarks?page=${i}" />
+                            <c:url var="pageUrl" value="${userSearch.userName}?page=${i}" />
                             <c:choose>
                                 <c:when test="${i == currentIndex}">
                                     <li class="active"><a href="${pageUrl}"><c:out value="${i}" /></a></li>
@@ -132,7 +128,7 @@
                 <h4>Adicionar Favorito</h4>
             </div>
             <div class="modal-body">
-                <form:form action="${currentUrl}" commandName="bookmark" method="post" id="add-bookmark-form">
+                <form:form action="${rootUrl}/bookmarks" commandName="bookmark" method="post" id="add-bookmark-form">
                     <form:hidden path="id" id="id" />
                     <div class="field-block">
                         <div class="field-title">
@@ -206,36 +202,20 @@
                 //                });
                 function loadData(){
                     var url = $(this).attr("href");
-                    $.get(url, function(data){
+                    $.get(url, {}, function (data){
                         $("#id").val(data.id);
                         $("#title").val(data.title);
                         $("#url").val(data.url);
                         $("#description").val(data.description);
                         $("#tags").val(data.tags);
-                        data.privateBookmark?$("#privateBookmark").attr("checked", "checked"):$("#privateBookmark").removeAttr("checked");
+                        data.privateBookmark?$("#privateBookmark").attr("checked", "checked"):$("privateBookmark").removeAttr("checked");
                         openModal();
                     });
                 }
                 
-                function destroy(){
-                    var url = $(this).attr("href");
-                    var caller = this;
-                    $.ajax({
-                        url: url,
-                        type: "DELETE"
-                    }).done(function(data){
-                        if(console && console.log){
-                            console.log($(caller).parents("div.bookmark-item"))
-                            console.log(caller)
-                        }
-                        $(caller).parents("div.bookmark-item").fadeOut("slow", function(){
-                            $(this).remove();
-                        });
-                    });
-                }
+                
                 
                 $("#editMe").live('click',loadData);
-                $("#destroy").live('click',destroy);
 
             });
         </script>

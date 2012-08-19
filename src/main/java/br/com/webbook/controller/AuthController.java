@@ -31,4 +31,9 @@ public class AuthController {
     public String logoutSuccess() {
         return "redirect:/home";
     }
+    
+    @RequestMapping(value="/denied")
+    public String accessDenied(){
+        return "auth/deniedAccess";
+    }
 }

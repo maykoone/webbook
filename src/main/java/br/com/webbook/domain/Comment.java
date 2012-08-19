@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -29,9 +30,11 @@ public class Comment implements Serializable {
     private Long id;
     private String text;
     @ManyToOne
+    @JsonIgnore
     private Bookmark bookmark;
     @ManyToOne
     @JoinColumn(name = "user_account")
+    @JsonIgnore
     private User user;
 
     //<editor-fold defaultstate="collapsed" desc="getters, setters and other methods">

@@ -7,16 +7,12 @@ package br.com.webbook.service.impl;
 import br.com.webbook.domain.Bookmark;
 import br.com.webbook.domain.User;
 import br.com.webbook.repositories.BookmarkRepository;
+import br.com.webbook.repositories.query.BookmarkSpecifications;
 import br.com.webbook.service.BookmarkService;
 import java.util.List;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,19 +62,20 @@ public class BookmarkServiceImpl implements BookmarkService {
     @Override
     public Page<Bookmark> listByUser(User user, Integer pageNumber, Integer pageSize) {
         PageRequest request = new PageRequest(pageNumber - 1, pageSize);
-        Page<Bookmark> pageResult = bookmarkRepository.findAll(new Specification<Bookmark>() {
-            private User userSearch;
+        Page<Bookmark> pageResult = bookmarkRepository.findAll(BookmarkSpecifications.bookmarksByUser(user), request);
 
-            public Specification<Bookmark> setUserSearch(User userSearch) {
-                this.userSearch = userSearch;
-                return this;
-            }
+        return pageResult;
+    }
 
-            @Override
-            public Predicate toPredicate(Root<Bookmark> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-                return cb.equal(root.join("user").get("userName"), userSearch.getUserName());
-            }
-        }.setUserSearch(user), request);
+    @Override
+    public long countByUser(User user) {
+        return bookmarkRepository.count(BookmarkSpecifications.bookmarksByUser(user));
+    }
+
+    @Override
+    public Page<Bookmark> listPublicBookmarksByUser(User user, Integer pageNumber, Integer pageSize) {
+        PageRequest request = new PageRequest(pageNumber - 1, pageSize);
+        Page<Bookmark> pageResult = bookmarkRepository.findAll(BookmarkSpecifications.publicBookmarksByUser(user), request);
 
         return pageResult;
     }

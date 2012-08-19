@@ -40,7 +40,7 @@
                     </div>
 
                     <div class="field-block">
-                        <input class="" type="checkbox">
+                        <input class="" type="checkbox" name="_spring_security_remember_me">
                         <label class="wb-font-small">Manter conectado</label>
                     </div>
                     <div class="controls">
