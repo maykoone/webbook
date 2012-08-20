@@ -22,11 +22,11 @@
     
     <!--Security-->
     <security:http auto-config="true" use-expressions="true">
-        <security:intercept-url pattern="/login" access="permitAll" />
-        <security:intercept-url pattern="/logout" access="permitAll" />
-        <security:intercept-url pattern="/home" access="permitAll" />
-        <security:intercept-url pattern="/users/register" access="permitAll" />
-        <security:intercept-url pattern="/users/create_account" access="permitAll" />
+        <security:intercept-url pattern="/login" access="isAnonymous()" />
+        <security:intercept-url pattern="/logout" access="isAnonymous()" />
+        <security:intercept-url pattern="/home" access="isAnonymous()" />
+        <security:intercept-url pattern="/users/register" access="isAnonymous()" />
+        <security:intercept-url pattern="/users/create_account" access="isAnonymous()" />
         <security:intercept-url pattern="/resources/**" access="permitAll" />
         <security:intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
         

@@ -68,4 +68,25 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
         return new UserDetailsAdapter(user);
     }
+
+    @Override
+    @Transactional
+    public User editProfile(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public boolean changePassword(String userName, String oldPassword, String newPassord) {
+        User user = findByUserName(userName);
+        if (user != null && passwordEncoder.isPasswordValid(user.getPassword(), oldPassword, user.getId())) {
+            String encodePassword = passwordEncoder.encodePassword(newPassord, user.getId());
+            user.setPassword(encodePassword);
+            userRepository.save(user);
+            return true;
+
+        } else {
+            return false;
+        }
+    }
 }

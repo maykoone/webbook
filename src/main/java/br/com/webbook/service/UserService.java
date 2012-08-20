@@ -22,4 +22,8 @@ public interface UserService {
     User findByUserName(String userName);
 
     List<User> list();
+
+    User editProfile(User user);
+
+    boolean changePassword(String userName, String oldPassword, String newPassord);
 }

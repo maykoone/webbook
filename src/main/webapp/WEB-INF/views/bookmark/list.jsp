@@ -132,7 +132,7 @@
                 <h4>Adicionar Favorito</h4>
             </div>
             <div class="modal-body">
-                <form:form action="${currentUrl}" commandName="bookmark" method="post" id="add-bookmark-form">
+                <form:form action="${currentUrl}" commandName="bookmark" method="post" id="login-form">
                     <form:hidden path="id" id="id" />
                     <div class="field-block">
                         <div class="field-title">

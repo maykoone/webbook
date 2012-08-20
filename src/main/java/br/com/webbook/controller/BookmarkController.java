@@ -86,12 +86,17 @@ public class BookmarkController {
 
         Bookmark bookmark = bookmarkService.findById(id);
 
-        if (!bookmark.getUser().getUserName().equals(principalUserName) && !bookmark.getPrivateBookmark()) {
-            //Criar um novo bookmark a a partir de um bookmark de outro usuário.
-            Bookmark bookmarkCopy = new Bookmark(bookmark.getUrl());
-            bookmarkCopy.setTitle(bookmark.getTitle());
-            bookmarkCopy.setTags(bookmark.getTags());
-            return bookmarkCopy;
+        if (!bookmark.getUser().getUserName().equals(principalUserName)) {
+            if (!bookmark.getPrivateBookmark()) {
+                //Criar um novo bookmark a a partir de um bookmark de outro usuário.
+                Bookmark bookmarkCopy = new Bookmark(bookmark.getUrl());
+                bookmarkCopy.setTitle(bookmark.getTitle());
+                bookmarkCopy.setTags(bookmark.getTags());
+                return bookmarkCopy;
+            } else {
+                return null;
+            }
+
         }
         return bookmark;
     }

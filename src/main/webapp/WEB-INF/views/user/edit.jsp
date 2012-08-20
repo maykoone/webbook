@@ -44,7 +44,23 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab1">
                             <h3>Seu Perfil</h3>
-                            <form:form action="${pageContext.request.contextPath}/users/edit" method="put" id="login-form">
+                            <c:if test="${message != null}">
+                                <div class="alert">
+                                    <button class="close" data-dismiss="alert">×</button>
+                                    <p>${message.message}</p>
+                                </div>
+                            </c:if>
+                            <form:form action="${pageContext.request.contextPath}/users/edit" method="put" id="login-form" commandName="userInstance">
+                                <form:hidden path="id" />
+                                <div class="field-block">
+                                    <div class="field-title">
+                                        <label>Nome de Usuário</label>
+                                    </div>
+                                    <div class="field-input">
+                                        <form:errors path="userName" />
+                                        <input class="disabled" type="text" name="userName" value="${userInstance.userName}">
+                                    </div>
+                                </div>
                                 <div class="field-block">
                                     <div class="field-title">
                                         <label>Nome</label>
@@ -63,15 +79,7 @@
                                         <input class=""type="text" name="lastName" value="${userInstance.lastName}">
                                     </div>
                                 </div>
-                                <div class="field-block">
-                                    <div class="field-title">
-                                        <label>Nome de Usuário</label>
-                                    </div>
-                                    <div class="field-input">
-                                        <form:errors path="userName" />
-                                        <input class=""type="text" name="userName" value="${userInstance.userName}">
-                                    </div>
-                                </div>
+
                                 <div class="field-block">
                                     <div class="field-title">
                                         <label>E-mail</label>
@@ -94,13 +102,13 @@
                         </div>
                         <div class="tab-pane" id="tab2">
                             <h3>Altere sua Senha</h3>
-                            <form action="" id="login-form">
+                            <form:form action="${pageContext.request.contextPath}/users/edit/password" id="login-form" commandName="userChangePassword" method="put">
                                 <div class="field-block">
                                     <div class="field-title">
                                         <label>Senha Antiga</label>
                                     </div>
                                     <div class="field-input">
-                                        <input class=""type="text">
+                                        <input class=""type="password" name="oldPassword">
                                     </div>
                                 </div>
                                 <div class="field-block">
@@ -108,7 +116,7 @@
                                         <label>Nova Senha</label>
                                     </div>
                                     <div class="field-input">
-                                        <input class=""type="text">
+                                        <input class=""type="password" name="newPassword">
                                     </div>
                                 </div>
                                 <div class="field-block">
@@ -116,7 +124,7 @@
                                         <label>Nova Senha novamente</label>
                                     </div>
                                     <div class="field-input">
-                                        <input class=""type="text">
+                                        <input class=""type="password" name="passwordVerification">
                                     </div>
                                 </div>
 
@@ -124,12 +132,12 @@
                                     <div class="control">
                                         <!-- <input id="button-register" class="wb-border-radius-all" type="button" value="Salvar"> -->
                                         <!-- <input id="button-register" class="wb-border-radius-all" type="button" value="Cancelar"> -->
-                                        <button class="btn btn-primary">Salvar</button>
-                                        <button class="btn">Cancelar</button>
+                                        <button class="btn btn-primary" type="submit">Salvar</button>
+                                        <button class="btn" type="reset">Cancelar</button>
                                     </div>
                                     <span class="wb-font-medium"></span>
                                 </div>
-                            </form>
+                            </form:form>
                         </div>
                     </div>
                 </div>

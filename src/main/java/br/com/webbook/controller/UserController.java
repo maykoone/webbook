@@ -6,10 +6,14 @@ package br.com.webbook.controller;
 
 import br.com.webbook.domain.User;
 import br.com.webbook.service.UserService;
+import br.com.webbook.tags.MessageBean;
+import br.com.webbook.validation.ProfileChecks;
+import br.com.webbook.validation.ValidationUtils;
+import br.com.webbook.web.form.UserChangePasswordForm;
 import java.security.Principal;
 import javax.validation.Valid;
+import javax.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,10 +33,12 @@ public class UserController {
     private static final String REDIRECT_USERS = "redirect:/users";
     @Autowired
     private UserService service;
+    @Autowired
+    private Validator validator;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView list() {
-        return new ModelAndView("user/list", "userList", service.list());
+    public String list() {
+        return "redirect:/bookmarks";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -59,22 +65,44 @@ public class UserController {
     public String edit(Principal principal, Model model) {
         User user = service.findByUserName(principal.getName());
         model.addAttribute("userInstance", user);
+        model.addAttribute("userChangePassword", new UserChangePasswordForm());
         return "user/edit";
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
-    public String update(User user, BindingResult results, Model model) {
-        if (results.hasErrors()) {
-            return null;
+    public String update(User userForm, BindingResult results, Model model, Principal principal) {
+        //carrega os dados do usuário logado.
+        User user = service.findByUserName(principal.getName());
+        if (ValidationUtils.isValid(results, user, ProfileChecks.class)) {
+            //evitar que altere outro usuário
+            if (user != null) {
+                user.setName(userForm.getName());
+                user.setEmail(userForm.getEmail());
+                user.setLastName(userForm.getLastName());
+
+                service.editProfile(user);
+                model.addAttribute("message", new MessageBean("O seu perfil foi atualizado com sucesso.", MessageBean.TYPE.SUCESS));
+
+            } else {
+                model.addAttribute("message", new MessageBean("Não foi possível alterar os dados.", MessageBean.TYPE.ERROR));
+            }
         }
-        service.save(user);
-        model.addAttribute("message", "O seu perfil foi atualizado com sucesso.");
-        return REDIRECT_USERS;
+        model.addAttribute("userInstance", user);
+        return REDIRECT_USERS + "/account/profile";
+
     }
 
     @RequestMapping(value = "/edit/password", method = RequestMethod.PUT)
-    public String changePassword(User user) {
-        return REDIRECT_USERS;
+    public String changePassword(@Valid UserChangePasswordForm userChangePassword, BindingResult results, Model model, Principal principal) {
+        if (!results.hasErrors()) {
+            if (service.changePassword(principal.getName(), userChangePassword.getOldPassword(), userChangePassword.getNewPassword())) {
+                model.addAttribute("message", new MessageBean("Sua senha foi alterada com sucesso", MessageBean.TYPE.SUCESS));
+
+            } else {
+                model.addAttribute("message", new MessageBean("Não foi possível alterar a senha. Verifique se você digitou a senha atual corretamente.", MessageBean.TYPE.ERROR));
+            }
+        }
+        return REDIRECT_USERS + "/account/profile";
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
