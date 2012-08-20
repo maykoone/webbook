@@ -19,7 +19,9 @@ public class AuthController {
 
     @RequestMapping("/login")
     public String login(Model model, @RequestParam(required = false) String message) {
-        model.addAttribute("message", new MessageBean(message, MessageBean.TYPE.ERROR));
+        if (message != null) {
+            model.addAttribute("message", new MessageBean(message, MessageBean.TYPE.ERROR));
+        }
         return "auth/login";
     }
 
@@ -32,9 +34,9 @@ public class AuthController {
     public String logoutSuccess() {
         return "redirect:/home";
     }
-    
-    @RequestMapping(value="/denied")
-    public String accessDenied(){
+
+    @RequestMapping(value = "/denied")
+    public String accessDenied() {
         return "auth/deniedAccess";
     }
 }
