@@ -127,58 +127,70 @@
         </div>
 
         <div id="add-bookmark-modal" class="modal hide" style="display: none">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <h4>Adicionar Favorito</h4>
-            </div>
-            <div class="modal-body">
-                <form:form action="${currentUrl}" commandName="bookmark" method="post" id="login-form">
-                    <form:hidden path="id" id="id" />
-                    <div class="field-block">
-                        <div class="field-title">
-                            <label>Título</label>
-                        </div>
-                        <div class="field-input">
-                            <input class=""type="text" name="title" id="title">
-                        </div>
-                    </div>
-                    <div class="field-block">
-                        <div class="field-title">
-                            <label>Url</label>
-                        </div>
-                        <div class="field-input">
-                            <form:errors path="url" />
-                            <input class=""type="text" name="url" id="url">
-                        </div>
-                    </div>
-                    <div class="field-block">
-                        <div class="field-title">
-                            <label>Descrição</label>
-                        </div>
-                        <div class="field-input">
-                            <textarea name="description" id="description"></textarea>
-                        </div>
-                    </div>
-                    <div class="field-block">
-                        <div class="field-title">
-                            <label>Tags</label>
-                        </div>
-                        <div class="field-input">
-                            <input class=""type="text" name="tags" id="tags">
-                        </div>
-                    </div>
 
-                    <div class="field-block">							
-                        <form:checkbox path="privateBookmark" id="privateBookmark"/>
-                        <label class="wb-font-small"><strong>Privado</strong></label>
-                    </div>
-                    <div class="controls">
-                        <div class="control">
-                            <input id="button-register" class="wb-border-radius-all" type="submit" value="Adicionar Favorito">
+            <form:form action="${currentUrl}" commandName="bookmark" method="post" id="modal-form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4>Adicionar Favorito</h4>
+                </div>
+                <div class="modal-body">
+                    <fieldset>
+                        <form:hidden path="id" id="id" />
+                        <div class="field-block">
+                            <div class="field-title">
+                                <label>Título</label>
+                            </div>
+                            <div class="field-input">
+                                <input class=""type="text" name="title" id="title">
+                            </div>
                         </div>
-                    </div>
-                </form:form>
-            </div>
+                        <div class="field-block">
+                            <div class="field-title">
+                                <label>Url</label>
+                            </div>
+                            <div class="field-input">
+                                <form:errors path="url" />
+                                <input class=""type="text" name="url" id="url">
+                            </div>
+                        </div>
+                        <div class="field-block">
+                            <div class="field-title">
+                                <label>Descrição</label>
+                            </div>
+                            <div class="field-input">
+                                <textarea name="description" id="description" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="field-block">
+                            <div class="field-title">
+                                <label>Tags</label>
+                            </div>
+                            <div class="field-input">
+                                <input class=""type="text" name="tags" id="tags">
+                            </div>
+                        </div>
+
+                        <div class="field-block">							
+
+                            <label class="wb-font-small checkbox">
+                                <form:checkbox path="privateBookmark" id="privateBookmark"/>
+                                <strong>Privado</strong><i class="icon-lock"></i>
+                            </label>
+                        </div>
+                    </fieldset>
+                </div>
+                <!--                <div class="modal-footer">
+                                    <div class="controls">
+                                        <div class="control">
+                                            <input id="button-register" class="wb-border-radius-all" type="submit" value="Adicionar Favorito">
+                                        </div>
+                                    </div>
+                                </div>-->
+                <div class="modal-footer">
+                    <a href="#" class="btn">Cancelar</a>
+                    <a href="#" class="btn btn-primary">Adicionar favorito</a>
+                </div>
+            </form:form>
         </div>
         <!--        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
                 <script type="text/javascript" src="resources/js/bootstrap.js"></script>-->

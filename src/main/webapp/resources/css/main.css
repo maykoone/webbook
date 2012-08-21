@@ -41,7 +41,7 @@ header{
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1300
+    z-index: 1030
 }
 header nav ul{
     float: right;
@@ -361,6 +361,12 @@ textarea{}
 #login-form .controls{
     margin-top: 20px;
     margin-left: 0
+}
+#modal-form{
+    margin: 0px
+}
+#modal-form fieldset{
+    padding: 0 20px;
 }
 .register-presentation,
 .bookmark-item{

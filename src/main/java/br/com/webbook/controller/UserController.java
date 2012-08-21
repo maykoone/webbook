@@ -13,14 +13,17 @@ import br.com.webbook.web.form.UserChangePasswordForm;
 import java.security.Principal;
 import javax.validation.Valid;
 import javax.validation.Validator;
+import javax.validation.groups.Default;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -47,7 +50,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/create_account", method = RequestMethod.POST)
-    public String save(@Valid User user, BindingResult result) {
+    public String save(@Validated({Default.class}) User user, BindingResult result) {
         if (result.hasErrors()) {
             return "user/create";
         }
@@ -70,10 +73,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
-    public String update(User userForm, BindingResult results, Model model, Principal principal) {
+    public String update(@Validated({ProfileChecks.class}) User userForm, BindingResult results, Model model, Principal principal, RedirectAttributes redirectAttributes) {
         //carrega os dados do usuário logado.
         User user = service.findByUserName(principal.getName());
-        if (ValidationUtils.isValid(results, user, ProfileChecks.class)) {
+//        if (ValidationUtils.isValid(results, user, ProfileChecks.class)) {
+        if (!results.hasErrors()) {
             //evitar que altere outro usuário
             if (user != null) {
                 user.setName(userForm.getName());
@@ -81,13 +85,12 @@ public class UserController {
                 user.setLastName(userForm.getLastName());
 
                 service.editProfile(user);
-                model.addAttribute("message", new MessageBean("O seu perfil foi atualizado com sucesso.", MessageBean.TYPE.SUCESS));
+                redirectAttributes.addFlashAttribute("message", new MessageBean("O seu perfil foi atualizado com sucesso.", MessageBean.TYPE.SUCESS));
 
             } else {
-                model.addAttribute("message", new MessageBean("Não foi possível alterar os dados.", MessageBean.TYPE.ERROR));
+                redirectAttributes.addFlashAttribute("message", new MessageBean("Não foi possível alterar os dados.", MessageBean.TYPE.ERROR));
             }
         }
-        model.addAttribute("userInstance", user);
         return REDIRECT_USERS + "/account/profile";
 
     }
