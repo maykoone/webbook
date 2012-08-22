@@ -115,6 +115,11 @@ public class BookmarkController {
         return "sucess";
     }
 
+    @RequestMapping(value = "/comments", method = RequestMethod.GET)
+    public String getComments() {
+        return "bookmark/comments";
+    }
+
     private User loadCurrentUser() {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUserName(userName);

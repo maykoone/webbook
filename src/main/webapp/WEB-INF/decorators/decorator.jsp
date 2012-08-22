@@ -19,7 +19,7 @@
         <decorator:head />
     </head>
 
-    <body>
+    <body class="webbook">
         <!-- Cabeçalho -->
         <header>
             <nav class="container_16">

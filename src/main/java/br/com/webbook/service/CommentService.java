@@ -4,6 +4,7 @@
  */
 package br.com.webbook.service;
 
+import br.com.webbook.domain.Bookmark;
 import br.com.webbook.domain.Comment;
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface CommentService {
     Comment findById(Long id);
 
     List<Comment> list();
+
+    List<Comment> listByBookmark(Bookmark bookmark);
 }

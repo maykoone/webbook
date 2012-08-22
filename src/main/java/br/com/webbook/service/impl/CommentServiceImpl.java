@@ -4,8 +4,10 @@
  */
 package br.com.webbook.service.impl;
 
+import br.com.webbook.domain.Bookmark;
 import br.com.webbook.domain.Comment;
 import br.com.webbook.repositories.CommentRepository;
+import br.com.webbook.repositories.query.CommentSpecifications;
 import br.com.webbook.service.CommentService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +43,10 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<Comment> list() {
         return commentRepository.findAll();
+    }
+
+    @Override
+    public List<Comment> listByBookmark(Bookmark bookmark) {
+        return commentRepository.findAll(CommentSpecifications.commentsByBookmark(bookmark));
     }
 }

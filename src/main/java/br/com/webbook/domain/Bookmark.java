@@ -41,6 +41,7 @@ public class Bookmark implements Serializable {
     @NotNull(message = "url é um campo obrigatório")
     @NotBlank(message = "url é um campo obrigatório")
     private String url;
+    private String hashUrl;
     @Size(max = 140, message = "A descrição pode ter no máximo 140 caracteres")
     private String description;
     private Boolean privateBookmark;
@@ -125,6 +126,14 @@ public class Bookmark implements Serializable {
 
     public void setPrivateBookmark(Boolean privateBookmark) {
         this.privateBookmark = privateBookmark != null ? privateBookmark : false;
+    }
+
+    public String getHashUrl() {
+        return hashUrl;
+    }
+
+    public void setHashUrl(String hashUrl) {
+        this.hashUrl = hashUrl;
     }
 
     @Override

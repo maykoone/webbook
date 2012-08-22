@@ -34,7 +34,7 @@ public class Comment implements Serializable {
     private Bookmark bookmark;
     @ManyToOne
     @JoinColumn(name = "user_account")
-    @JsonIgnore
+//    @JsonIgnore()
     private User user;
 
     //<editor-fold defaultstate="collapsed" desc="getters, setters and other methods">

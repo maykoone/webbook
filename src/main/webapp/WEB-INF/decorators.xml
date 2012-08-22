@@ -14,6 +14,7 @@
         <pattern>*.json</pattern>
         <pattern>*.xml</pattern>
         <pattern>/rest/*</pattern>
+        <pattern>/ajax/*</pattern>
 
     </excludes>
 

@@ -72,7 +72,11 @@
                             <ul>
                                 <li><a href="${currentUrl}/${bookmark.id}" id="destroy" onclick="return false;"><i class="icon-remove"></i>Excluir</a></li>
                                 <li><a href="${currentUrl}/${bookmark.id}/edit" id="editMe" onclick="return false;"><i class="icon-edit"></i>Editar</a></li>
-                                <li><a href=""><i class="icon-comment"></i>10 Comentários</a></li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/ajax/bookmarks/${bookmark.id}/comments" data-toggle="modal" data-target="#comments-modal">
+                                        <i class="icon-comment"></i>10 Comentários
+                                    </a>
+                                </li>
                                 <li><a href=""><i class="icon-share"></i>Compartilhar</a></li>
                             </ul>
                         </div>
@@ -120,9 +124,9 @@
             </section>
         </div>
         <div class="grid_4">
-            <div class="wb-box-with-shadow popular-content">
+            <div class="wb-box-with-shadow popular-content" id="comments">
                 <h4>Lorem Ipsum</h4>
-                <p class="wb-font-medium">"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
+                <p class="wb-font-medium" >"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
             </div>
         </div>
 
@@ -187,10 +191,17 @@
                                     </div>
                                 </div>-->
                 <div class="modal-footer">
-                    <a href="#" class="btn">Cancelar</a>
-                    <a href="#" class="btn btn-primary">Adicionar favorito</a>
+                    <button class="btn" type="reset">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Adicionar favorito</button>
                 </div>
             </form:form>
+        </div>
+        <div id="comments-modal" class="modal hide">  
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4>Comentários</h4>
+            </div>
+            <div class="modal-body"></div>
         </div>
         <!--        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
                 <script type="text/javascript" src="resources/js/bootstrap.js"></script>-->
