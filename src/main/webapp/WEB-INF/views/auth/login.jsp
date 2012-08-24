@@ -46,8 +46,9 @@
                     </div>
 
                     <div class="field-block">
-                        <input class="" type="checkbox" name="_spring_security_remember_me">
-                        <label class="wb-font-small">Manter conectado</label>
+                        <label class="checkbox">
+                            <input class="" type="checkbox" name="_spring_security_remember_me">Manter conectado
+                        </label>
                     </div>
                     <div class="controls">
                         <div class="control">

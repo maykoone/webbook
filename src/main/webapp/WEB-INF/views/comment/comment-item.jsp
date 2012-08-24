@@ -6,22 +6,15 @@
 <%@taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@taglib uri="/WEB-INF/tags/webbook.tld" prefix="wb" %>
 
-<div id="user-info">
-    <div id="profile-summary">
-        <wb:gravatar email="${userInstance.email}" />
-    </div>
-    <div id="comment-form"></div>
-</div>
-<div id="bookmark-summary">
-    ${bookmark.title}
-</div>    
-<div id="comments-list">
-    <c:forEach var="comment" items="${comments}">
-        <div>
+<li class="comment-item">
+    <div class="comment-content">
+        <a href="" class="avatar">
             <wb:gravatar email="${comment.user.email}" />
-            <div id="comment-text">
-                <p>${comment.text}</p>
-            </div>
-        </div> 
-    </c:forEach>
-</div>
+        </a>   
+        <div class="comment-text">
+            <h6>Comentário por <a href="${pageContext.request.contextPath}/bookmarks/${comment.user.userName}">${comment.user.userName}</a></h6>
+            <p>${comment.text}</p>
+            <div class="arrow"></div>
+        </div>
+    </div>
+</li>

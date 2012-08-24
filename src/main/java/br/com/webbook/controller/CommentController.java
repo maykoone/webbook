@@ -16,7 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -42,8 +45,20 @@ public class CommentController {
         model.addAttribute("bookmark", bookmark);
         model.addAttribute("comments", comments);
         model.addAttribute("userInstance", user);
+//        model.addAttribute("commentInstance", new Comment());
 
-        return "bookmark/comments";
+        return "comment/comments";
 
+    }
+
+    @RequestMapping(value = "/ajax/comments", method = RequestMethod.POST)
+//    @ResponseBody
+    public String addComment(Comment comment, Model model, Principal principal) {
+        User user = userService.findByUserName(principal.getName());
+        comment.setUser(user);
+        commentService.save(comment);
+
+        model.addAttribute("comment", comment);
+        return "comment/comment-item";
     }
 }

@@ -8,6 +8,7 @@ body{
     background-color:#F7F7F7;
     line-height: 1.5;
     font-size: 12px;
+    color: #515151;
 }
 
 a{
@@ -111,7 +112,7 @@ footer li {
 }
 footer li a {
     color:#355664;
-    font-size: 14px;
+    font-size: 12px;
 }
 /**/
 .logo {
@@ -333,7 +334,7 @@ textarea{}
     border-radius: 3px; 
     -moz-border-radius: 5px; 
     padding: 7px; 
-    font-size: 18px; 
+    font-size: 14px; 
     border: 1px solid #cccccc;
     color: #AAA;
     font-weight: bold;
@@ -384,7 +385,7 @@ span.tag{
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
-    font-size: 10.998px;
+    font-size: 12px;
     font-weight: bold;
     line-height: 14px;
     color: white;
@@ -444,6 +445,9 @@ span.tag{
     display: inline-block;
     width: 450px
 }
+.bookmark-info h3{
+    line-height: 17px;
+}
 .bookmark-info h3,
 .bookmark-info p{
     padding: 0px;
@@ -461,6 +465,7 @@ a.bookmark-url{
 a.bookmark-title{
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: #2F96B4;
+    
 }
 .bookmark-tag-list{
     margin: 0px;
@@ -492,6 +497,9 @@ a.bookmark-title{
     color: #FFF;
     text-shadow: 0 1px 0 #000;
     font-weight: bold;
+}
+.user-account .dropdown-menu a{
+    color: #515151;
 }
 .user-account a:hover{
     text-decoration: underline;
@@ -548,4 +556,47 @@ a.bookmark-title{
 .webbook .modal {
     width: 700px;
 }
-
+#comments-modal {
+    min-height: 400px;
+}
+.comment-item {
+    padding: 5px;
+    margin-bottom: 5px;
+}
+.comment-content{
+    position: relative;
+    min-height: 45px;
+}
+.comment-text{
+    margin-right: 60px;
+    padding: 5px;
+    position: relative;
+    border: 1px solid #DFDFDF;
+    background-color: whitesmoke;
+    border-radius: 5px;
+}
+.comment-text p{
+    font-size: 14px;
+}
+.comment-item .avatar{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.comment-item .avatar img{
+    border: 1px solid #DDD;
+    padding: 2px;
+}
+.comment-text .arrow {
+    position: absolute;
+    top: 10px;
+    left: 275px;
+    margin: 0;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent;
+    border-left-color: whitesmoke;
+    padding: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}

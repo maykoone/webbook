@@ -12,10 +12,12 @@
         <link rel="stylesheet" href="<%= request.getContextPath()%>/resources/css/reset.css" />
         <link rel="stylesheet" href="<%= request.getContextPath()%>/resources/css/text.css" />
         <link rel="stylesheet" href="<%= request.getContextPath()%>/resources/css/960.css" />
-        <link rel="stylesheet" href="<%= request.getContextPath()%>/resources/css/main.css" />
         <link rel="stylesheet" href="<%= request.getContextPath()%>/resources/css/bootstrap.css" />
+        <link rel="stylesheet" href="<%= request.getContextPath()%>/resources/css/main.css" />
+        
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.json-2.2.js"></script>
         <decorator:head />
     </head>
 

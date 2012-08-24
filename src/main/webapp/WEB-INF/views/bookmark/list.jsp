@@ -72,11 +72,13 @@
                             <ul>
                                 <li><a href="${currentUrl}/${bookmark.id}" id="destroy" onclick="return false;"><i class="icon-remove"></i>Excluir</a></li>
                                 <li><a href="${currentUrl}/${bookmark.id}/edit" id="editMe" onclick="return false;"><i class="icon-edit"></i>Editar</a></li>
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/ajax/bookmarks/${bookmark.id}/comments" data-toggle="modal" data-target="#comments-modal">
-                                        <i class="icon-comment"></i>10 Comentários
-                                    </a>
-                                </li>
+                                <c:if test="${not bookmark.privateBookmark}">
+                                    <li>
+                                        <a href="${pageContext.request.contextPath}/ajax/bookmarks/${bookmark.id}/comments" data-toggle="modal" data-target="#comments-modal">
+                                            <i class="icon-comment"></i>Comentários
+                                        </a>
+                                    </li>
+                                </c:if>
                                 <li><a href=""><i class="icon-share"></i>Compartilhar</a></li>
                             </ul>
                         </div>
@@ -202,6 +204,9 @@
                 <h4>Comentários</h4>
             </div>
             <div class="modal-body"></div>
+            <div class="modal-footer">
+                <a href="#" class="btn">Fechar</a>
+            </div>
         </div>
         <!--        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
                 <script type="text/javascript" src="resources/js/bootstrap.js"></script>-->
@@ -259,6 +264,8 @@
                 
                 $("#editMe").live('click',loadData);
                 $("#destroy").live('click',destroy);
+                
+                
 
             });
         </script>

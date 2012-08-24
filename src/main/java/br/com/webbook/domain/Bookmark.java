@@ -52,6 +52,7 @@ public class Bookmark implements Serializable {
     @JoinColumn(name = "user_account")
     private User user;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bookmark")
+    @JsonIgnore
     private Set<Comment> comments;
 
     //<editor-fold defaultstate="collapsed" desc="constructors">

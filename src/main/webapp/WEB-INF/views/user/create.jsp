@@ -36,7 +36,7 @@
         </div>
         <div class="grid_8" >
             <div class="wb-box-with-shadow popular-content" id="login-form-container">
-                <h3 class="wb-font-x-big">Descubra, Colecione e Compartilhe novos conteúdos da Web</h3>
+                <h4>Descubra, Colecione e Compartilhe novos conteúdos da Web</h4>
                 <form:form action="${pageContext.request.contextPath}/users/create_account" commandName="user" id="login-form" method="post">
 
                     <div class="field-block">
@@ -78,8 +78,9 @@
                     <span class="wb-font-medium"><a href="">Leia o Termo de Uso antes de se Cadastrar</a></span>
                     <div class="field-block">
 
-                        <input class="" type="checkbox">
-                        <label class="wb-font-medium">Concordo com o Termo de Uso</label>
+                        <label class="wb-font-medium checkbox">
+                        <input class="" type="checkbox">Concordo com o Termo de Uso
+                        </label>
                     </div>
                     <div class="controls">
                         <div class="control">
