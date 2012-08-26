@@ -465,13 +465,14 @@ a.bookmark-url{
 a.bookmark-title{
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: #2F96B4;
-    
+
 }
 .bookmark-tag-list{
     margin: 0px;
     padding: 0px;
 }
-.bookmark-tag-list li{
+.bookmark-tag-list li, 
+.filter-tag-list li{
     display: inline;
     font-size: 12px;
     font-weight: bold;
@@ -519,6 +520,23 @@ a.bookmark-title{
     padding: 10px 20px;
     margin: 10px;
 }
+.filter-tag-list{
+    margin-top: 5px;
+    margin-left: 0;
+}
+.filter-item{
+    width: 203px;
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.filter-item .filter-control ul {
+    margin: 0;
+}
+.filter-item .filter-control li {
+    display: inline;
+    margin-left: 2px;
+}
 /*commons*/
 .wb-border-radius-all{
     border-radius: 3px;
@@ -561,19 +579,29 @@ a.bookmark-title{
 }
 .comment-item {
     padding: 5px;
-    margin-bottom: 5px;
+    /*margin-bottom: 5px;*/
+    border-top: 1px solid #FCFAFA;
+    border-bottom: 1px solid #D9D4D4;
+    background-color: whitesmoke;
+    margin-left: 0;
 }
 .comment-content{
     position: relative;
     min-height: 45px;
 }
+#comments-list{
+    box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+    margin-left: 50px;
+}
 .comment-text{
     margin-right: 60px;
     padding: 5px;
     position: relative;
-    border: 1px solid #DFDFDF;
-    background-color: whitesmoke;
-    border-radius: 5px;
+    /*    border: 1px solid #DFDFDF;
+        
+        border-radius: 5px;*/
+
+
 }
 .comment-text p{
     font-size: 14px;

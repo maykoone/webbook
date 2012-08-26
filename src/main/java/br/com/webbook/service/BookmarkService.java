@@ -7,6 +7,7 @@ package br.com.webbook.service;
 import br.com.webbook.domain.Bookmark;
 import br.com.webbook.domain.User;
 import java.util.List;
+import java.util.Set;
 import org.springframework.data.domain.Page;
 
 /**
@@ -26,8 +27,10 @@ public interface BookmarkService {
     Page<Bookmark> list(Integer pageNumber, Integer pageSize);
 
     Page<Bookmark> listByUser(User user, Integer pageNumber, Integer pageSize);
-    
+
     long countByUser(User user);
-    
+
     Page<Bookmark> listPublicBookmarksByUser(User user, Integer pageNumber, Integer pageSize);
+
+    Page<Bookmark> listPublicBookmarksByTags(Set<String> tags, Integer pageNumber, Integer pageSize);
 }

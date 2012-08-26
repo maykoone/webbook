@@ -5,7 +5,9 @@
 package br.com.webbook.service;
 
 import br.com.webbook.domain.Filter;
+import br.com.webbook.domain.User;
 import java.util.List;
+import org.springframework.data.domain.Page;
 
 /**
  *
@@ -20,4 +22,8 @@ public interface FilterService {
     Filter findById(Long id);
 
     List<Filter> list();
+    
+    Page<Filter> findByUser(User user, Integer pageNumber, Integer pageSize);
+    
+    long countByUser(User user);
 }

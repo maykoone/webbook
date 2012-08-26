@@ -18,6 +18,9 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.json-2.2.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.masonry.min.js"></script>
+
+
         <decorator:head />
     </head>
 
@@ -49,7 +52,7 @@
                                     <span class="caret-inner"></span>
                                 </li>
                                 <li><a href="<%= request.getContextPath()%>/bookmarks"><i class="icon-bookmark"></i>Meus favoritos</a></li>
-                                <li><a href="#">Meus filtros</a></li>
+                                <li><a href="${pageContext.request.contextPath}/filters">Meus filtros</a></li>
                                 <li><a href="#">Meus amigos</a></li>
                                 <li class="dropdown-divider"></li>
                                 <li><a href="${pageContext.request.contextPath}/users/account/profile"><i class="icon-user"></i>Meu Perfil</a></li>
@@ -95,7 +98,7 @@
 
             </ul>
         </footer>
-
+        
     </body>
 
 

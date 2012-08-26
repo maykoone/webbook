@@ -49,4 +49,22 @@ public class BookmarkSpecifications {
             }
         }.setUserSearch(user);
     }
+    
+//    public static Specification<Bookmark> publicBookmarksByTags(Set<String> tags){
+//        return new Specification<Bookmark>() {
+//            
+//            private Set<String> tagsSearch;
+//            
+//            public Specification<Bookmark> setTagsSearch(Set<String> tagsSearch){
+//                this.tagsSearch = tagsSearch;
+//                return this;
+//            }
+//            
+//
+//            @Override
+//            public Predicate toPredicate(Root<Bookmark> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+//                return cb.and(cb.)
+//            }
+//        }
+//    }
 }

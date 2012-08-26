@@ -19,18 +19,20 @@ import org.springframework.transaction.annotation.Transactional;
  * @author maykoone
  */
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private CommentRepository commentRepository;
 
     @Override
+    @Transactional
     public Comment save(Comment comment) {
         return commentRepository.save(comment);
     }
 
     @Override
+    @Transactional
     public void remove(Comment comment) {
         commentRepository.delete(comment);
     }

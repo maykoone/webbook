@@ -11,6 +11,7 @@ import br.com.webbook.repositories.query.BookmarkSpecifications;
 import br.com.webbook.service.BookmarkService;
 import br.com.webbook.utils.MD5Util;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -80,6 +81,14 @@ public class BookmarkServiceImpl implements BookmarkService {
     public Page<Bookmark> listPublicBookmarksByUser(User user, Integer pageNumber, Integer pageSize) {
         PageRequest request = new PageRequest(pageNumber - 1, pageSize);
         Page<Bookmark> pageResult = bookmarkRepository.findAll(BookmarkSpecifications.publicBookmarksByUser(user), request);
+
+        return pageResult;
+    }
+
+    @Override
+    public Page<Bookmark> listPublicBookmarksByTags(Set<String> tags, Integer pageNumber, Integer pageSize) {
+        PageRequest request = new PageRequest(pageNumber - 1, pageSize);
+        Page<Bookmark> pageResult = bookmarkRepository.findByTagsInAndPrivateBookmark(tags, false, request);
 
         return pageResult;
     }

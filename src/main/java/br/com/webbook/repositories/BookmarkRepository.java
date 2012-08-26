@@ -7,6 +7,7 @@ package br.com.webbook.repositories;
 import br.com.webbook.domain.Bookmark;
 import br.com.webbook.domain.User;
 import java.util.List;
+import java.util.Set;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,5 +27,6 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long>, JpaSp
 
     List<Bookmark> findByUser(User user);
 
+    Page<Bookmark> findByTagsInAndPrivateBookmark(Set<String> tags, boolean privateBookmark, Pageable pageable);
 //    Page<Bookmark> findByUser(String userName, Pageable pageable);
 }

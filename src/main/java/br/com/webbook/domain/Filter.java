@@ -6,8 +6,10 @@ package br.com.webbook.domain;
 
 import java.io.Serializable;
 import java.util.Set;
+import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,7 +17,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -30,8 +34,14 @@ public class Filter implements Serializable {
     @GeneratedValue(generator = "wb_filter_seq", strategy = GenerationType.AUTO)
     @SequenceGenerator(name = "wb_filter_seq", sequenceName = "wb_filter_seq", allocationSize = 1)
     private Long id;
+    @NotBlank(message = "O campo título não pode ser vazio")
+    @Size(max = 50, message = "O tamanho máximo do título é de 50 caracteres")
     private String title;
-    @ElementCollection
+    @Size(max = 140, message = "O campo descrição deve ter no máximo 140 caracteres")
+    private String description;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "filter_tags", joinColumns = {
+        @JoinColumn(name = "filter_id")})
     private Set<String> tags;
     @ManyToOne
     @JoinColumn(name = "user_account")
@@ -68,6 +78,14 @@ public class Filter implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

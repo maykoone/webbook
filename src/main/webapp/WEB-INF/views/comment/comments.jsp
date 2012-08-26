@@ -9,13 +9,9 @@
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span4">
-            <div id="user-info">
-                <div id="profile-summary">
-                    <wb:gravatar email="${userInstance.email}" />
-                </div>
-            </div>
+            
             <div id="bookmark-summary">
-                ${bookmark.title}
+                <h4>${bookmark.title}</h4>
             </div> 
             <div>
                 <form action="#" id="comment-form" method="post">
@@ -41,7 +37,6 @@
                             <div class="comment-text">
                                 <h6>Comentário por <a href="${pageContext.request.contextPath}/bookmarks/${comment.user.userName}">${comment.user.userName}</a></h6>
                                 <p>${comment.text}</p>
-                                <div class="arrow"></div>
                             </div>
                         </div>
                     </li> 
@@ -73,7 +68,7 @@
             //            var comment = $(this).serializeObject();
             var comment = $(this).serialize();
             //            var commentJson = $.toJSON(comment);
-            $.post("ajax/comments", comment, function(data){
+            $.post("${pageContext.request.contextPath}/ajax/comments", comment, function(data){
                 $('ul#comments-list').prepend(data).slideDown("slow");
             });
             return false;
