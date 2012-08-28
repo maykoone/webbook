@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="wb" uri="/WEB-INF/tags/webbook.tld" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -19,12 +20,7 @@
             <div class="wb-box-with-shadow popular-content" id="login-form-container">
                 <h3 class="wb-font-x-big">Faça seu Login</h3>
                 <p class="wb-font-small">Ainda não tem uma conta? <a href="users/register">Cadastre-se</a></p>
-                <c:if test="${message != null}">
-                    <div class="alert">
-                        <button class="close" data-dismiss="alert">×</button>
-                        <p>${message.message}</p>
-                    </div>
-                </c:if>
+                <wb:message messageBean="${message}"/>
                 <form action="<c:url value='j_spring_security_check' />" method="post" id="login-form">
                     <div class="field-block">
                         <div class="field-title">

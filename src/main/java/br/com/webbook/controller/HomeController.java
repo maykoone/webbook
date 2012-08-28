@@ -13,11 +13,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author maykoone
  */
 @Controller
-@RequestMapping("/home")
 public class HomeController {
     
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value="/home", method = RequestMethod.GET)
     public String index() {
         return "home/index";
+    }
+    
+    @RequestMapping(value="/error404", method= RequestMethod.GET)
+    public String error404(){
+        return "errors/error404";
     }
 }

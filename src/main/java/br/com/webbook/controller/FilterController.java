@@ -45,7 +45,7 @@ public class FilterController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView findByUser(@RequestParam(required = false) Integer page, Principal principal) {
         User user = userService.findByUserName(principal.getName());
-        Page<Filter> pageResult = filterService.findByUser(user, page == null ? 1 : page, 10);
+        Page<Filter> pageResult = filterService.findByUser(user, page == null ? 1 : page, 12);
 
         ModelAndView model = new ModelAndView("filter/list");
         model.addAllObjects(configurePagination(pageResult));
@@ -76,7 +76,7 @@ public class FilterController {
         filter.setUser(user);
 
         filterService.save(filter);
-        redirectAttributes.addAttribute("message", new MessageBean("O filtro " + filter.getTitle() + " foi criado com sucesso."));
+        redirectAttributes.addFlashAttribute("message", new MessageBean("O filtro " + filter.getTitle() + " foi criado com sucesso."));
         return "redirect:/filters";
     }
 
@@ -111,12 +111,12 @@ public class FilterController {
         filterEdit.setDescription(filter.getDescription());
         filterService.save(filter);
 
-        redirectAttributes.addAttribute("message", new MessageBean("O filtro " + filter.getTitle() + " foi atualizado com sucesso."));
+        redirectAttributes.addFlashAttribute("message", new MessageBean("O filtro " + filter.getTitle() + " foi atualizado com sucesso."));
         return "redirect:/filters";
 
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public String destroy(@PathVariable Long id, Principal principal, Model model) {
         Filter filter = filterService.findById(id);
         if (filter == null) {

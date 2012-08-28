@@ -68,7 +68,7 @@ header nav ul#user-dropdown li.dropdown-divider{
     border-bottom: 1px solid #DDD;
 }
 #content{
-    padding-top: 50px;
+    padding-top: 75px;
 }
 .hero-unit {
     padding: 60px;
@@ -333,11 +333,10 @@ textarea{}
 .field-input textarea { 
     border-radius: 3px; 
     -moz-border-radius: 5px; 
-    padding: 7px; 
-    font-size: 14px; 
-    border: 1px solid #cccccc;
+    padding: 5px; 
+    font-size: 12px; 
+    border: 1px solid #DDD;
     color: #AAA;
-    font-weight: bold;
 }
 
 #login-form-container h3,
@@ -355,8 +354,8 @@ textarea{}
     padding: 0
 }
 #login-form .field-input input{
-    width: 280px;
-    height: 30px;
+    width: 250px;
+    height: 28px;
 }
 
 #login-form .controls{
@@ -627,4 +626,7 @@ a.bookmark-title{
     width: 0;
     height: 0;
     border-style: solid;
+}
+.webbook .pagination a{
+    background-color: white
 }

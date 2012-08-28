@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="<%= request.getContextPath()%>/resources/css/960.css" />
         <link rel="stylesheet" href="<%= request.getContextPath()%>/resources/css/bootstrap.css" />
         <link rel="stylesheet" href="<%= request.getContextPath()%>/resources/css/main.css" />
-        
+
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.json-2.2.js"></script>
@@ -29,9 +29,15 @@
         <header>
             <nav class="container_16">
                 <a class="logo wb-left-float" href="">Webbook</a>
-                <form id="searchbox" class="wb-left-float" action="">
-                    <input id="search" class="wb-left-float" type="text">
-                    <input id="submit" type="submit" class="wb-left-float" value="Pesquisar">
+                <!--                <form id="searchbox" class="wb-left-float" action="">
+                                    <input id="search" class="wb-left-float" type="text">
+                                    <input id="submit" type="submit" class="wb-left-float" value="Pesquisar">
+                                </form>-->
+                <form class="form-search" id="searchbox">
+                    <div class="input-append">
+                        <input type="text" class="span2 search-query">
+                        <button type="submit" class="btn btn-info">Pesquisar</button>
+                    </div>
                 </form>
                 <sec:authorize access="isAuthenticated()">
                     <ul class="user-account wb-right-float">
@@ -98,7 +104,7 @@
 
             </ul>
         </footer>
-        
+
     </body>
 
 

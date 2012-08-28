@@ -88,7 +88,7 @@ public class BookmarkServiceImpl implements BookmarkService {
     @Override
     public Page<Bookmark> listPublicBookmarksByTags(Set<String> tags, Integer pageNumber, Integer pageSize) {
         PageRequest request = new PageRequest(pageNumber - 1, pageSize);
-        Page<Bookmark> pageResult = bookmarkRepository.findByTagsInAndPrivateBookmark(tags, false, request);
+        Page<Bookmark> pageResult = bookmarkRepository.findDistinctByTagsInAndPrivateBookmark(tags, false, request);
 
         return pageResult;
     }

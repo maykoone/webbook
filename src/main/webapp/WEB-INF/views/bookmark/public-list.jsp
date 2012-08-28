@@ -39,7 +39,7 @@
                         <li class="wb-font-small"><a href="${rootUrl}/users/${userSearch.userName}/following"><strong>10</strong> seguindo</a></li>
                         <li class="wb-font-small"><a href="${rootUrl}/users/${userSearch.userName}/followers"><strong>10</strong> seguidores</a></li>
                         <li class="wb-font-small"><a href="${rootUrl}/filters/${userSearch.userName}"><strong>10</strong> Filtros</a></li>
-                        <li class="wb-font-small"><strong><a href="${rootUrl}/users/${userSearch.userName}/follow" class="btn btn-info">Acompanhar</a></strong></li>
+                        <li class="wb-font-small"><strong><a href="${rootUrl}/users/${userSearch.userName}/follow" class="btn btn-info btn-mini">Acompanhar</a></strong></li>
                     </ul>
                 </div>
             </section>

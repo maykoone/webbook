@@ -9,6 +9,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@taglib uri="/WEB-INF/tags/webbook.tld" prefix="wb" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,8 +20,7 @@
         <div class="grid_12">
             <section class="user-details wb-box-with-shadow popular-content">
                 <a href="" class="avatar">
-                    <!-- <img src="http://springpad.com/api/users/maykoone/photo?w=80&h=80" alt="avatar" /> -->
-                    <img src="http://icons.iconarchive.com/icons/pixelmixer/basic/64/user-icon.png" alt="avatar" />
+                   <wb:gravatar email="${userInstance.email}" />
                 </a>
                 <div class="user-info">
                     <a hreaf="" class="wb-font-big"><strong><sec:authentication property="principal.username" /></strong></a>&nbsp;<span class="wb-font-big">${userInstance.name}</span>
@@ -43,13 +43,8 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab1">
-                            <h3>Seu Perfil</h3>
-                            <c:if test="${message != null}">
-                                <div class="alert">
-                                    <button class="close" data-dismiss="alert">×</button>
-                                    <p>${message.message}</p>
-                                </div>
-                            </c:if>
+                            <h4>Seu Perfil</h4>
+                            <wb:message messageBean="${message}" />
                             <form:form action="${pageContext.request.contextPath}/users/edit" method="put" id="login-form" commandName="userInstance">
                                 <form:hidden path="id" />
                                 <div class="field-block">
@@ -101,7 +96,7 @@
                             </form:form>
                         </div>
                         <div class="tab-pane" id="tab2">
-                            <h3>Altere sua Senha</h3>
+                            <h4>Altere sua Senha</h4>
                             <form:form action="${pageContext.request.contextPath}/users/edit/password" id="login-form" commandName="userChangePassword" method="put">
                                 <div class="field-block">
                                     <div class="field-title">

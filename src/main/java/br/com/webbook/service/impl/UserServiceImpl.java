@@ -4,7 +4,9 @@
  */
 package br.com.webbook.service.impl;
 
+import br.com.webbook.domain.Friendship;
 import br.com.webbook.domain.User;
+import br.com.webbook.repositories.FriendshipRepository;
 import br.com.webbook.repositories.UserRepository;
 import br.com.webbook.service.UserService;
 import java.util.List;
@@ -29,6 +31,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private FriendshipRepository friendshipRepository;
 
     @Override
     @Transactional
@@ -88,5 +92,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public boolean follow(User follower, User followed) {
+        //@TODO: verificar em casos de violação da constraint unique.
+        
+        //não pode seguir ele mesmo.
+        if(followed.equals(follower)){
+            return false;
+        }
+        friendshipRepository.save(new Friendship(follower, followed));
+        return true;
     }
 }

@@ -33,7 +33,7 @@
                         <li class="wb-font-small"><a href="users/following">10 Amigos que você acompanha</a></li>
                         <li class="wb-font-small"><a href="users/followers">10 Amigos que te acompanham</a></li>
                         <li class="wb-font-small"><a href="users/filters">${filterList.totalElements} Filtros</a></li>
-                        <li class="wb-font-small"><strong><a href="users/account/profile" class="btn">Edite seu Perfil</a></strong></li>
+                        <li class="wb-font-small"><strong><a href="users/account/profile" class="btn btn-mini">Edite seu Perfil</a></strong></li>
                     </ul>
                 </div>
             </section>
@@ -41,8 +41,11 @@
         <div class="clear"></div>
         <div class="grid_12">
             <div class="wb-box-with-shadow popular-content">
-                <h3>Seus filtros</h3>
-                <a href="filters/create" class="btn btn-primary">Adicionar filtro</a>
+                <div class="list-header">
+                    <h4 class="wb-left-float">Seus filtros</h4>
+                    <a href="filters/create" class="btn btn-primary btn-mini wb-right-float"><i class="icon-plus icon-white"></i>Adicionar filtro</a>
+                </div>
+                <wb:message messageBean="${message}"/>
             </div>
         </div>
         <div class="clear"></div>
@@ -55,7 +58,7 @@
                             <h3>${filter.title}</h3>
                             <p class="wb-font-medium">${filter.description}</p>
                         </div>
-                        
+
                         <ul class="filter-tag-list">
                             <c:forEach items="${filter.tags}" var="tag">
                                 <li><a href="tags/${tag}"><span class="tag">#${tag}</span></a></li>

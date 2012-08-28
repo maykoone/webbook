@@ -4,9 +4,7 @@
  */
 package br.com.webbook.domain;
 
-import br.com.webbook.validation.ChangePasswordChecks;
 import br.com.webbook.validation.ProfileChecks;
-import br.com.webbook.validation.RegisterChecks;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Entity;
@@ -43,9 +41,9 @@ public class User implements Serializable {
     private String name;
     @Size(min = 3, max = 30, message = "O sobrenome deve ter no mínimo 3 e no máximo 30 caracteres.", groups = {ProfileChecks.class})
     private String lastName;
-    @NotNull(message = "A senha é obrigatória", groups = {Default.class, ChangePasswordChecks.class})
-    @NotBlank(message = "A senha é obrigatória", groups = {Default.class, ChangePasswordChecks.class})
-    @Size(min = 3, message = "A senha deve ter no mínimo 3 caracteres.", groups = {Default.class, ChangePasswordChecks.class})
+    @NotNull(message = "A senha é obrigatória", groups = {Default.class})
+    @NotBlank(message = "A senha é obrigatória", groups = {Default.class})
+    @Size(min = 3, message = "A senha deve ter no mínimo 3 caracteres.", groups = {Default.class,})
     @JsonIgnore
     private String password;
     @NotNull(message = "O email é obrigatório", groups = {Default.class, ProfileChecks.class})
@@ -62,6 +60,12 @@ public class User implements Serializable {
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Filter> filters;
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "followed")
+    private Set<Friendship> followers;
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "follower")
+    private Set<Friendship> followings;
 
     //<editor-fold defaultstate="collapsed" desc="constructors">
     public User() {
@@ -137,6 +141,22 @@ public class User implements Serializable {
 
     public void setFilters(Set<Filter> filters) {
         this.filters = filters;
+    }
+
+    public Set<Friendship> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Set<Friendship> followers) {
+        this.followers = followers;
+    }
+
+    public Set<Friendship> getFollowings() {
+        return followings;
+    }
+
+    public void setFollowings(Set<Friendship> followings) {
+        this.followings = followings;
     }
 
     @Override

@@ -8,7 +8,6 @@ import br.com.webbook.domain.User;
 import br.com.webbook.service.UserService;
 import br.com.webbook.tags.MessageBean;
 import br.com.webbook.validation.ProfileChecks;
-import br.com.webbook.validation.ValidationUtils;
 import br.com.webbook.web.form.UserChangePasswordForm;
 import java.security.Principal;
 import javax.validation.Valid;
@@ -50,12 +49,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "/create_account", method = RequestMethod.POST)
-    public String save(@Validated({Default.class}) User user, BindingResult result) {
+    public String save(@Validated({Default.class}) User user, BindingResult result, RedirectAttributes attributes) {
         if (result.hasErrors()) {
             return "user/create";
         }
         service.save(user);
-        return REDIRECT_USERS;
+        attributes.addFlashAttribute("message", new MessageBean("Seu cadastro foi realizado com sucesso. Efetue o login para acesso."));
+        return "redirect:/login";
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -73,7 +73,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
-    public String update(@Validated({ProfileChecks.class}) User userForm, BindingResult results, Model model, Principal principal, RedirectAttributes redirectAttributes) {
+    public String update(@Validated({ProfileChecks.class}) User userForm, BindingResult results, Principal principal, RedirectAttributes redirectAttributes) {
         //carrega os dados do usuário logado.
         User user = service.findByUserName(principal.getName());
 //        if (ValidationUtils.isValid(results, user, ProfileChecks.class)) {
@@ -96,21 +96,40 @@ public class UserController {
     }
 
     @RequestMapping(value = "/edit/password", method = RequestMethod.PUT)
-    public String changePassword(@Valid UserChangePasswordForm userChangePassword, BindingResult results, Model model, Principal principal) {
+    public String changePassword(@Valid UserChangePasswordForm userChangePassword, BindingResult results, RedirectAttributes redirectAttributes, Principal principal) {
         if (!results.hasErrors()) {
             if (service.changePassword(principal.getName(), userChangePassword.getOldPassword(), userChangePassword.getNewPassword())) {
-                model.addAttribute("message", new MessageBean("Sua senha foi alterada com sucesso", MessageBean.TYPE.SUCESS));
+                redirectAttributes.addFlashAttribute("message", new MessageBean("Sua senha foi alterada com sucesso", MessageBean.TYPE.SUCESS));
 
             } else {
-                model.addAttribute("message", new MessageBean("Não foi possível alterar a senha. Verifique se você digitou a senha atual corretamente.", MessageBean.TYPE.ERROR));
+                redirectAttributes.addFlashAttribute("message", new MessageBean("Não foi possível alterar a senha. Verifique se você digitou a senha atual corretamente.", MessageBean.TYPE.ERROR));
             }
+        } else {
+            return "user/edit";
         }
         return REDIRECT_USERS + "/account/profile";
     }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public String delete(@PathVariable Long id) {
-        service.remove(service.findById(id));
+    
+    @RequestMapping(value="/{userName}/follow", method= RequestMethod.GET)
+    public String createFriendship(@PathVariable String userName, Principal principal, RedirectAttributes attributes){
+        User user = service.findByUserName(principal.getName());
+        User followed = service.findByUserName(userName);
+        
+        if(followed == null){
+            return "redirect:/error404";
+        }
+        
+        if(!service.follow(user, followed)){
+            return "redirect:/denied";
+        }
+        
+        attributes.addFlashAttribute("message", new MessageBean("você está seguindo " + followed.getUserName() + " agora", MessageBean.TYPE.SUCESS));
         return REDIRECT_USERS;
     }
+        
+//    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+//    public String delete(@PathVariable Long id) {
+//        service.remove(service.findById(id));
+//        return REDIRECT_USERS;
+//    }
 }

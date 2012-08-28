@@ -36,12 +36,13 @@
                     </a>&nbsp;<span class="wb-font-big">[${userInstance.name}]</span>
                     <ul class="user-stats">
                         <li class="wb-font-small"><a href="${pageContext.request.contextPath}/bookmarks" rel="tooltip" title="first tooltip">${bookmarkList.totalElements} Bookmarks</a></li>
-                        <li class="wb-font-small"><a href="users/following">10 Amigos que você acompanha</a></li>
-                        <li class="wb-font-small"><a href="users/followers">10 Amigos que te acompanham</a></li>
+                        <li class="wb-font-small"><a href="users/following">${fn:length(userInstance.followings)} Amigos que você acompanha</a></li>
+                        <li class="wb-font-small"><a href="users/followers">${fn:length(userInstance.followers)} Amigos que te acompanham</a></li>
                         <li class="wb-font-small"><a href="${pageContext.request.contextPath}/filters">10 Filtros</a></li>
-                        <li class="wb-font-small"><strong><a href="users/account/profile" class="btn">Edite seu Perfil</a></strong></li>
+                        <li class="wb-font-small"><strong><a href="users/account/profile" class="btn btn-mini">Edite seu Perfil</a></strong></li>
                     </ul>
                 </div>
+                <wb:message messageBean="${message}" />
             </section>
         </div>
         <div class="clear"></div>
@@ -49,7 +50,7 @@
             <section id="user-list-bookmark" class="wb-box-with-shadow popular-content">
                 <div class="list-header">
                     <h4 class="wb-left-float">Seus favoritos</h4>
-                    <a href="#add-bookmark-modal" class="btn btn-primary wb-right-float" id="add-bookmark" data-toggle="modal">
+                    <a href="#add-bookmark-modal" class="btn btn-primary btn-mini wb-right-float" id="add-bookmark" data-toggle="modal">
                         <i class="icon-plus icon-white"></i>Adicionar Favorito
                     </a>
                 </div>

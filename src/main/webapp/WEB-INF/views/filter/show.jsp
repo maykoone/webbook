@@ -39,7 +39,7 @@
                         <li class="wb-font-small"><a href="users/following">10 Amigos que você acompanha</a></li>
                         <li class="wb-font-small"><a href="users/followers">10 Amigos que te acompanham</a></li>
                         <li class="wb-font-small"><a href="users/filters">${filterCount} Filtros</a></li>
-                        <li class="wb-font-small"><strong><a href="${pageContext.request.contextPath}/users/account/profile" class="btn">Edite seu Perfil</a></strong></li>
+                        <li class="wb-font-small"><strong><a href="${pageContext.request.contextPath}/users/account/profile" class="btn btn-mini">Edite seu Perfil</a></strong></li>
                     </ul>
                 </div>
             </section>
@@ -49,7 +49,7 @@
             <section id="user-list-bookmark" class="wb-box-with-shadow popular-content">
                 <div class="list-header">
                     <h4 class="wb-left-float">Favoritos do filtro ${filterInstance.title}</h4>
-                    <a href="${pageContext.request.contextPath}/filters/${filterInstance.id}/edit" class="btn btn-primary wb-right-float">
+                    <a href="${pageContext.request.contextPath}/filters/${filterInstance.id}/edit" class="btn btn-primary btn-mini wb-right-float">
                         <i class="icon-plus icon-white"></i>Editar filtro
                     </a>
                 </div>

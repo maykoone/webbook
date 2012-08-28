@@ -56,4 +56,15 @@
       <type>java.lang.String</type>
     </attribute>
   </tag>
+  <tag>
+    <name>message</name>
+    <tag-class>br.com.webbook.tags.MessageTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+      <name>messageBean</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.Object</type>
+    </attribute>
+  </tag>
 </taglib>

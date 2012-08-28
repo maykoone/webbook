@@ -35,4 +35,9 @@ public class MessageBean {
     public TYPE getType() {
         return type;
     }
+
+    @Override
+    public String toString() {
+        return message;
+    }
 }

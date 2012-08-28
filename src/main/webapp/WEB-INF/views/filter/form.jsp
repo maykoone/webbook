@@ -31,8 +31,8 @@
                         <li class="wb-font-small"><a href="" rel="tooltip" title="first tooltip">${bookmarkCount} Bookmarks</a></li>
                         <li class="wb-font-small"><a href="users/following">10 Amigos que você acompanha</a></li>
                         <li class="wb-font-small"><a href="users/followers">10 Amigos que te acompanham</a></li>
-                        <li class="wb-font-small"><a href="users/filters">${filterCount} Filtros</a></li>
-                        <li class="wb-font-small"><strong><a href="users/account/profile" class="btn">Edite seu Perfil</a></strong></li>
+                        <li class="wb-font-small"><a href="${pageContext.request.contextPath}/filters">${filterCount} Filtros</a></li>
+                        <li class="wb-font-small"><strong><a href="users/account/profile" class="btn btn-mini">Edite seu Perfil</a></strong></li>
                     </ul>
                 </div>
             </section>
@@ -40,12 +40,12 @@
         <div class="clear"></div>
         <div class="grid_8" >
             <div class="wb-box-with-shadow">
-                <h4>Filtros</h4>
                 <c:set var="formMethod" value="post" />
                 <c:if test="${filterInstance.id ne null}">
                     <c:set var="formMethod" value="put"/>
                 </c:if>
-                <form:form action="${pageContext.request.contextPath}/filters" commandName="filterInstance" method="${formMethod}">
+                <form:form action="${pageContext.request.contextPath}/filters" commandName="filterInstance" method="${formMethod}" id="login-form">
+                    <legend>Cadastro de filtro</legend>
                     <form:hidden path="id" />
                     <div class="field-block">
                         <div class="field-title">

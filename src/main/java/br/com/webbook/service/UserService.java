@@ -26,4 +26,6 @@ public interface UserService {
     User editProfile(User user);
 
     boolean changePassword(String userName, String oldPassword, String newPassord);
+    
+    boolean follow(User follower, User followed);
 }
