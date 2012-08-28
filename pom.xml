@@ -164,6 +164,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--Hibernate search-->
         <!--JUnit-->
         <dependency>
             <groupId>junit</groupId>

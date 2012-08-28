@@ -44,16 +44,16 @@
                             <label>Nome de Usuário</label>
                         </div>
                         <div class="field-input">
-                            <form:errors path="userName" />
+                            <form:errors path="userName" cssClass="error" />
                             <input class="" type="text" name="userName" />
                         </div>
                     </div>
                     <div class="field-block">
                         <div class="field-title">
-                            <form:errors path="email" />
                             <label>E-mail</label>
                         </div>
                         <div class="field-input">
+                            <form:errors path="email" cssClass="error" />
                             <input class=""type="text" name="email" />
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                             <label>Senha</label>
                         </div>
                         <div class="field-input">
-                            <form:errors path="password" />
+                            <form:errors path="password" cssClass="error"/>
                             <input class=""type="password" name="password" />
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                     <div class="field-block">
 
                         <label class="wb-font-medium checkbox">
-                        <input class="" type="checkbox">Concordo com o Termo de Uso
+                            <input class="" type="checkbox">Concordo com o Termo de Uso
                         </label>
                     </div>
                     <div class="controls">

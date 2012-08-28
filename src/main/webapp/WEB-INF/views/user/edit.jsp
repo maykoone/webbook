@@ -52,7 +52,7 @@
                                         <label>Nome de Usuário</label>
                                     </div>
                                     <div class="field-input">
-                                        <form:errors path="userName" />
+                                        <form:errors path="userName" cssClass="error" />
                                         <input class="disabled" type="text" name="userName" value="${userInstance.userName}">
                                     </div>
                                 </div>
@@ -61,7 +61,7 @@
                                         <label>Nome</label>
                                     </div>
                                     <div class="field-input">
-                                        <form:errors path="name" />
+                                        <form:errors path="name" cssClass="error"/>
                                         <input class=""type="text" name="name" value="${userInstance.name}">
                                     </div>
                                 </div>
@@ -70,7 +70,7 @@
                                         <label>Sobrenome</label>
                                     </div>
                                     <div class="field-input">
-                                        <form:errors path="lastName" />
+                                        <form:errors path="lastName" cssClass="error" />
                                         <input class=""type="text" name="lastName" value="${userInstance.lastName}">
                                     </div>
                                 </div>
@@ -80,7 +80,7 @@
                                         <label>E-mail</label>
                                     </div>
                                     <div class="field-input">
-                                        <form:errors path="email" />
+                                        <form:errors path="email" cssClass="error"/>
                                         <input class=""type="text" name="email" value="${userInstance.email}">
                                     </div>
                                 </div>

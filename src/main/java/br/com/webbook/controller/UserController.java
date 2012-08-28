@@ -11,7 +11,6 @@ import br.com.webbook.validation.ProfileChecks;
 import br.com.webbook.web.form.UserChangePasswordForm;
 import java.security.Principal;
 import javax.validation.Valid;
-import javax.validation.Validator;
 import javax.validation.groups.Default;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,8 +34,6 @@ public class UserController {
     private static final String REDIRECT_USERS = "redirect:/users";
     @Autowired
     private UserService service;
-    @Autowired
-    private Validator validator;
 
     @RequestMapping(method = RequestMethod.GET)
     public String list() {
@@ -109,24 +106,23 @@ public class UserController {
         }
         return REDIRECT_USERS + "/account/profile";
     }
-    
-    @RequestMapping(value="/{userName}/follow", method= RequestMethod.GET)
-    public String createFriendship(@PathVariable String userName, Principal principal, RedirectAttributes attributes){
+
+    @RequestMapping(value = "/{userName}/follow", method = RequestMethod.GET)
+    public String createFriendship(@PathVariable String userName, Principal principal, RedirectAttributes attributes) {
         User user = service.findByUserName(principal.getName());
         User followed = service.findByUserName(userName);
-        
-        if(followed == null){
+
+        if (followed == null) {
             return "redirect:/error404";
         }
-        
-        if(!service.follow(user, followed)){
+
+        if (!service.follow(user, followed)) {
             return "redirect:/denied";
         }
-        
+
         attributes.addFlashAttribute("message", new MessageBean("você está seguindo " + followed.getUserName() + " agora", MessageBean.TYPE.SUCESS));
         return REDIRECT_USERS;
     }
-        
 //    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 //    public String delete(@PathVariable Long id) {
 //        service.remove(service.findById(id));

@@ -126,11 +126,12 @@
                         type: "DELETE"
                     }).done(function(data){
                         if(console && console.log){
-                            console.log($(caller).parents("div.filter-item"))
+                            console.log($(caller).parents("section.filter-item"))
                             console.log(caller)
                         }
-                        $(caller).parents("div.grid_4").fadeOut("slow", function(){
+                        $(caller).parents("section.filter-item").fadeOut("slow", function(){
                             $(this).remove();
+                            $("#filter-list-container").masonry( 'reload' );
                         });
                     });
                 }
@@ -139,7 +140,8 @@
                 
                 $("#filter-list-container").masonry({
                     // options
-                    itemSelector : '.filter-item'
+                    itemSelector : '.filter-item',
+                    animated: true
                     //                    columnWidth : 200
                 });
                 

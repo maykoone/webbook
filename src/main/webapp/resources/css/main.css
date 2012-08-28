@@ -325,6 +325,9 @@ textarea{}
 .field-input { 
     padding-bottom: 10px;
 }
+.error{
+    color: #B94A48;
+}
 .field-input input.error { 
     border: 3px solid #d1c030 !important; 
     background: #fffdef; 

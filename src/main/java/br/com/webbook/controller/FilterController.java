@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -117,16 +118,17 @@ public class FilterController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
     public String destroy(@PathVariable Long id, Principal principal, Model model) {
         Filter filter = filterService.findById(id);
         if (filter == null) {
-            return "errors/error404";
+            return "error";
         } else if (!filter.getUser().getUserName().equals(principal.getName())) {
-            return "foward:../denied";
+            return "denied";
         }
 
         filterService.remove(filter);
-        return "redirect:/filters";
+        return "success";
 
     }
 
