@@ -123,6 +123,20 @@ public class UserController {
         attributes.addFlashAttribute("message", new MessageBean("você está seguindo " + followed.getUserName() + " agora", MessageBean.TYPE.SUCESS));
         return REDIRECT_USERS;
     }
+
+    @RequestMapping(value = "/followers", method = RequestMethod.GET)
+    public String getFollowers(Principal principal, Model model) {
+        User user = service.findByUserName(principal.getName());
+        model.addAttribute("followers", user.getFollowers());
+        return "user/followers";
+    }
+
+    @RequestMapping(value = "/followings", method = RequestMethod.GET)
+    public String getFollowings(Principal principal, Model model) {
+        User user = service.findByUserName(principal.getName());
+        model.addAttribute("followings", user.getFollowings());
+        return "user/followings";
+    }
 //    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 //    public String delete(@PathVariable Long id) {
 //        service.remove(service.findById(id));

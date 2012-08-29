@@ -27,7 +27,6 @@
         <div class="grid_12">
             <section class="user-details wb-box-with-shadow popular-content">
                 <a href="" class="avatar">
-                    <!-- <img src="http://springpad.com/api/users/maykoone/photo?w=80&h=80" alt="avatar" /> -->
                     <wb:gravatar email="${userInstance.email}" />
                 </a>
                 <div class="user-info">
@@ -36,7 +35,7 @@
                     </a>&nbsp;<span class="wb-font-big">[${userInstance.name}]</span>
                     <ul class="user-stats">
                         <li class="wb-font-small"><a href="${pageContext.request.contextPath}/bookmarks" rel="tooltip" title="first tooltip">${bookmarkList.totalElements} Bookmarks</a></li>
-                        <li class="wb-font-small"><a href="users/following">${fn:length(userInstance.followings)} Amigos que você acompanha</a></li>
+                        <li class="wb-font-small"><a href="users/followings">${fn:length(userInstance.followings)} Amigos que você acompanha</a></li>
                         <li class="wb-font-small"><a href="users/followers">${fn:length(userInstance.followers)} Amigos que te acompanham</a></li>
                         <li class="wb-font-small"><a href="${pageContext.request.contextPath}/filters">10 Filtros</a></li>
                         <li class="wb-font-small"><strong><a href="users/account/profile" class="btn btn-mini">Edite seu Perfil</a></strong></li>
@@ -127,9 +126,37 @@
             </section>
         </div>
         <div class="grid_4">
-            <div class="wb-box-with-shadow popular-content" id="comments">
-                <h4>Lorem Ipsum</h4>
-                <p class="wb-font-medium" >"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
+            <div class="wb-box-with-shadow popular-content">
+                <div class="top-tags">
+                    <h4>Tags mais usadas</h4>
+                    <p class="wb-font-medium" >"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
+                </div>
+                <div class="followers-list">
+                    <h4>Acompanham você (${fn:length(userInstance.followers)})</h4>
+                    <ul>
+                        <c:forEach items="${userInstance.followers}" var="follower">
+                            <li>
+                                <a href="">
+                                    <wb:gravatar email="${follower.follower.email}"/>
+                                    <span class="wb-font-small">${follower.follower.userName}</span>
+                                </a>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>
+                <div class="followings-list">
+                    <h4>Você acompanha (${fn:length(userInstance.followings)})</h4>
+                    <ul>
+                        <c:forEach items="${userInstance.followings}" var="following">
+                            <li>
+                                <a href="">
+                                    <wb:gravatar email="${following.followed.email}"/>
+                                    <span class="wb-font-small">${following.followed.userName}</span>
+                                </a>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -186,16 +213,13 @@
                         </div>
                     </fieldset>
                 </div>
-                <!--                <div class="modal-footer">
-                                    <div class="controls">
-                                        <div class="control">
-                                            <input id="button-register" class="wb-border-radius-all" type="submit" value="Adicionar Favorito">
-                                        </div>
-                                    </div>
-                                </div>-->
                 <div class="modal-footer">
-                    <button class="btn" type="reset">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Adicionar favorito</button>
+                    <div class="controls">
+                        <div class="control">
+                            <button class="btn" type="reset">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Adicionar favorito</button>
+                        </div>
+                    </div>
                 </div>
             </form:form>
         </div>
