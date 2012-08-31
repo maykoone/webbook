@@ -30,19 +30,32 @@
                 </div>
                 <c:forEach items="${followers}" var="follower">
                     <div class="friendship">
-                        <a href="" class="avatar img-polaroid">
+                        <a href="${rootUrl}/users/${follower.follower.userName}" class="avatar img-polaroid">
                             <wb:gravatar email="${follower.follower.email}" />
                         </a>
                         <div class="friendship-info">
-                            <h4><a href="" class="">@${follower.follower.userName}</a></h4>
-                            <a href="" >${follower.follower.name}</a>
+                            <h4><a href="${rootUrl}/users/${follower.follower.userName}" class="">@${follower.follower.userName}</a></h4>
+                            <p></p>
                         </div>
                         <div class="friendship-control">
                             <ul>
                                 <li>
-                                    <a href="${rootUrl}/bookmarks/${follower.follower.userName}" ><i class="icon-bookmark"></i>Favoritos</a>
+                                    <a href="${rootUrl}/bookmarks/${follower.follower.userName}" >${fn:length(follower.follower.bookmarks)} Favoritos<i class="icon-bookmark"></i></a>
                                 </li>
-                                <li><a href="" class="btn btn-warning btn-mini">Bloquear</a></li>
+                                <li>
+                                    <c:choose>
+                                        <c:when test="${userInstance.isFollowing(follower.follower)}">
+                                            <span class="label label-info">Acompanhando</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="${rootUrl}/users/${follower.follower.userName}/follow" class="btn btn-mini btn-primary">Acompanhar</a>
+                                        </c:otherwise>
+                                    </c:choose>
+
+                                </li>
+                                <li>
+                                    <a href="${rootUrl}/users/${follower.follower.userName}/block" class="btn btn-warning btn-mini">Bloquear</a>
+                                </li>
                             </ul>
                         </div>
                     </div>

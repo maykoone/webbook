@@ -74,7 +74,7 @@
                                 <li><a href="${currentUrl}/${bookmark.id}/edit" id="editMe" onclick="return false;"><i class="icon-edit"></i>Editar</a></li>
                                 <c:if test="${not bookmark.privateBookmark}">
                                     <li>
-                                        <a href="${pageContext.request.contextPath}/ajax/bookmarks/${bookmark.id}/comments" data-toggle="modal" data-target="#comments-modal">
+                                        <a href="${pageContext.request.contextPath}/ajax/bookmarks/${bookmark.id}/comments" data-toggle="modal" onclick="return false;" id="get-comments">
                                             <i class="icon-comment"></i>Comentários
                                         </a>
                                     </li>
@@ -131,32 +131,7 @@
                     <h4>Tags mais usadas</h4>
                     <p class="wb-font-medium" >"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
                 </div>
-                <div class="followers-list">
-                    <h4>Acompanham você (${fn:length(userInstance.followers)})</h4>
-                    <ul>
-                        <c:forEach items="${userInstance.followers}" var="follower">
-                            <li>
-                                <a href="">
-                                    <wb:gravatar email="${follower.follower.email}"/>
-                                    <span class="wb-font-small">${follower.follower.userName}</span>
-                                </a>
-                            </li>
-                        </c:forEach>
-                    </ul>
-                </div>
-                <div class="followings-list">
-                    <h4>Você acompanha (${fn:length(userInstance.followings)})</h4>
-                    <ul>
-                        <c:forEach items="${userInstance.followings}" var="following">
-                            <li>
-                                <a href="">
-                                    <wb:gravatar email="${following.followed.email}"/>
-                                    <span class="wb-font-small">${following.followed.userName}</span>
-                                </a>
-                            </li>
-                        </c:forEach>
-                    </ul>
-                </div>
+
             </div>
         </div>
 
@@ -254,6 +229,11 @@
                     $('#add-bookmark-modal').modal();
                 }
                 
+                function openCommentsModal(){
+                    $("#comments-modal").modal()
+                }
+                
+                
                 //                $('#add-bookmark').click( function(){ 
                 //                    openModal();
                 //                });
@@ -287,7 +267,15 @@
                     });
                 }
                 
+                function loadComments(){
+                    var url = $(this).attr("href");
+                    $("#comments-modal .modal-body").load(url);
+                    openCommentsModal();
+                }
+                
+                
                 $("#editMe").live('click',loadData);
+                $("#get-comments").live('click',loadComments);
                 $("#destroy").live('click',destroy);
                 
                 

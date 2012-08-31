@@ -55,10 +55,9 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ModelAndView show(@PathVariable Long id) {
-        User user = service.findById(id);
-        return new ModelAndView("user/show", "user", user);
+    @RequestMapping(value = "/{userName}", method = RequestMethod.GET)
+    public String show(@PathVariable String userName) {
+        return "forward:/bookmarks/{userName}";
     }
 
     @RequestMapping(value = "/account/profile", method = RequestMethod.GET)
@@ -127,6 +126,7 @@ public class UserController {
     @RequestMapping(value = "/followers", method = RequestMethod.GET)
     public String getFollowers(Principal principal, Model model) {
         User user = service.findByUserName(principal.getName());
+        model.addAttribute("userInstance", user);
         model.addAttribute("followers", user.getFollowers());
         return "user/followers";
     }
@@ -134,6 +134,7 @@ public class UserController {
     @RequestMapping(value = "/followings", method = RequestMethod.GET)
     public String getFollowings(Principal principal, Model model) {
         User user = service.findByUserName(principal.getName());
+        model.addAttribute("userInstance", user);
         model.addAttribute("followings", user.getFollowings());
         return "user/followings";
     }

@@ -30,19 +30,21 @@
                 </div>
                 <c:forEach items="${followings}" var="following">
                     <div class="friendship">
-                        <a href="" class="avatar img-polaroid">
+                        <a href="${rootUrl}/users/${following.followed.userName}" class="avatar img-polaroid">
                             <wb:gravatar email="${following.followed.email}" />
                         </a>
                         <div class="friendship-info">
-                            <h4><a href="" class="">@${following.followed.userName}</a></h4>
+                            <h4><a href="${rootUrl}/users/${following.followed.userName}" class="">@${following.followed.userName}</a></h4>
                             <a href="" >${following.followed.name}</a>
                         </div>
                         <div class="friendship-control">
                             <ul>
                                 <li>
-                                    <a href="${rootUrl}/bookmarks/${following.followed.userName}" ><i class="icon-bookmark"></i>Favoritos</a>
+                                    <a href="${rootUrl}/bookmarks/${following.followed.userName}" ><i class="icon-bookmark"></i> Favoritos (${fn:length(following.followed.bookmarks)})</a>
                                 </li>
-                                <li><a href="" class="btn btn-warning btn-mini">Bloquear</a></li>
+                                <li>
+                                    <a href="${rootUrl}/users/${following.followed.userName}/unfollow" class="btn btn-mini btn-danger">Parar de acompanhar</a>
+                                </li>
                             </ul>
                         </div>
                     </div>

@@ -190,4 +190,25 @@ public class User implements Serializable {
         return userName;
     }
     //</editor-fold>
+    
+    /**
+     * método para verificar se um dado usuário está sendo seguido pelo
+     * usuário atual. (this)
+     * @param user
+     * @return 
+     */
+    public boolean isFollowing(User user) {
+        if (this.getFollowings() == null) {
+            return false;
+        }
+
+        for (Friendship f : getFollowings()) {
+            if (f.getFollowed().equals(user)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    
 }
