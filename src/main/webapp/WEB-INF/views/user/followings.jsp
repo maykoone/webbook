@@ -26,7 +26,8 @@
         <div class="grid_12">
             <section id="" class="wb-box-with-shadow popular-content">
                 <div class="list-header">
-                    <h4 class="wb-left-float">Amigos que você acompanha</h4>
+                    <h4>Amigos que você acompanha</h4>
+                    <wb:message messageBean="${message}" />
                 </div>
                 <c:forEach items="${followings}" var="following">
                     <div class="friendship">
@@ -43,7 +44,10 @@
                                     <a href="${rootUrl}/bookmarks/${following.followed.userName}" ><i class="icon-bookmark"></i> Favoritos (${fn:length(following.followed.bookmarks)})</a>
                                 </li>
                                 <li>
-                                    <a href="${rootUrl}/users/${following.followed.userName}/unfollow" class="btn btn-mini btn-danger">Parar de acompanhar</a>
+                                    <form:form action="${rootUrl}/users/${following.followed.userName}/unfollow" method="delete">
+                                        <input type="hidden" name="friendship" value="${following.id}">
+                                        <button class="btn btn-mini btn-danger">Para de acompanhar</button>
+                                    </form:form>
                                 </li>
                             </ul>
                         </div>

@@ -73,20 +73,23 @@ public class UserController {
         //carrega os dados do usuário logado.
         User user = service.findByUserName(principal.getName());
 //        if (ValidationUtils.isValid(results, user, ProfileChecks.class)) {
-        if (!results.hasErrors()) {
-            //evitar que altere outro usuário
-            if (user != null) {
-                user.setName(userForm.getName());
-                user.setEmail(userForm.getEmail());
-                user.setLastName(userForm.getLastName());
-
-                service.editProfile(user);
-                redirectAttributes.addFlashAttribute("message", new MessageBean("O seu perfil foi atualizado com sucesso.", MessageBean.TYPE.SUCESS));
-
-            } else {
-                redirectAttributes.addFlashAttribute("message", new MessageBean("Não foi possível alterar os dados.", MessageBean.TYPE.ERROR));
-            }
+        if (results.hasErrors()) {
+            return "user/edit";
         }
+
+        //evitar que altere outro usuário
+        if (user != null) {
+            user.setName(userForm.getName());
+            user.setEmail(userForm.getEmail());
+            user.setLastName(userForm.getLastName());
+
+            service.editProfile(user);
+            redirectAttributes.addFlashAttribute("message", new MessageBean("O seu perfil foi atualizado com sucesso.", MessageBean.TYPE.SUCESS));
+
+        } else {
+            redirectAttributes.addFlashAttribute("message", new MessageBean("Não foi possível alterar os dados.", MessageBean.TYPE.ERROR));
+        }
+
         return REDIRECT_USERS + "/account/profile";
 
     }
@@ -119,8 +122,28 @@ public class UserController {
             return "redirect:/denied";
         }
 
-        attributes.addFlashAttribute("message", new MessageBean("você está seguindo " + followed.getUserName() + " agora", MessageBean.TYPE.SUCESS));
-        return REDIRECT_USERS;
+        attributes.addFlashAttribute("message", new MessageBean("você está acompanhando " + followed.getUserName() + " agora", MessageBean.TYPE.SUCESS));
+        return REDIRECT_USERS + "/followings";
+    }
+
+    @RequestMapping(value = "/{userName}/unfollow", method = RequestMethod.DELETE)
+    public String unfollow(@PathVariable String userName, Principal principal, RedirectAttributes attributes) {
+
+        if (principal.getName().equals(userName)) {
+            return "redirect:/denied";
+        }
+
+        User user = service.findByUserName(userName);
+        User loggedUser = service.findByUserName(principal.getName());
+
+        if (!service.unfollow(loggedUser, user)) {
+            return "redirect:/denied";
+        }
+
+        attributes.addFlashAttribute("message", new MessageBean("Você deixou de acompanhar o " + user.getUserName(), MessageBean.TYPE.SUCESS));
+        return REDIRECT_USERS + "/followings";
+
+
     }
 
     @RequestMapping(value = "/followers", method = RequestMethod.GET)

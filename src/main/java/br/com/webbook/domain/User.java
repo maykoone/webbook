@@ -43,7 +43,7 @@ public class User implements Serializable {
     private String lastName;
     @NotNull(message = "A senha é obrigatória", groups = {Default.class})
     @NotBlank(message = "A senha é obrigatória", groups = {Default.class})
-    @Size(min = 3, message = "A senha deve ter no mínimo 3 caracteres.", groups = {Default.class,})
+    @Size(min = 3, message = "A senha deve ter no mínimo 3 caracteres.", groups = {Default.class})
     @JsonIgnore
     private String password;
     @NotNull(message = "O email é obrigatório", groups = {Default.class, ProfileChecks.class})

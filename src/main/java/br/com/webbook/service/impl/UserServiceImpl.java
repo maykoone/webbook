@@ -95,14 +95,27 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public boolean follow(User follower, User followed) {
         //@TODO: verificar em casos de violação da constraint unique.
-        
+
         //não pode seguir ele mesmo.
-        if(followed.equals(follower)){
+        if (followed.equals(follower)) {
             return false;
         }
         friendshipRepository.save(new Friendship(follower, followed));
         return true;
+    }
+
+    @Override
+    @Transactional
+    public boolean unfollow(User follower, User unfollowed) {
+        for (Friendship f : follower.getFollowings()) {
+            if (f.getFollowed().equals(unfollowed)) {
+                friendshipRepository.delete(f);
+                return true;
+            }
+        }
+        return false;
     }
 }

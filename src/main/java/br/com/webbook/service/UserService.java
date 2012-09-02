@@ -28,4 +28,6 @@ public interface UserService {
     boolean changePassword(String userName, String oldPassword, String newPassord);
     
     boolean follow(User follower, User followed);
+    
+    boolean unfollow(User follower, User unfollowed);
 }
