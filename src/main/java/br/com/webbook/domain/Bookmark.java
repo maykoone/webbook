@@ -5,6 +5,7 @@
 package br.com.webbook.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
@@ -47,9 +48,9 @@ public class Bookmark implements Serializable {
     private String description;
     private Boolean privateBookmark;
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "bookmark_tags", joinColumns = {
+    @CollectionTable(name = "wb_bookmark_tags", joinColumns = {
         @JoinColumn(name = "bookmark_id")})
-    private Set<String> tags;
+    private Set<String> tags = new HashSet<String>();
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_account")

@@ -29,9 +29,9 @@
                         <strong>@<sec:authentication property="principal.username" /></strong>
                     </a>&nbsp;<span class="wb-font-big">[${userInstance.name}]</span>
                     <ul class="user-stats">
-                        <li class="wb-font-small"><a href="" rel="tooltip" title="first tooltip">${bookmarksCount} Bookmarks</a></li>
-                        <li class="wb-font-small"><a href="users/following">10 Amigos que você acompanha</a></li>
-                        <li class="wb-font-small"><a href="users/followers">10 Amigos que te acompanham</a></li>
+                        <li class="wb-font-small"><a href="${pageContext.request.contextPath}/bookmarks" rel="tooltip" title="first tooltip">${bookmarksCount} Bookmarks</a></li>
+                        <li class="wb-font-small"><a href="users/following">${fn:length(userInstance.followings)} Amigos que você acompanha</a></li>
+                        <li class="wb-font-small"><a href="users/followers">${fn:length(userInstance.followers)} Amigos que te acompanham</a></li>
                         <li class="wb-font-small"><a href="users/filters">${filterList.totalElements} Filtros</a></li>
                         <li class="wb-font-small"><strong><a href="users/account/profile" class="btn btn-mini">Edite seu Perfil</a></strong></li>
                     </ul>

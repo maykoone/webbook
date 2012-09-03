@@ -26,7 +26,7 @@
         <div class="grid_12">
             <section id="" class="wb-box-with-shadow popular-content">
                 <div class="list-header">
-                    <h4 class="wb-left-float">Amigos que você acompanha</h4>
+                    <h4 class="wb-left-float">Amigos que acompanham você</h4>
                     <wb:message messageBean="${message}" />
                 </div>
                 <c:forEach items="${followers}" var="follower">

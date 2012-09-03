@@ -577,7 +577,8 @@ a.bookmark-title{
 .webbook .modal {
     width: 700px;
 }
-#comments-modal {
+
+#comments-modal .modal-body{
     min-height: 400px;
 }
 .comment-item {
@@ -651,4 +652,12 @@ a.bookmark-title{
 .webbook .pagination a{
     background-color: white
 }
+.top-tags ul{
+    margin-left: 5px;
+}
+.top-tags ul li{
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
 

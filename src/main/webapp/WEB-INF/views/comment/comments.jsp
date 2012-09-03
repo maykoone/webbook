@@ -9,9 +9,10 @@
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span4">
-            
+
             <div id="bookmark-summary">
                 <h4>${bookmark.title}</h4>
+                <p>${bookmark.url}</p>
             </div> 
             <div>
                 <form action="#" id="comment-form" method="post">
@@ -47,27 +48,10 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function(){
-        $.fn.serializeObject = function()
-        {
-            var o = {};
-            var a = this.serializeArray();
-            $.each(a, function() {
-                if (o[this.name]) {
-                    if (!o[this.name].push) {
-                        o[this.name] = [o[this.name]];
-                    }
-                    o[this.name].push(this.value || '');
-                } else {
-                    o[this.name] = this.value || '';
-                }
-            });
-            return o;
-        };
+        
         
         $("#comment-form").submit(function() {
-            //            var comment = $(this).serializeObject();
             var comment = $(this).serialize();
-            //            var commentJson = $.toJSON(comment);
             $.post("${pageContext.request.contextPath}/ajax/comments", comment, function(data){
                 $('ul#comments-list').prepend(data).slideDown("slow");
             });

@@ -34,6 +34,7 @@
     <bean id="bookmarkService" class="br.com.webbook.service.impl.BookmarkServiceImpl" />
     <bean id="commentService" class="br.com.webbook.service.impl.CommentServiceImpl" />
     <bean id="filterService" class="br.com.webbook.service.impl.FilterServiceImpl" />
+    <bean id="searchService" class="br.com.webbook.service.impl.SearchServiceImpl" />
     
     
     <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder" /> 
