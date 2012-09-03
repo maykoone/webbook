@@ -34,11 +34,11 @@
                         <strong>@<sec:authentication property="principal.username" /></strong>
                     </a>&nbsp;<span class="wb-font-big">[${userInstance.name}]</span>
                     <ul class="user-stats">
-                        <li class="wb-font-small"><a href="${pageContext.request.contextPath}/bookmarks" data-placement="top"  rel="tooltip" title="first tooltip">${bookmarkList.totalElements} Bookmarks</a></li>
-                        <li class="wb-font-small"><a href="users/followings" title="Veja quais amigos você acompanha">${fn:length(userInstance.followings)} Amigos que você acompanha</a></li>
+                        <li class="wb-font-small"><a href="${pageContext.request.contextPath}/bookmarks" data-placement="bottom"  rel="tooltip" title="Seus favoritos">${bookmarkList.totalElements} Bookmarks</a></li>
+                        <li class="wb-font-small"><a href="users/followings"  data-placement="bottom"  rel="tooltip" title="Veja quais amigos você acompanha">${fn:length(userInstance.followings)} Amigos que você acompanha</a></li>
                         <li class="wb-font-small"><a href="users/followers">${fn:length(userInstance.followers)} Amigos que te acompanham</a></li>
                         <li class="wb-font-small"><a href="${pageContext.request.contextPath}/filters">10 Filtros</a></li>
-                        <li class="wb-font-small"><strong><a href="users/account/profile" class="btn btn-mini">Edite seu Perfil</a></strong></li>
+                        <li class="wb-font-small"><strong><a href="users/account/profile" class="btn btn-mini"><i class="icon-user"></i>Edite seu Perfil</a></strong></li>
                     </ul>
                 </div>
                 <wb:message messageBean="${message}" />
@@ -283,12 +283,14 @@
 
                     $.each(data, function(key, val) {
                         
-                        $('div.top-tags ul').prepend('<li><span class="label label-info">'+ key +'</span> <span class="label"> ('+ val +')'+ '</span></li>');
+                        $('div.top-tags ul').prepend('<li><span class="label label-success">'+ key +'</span> <span class="badge"> ('+ val +')'+ '</span></li>');
                         //                        items.push('<li>'+ key +' ('+ val +')'+ '</li>');
                     });
 
                     
                 });
+                
+                
 
             });
         </script>

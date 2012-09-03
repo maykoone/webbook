@@ -35,8 +35,8 @@
                                 </form>-->
                 <form class="form-search" id="searchbox">
                     <div class="input-append">
-                        <input type="text" class="span2 search-query">
-                        <button type="submit" class="btn btn-info">Pesquisar</button>
+                        <input type="text" class="span2 search-query"  placeholder="Pesquisar">
+                        <button type="submit" class="btn"><i class="icon-search"></i></button>
                     </div>
                 </form>
                 <sec:authorize access="isAuthenticated()">
@@ -106,7 +106,19 @@
         </footer>
 
     </body>
-
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("[rel=tooltip]").tooltip();
+            
+            $('.search-query').focus(function() {
+                $(this).animate({width: '250px'});
+            })
+            $('.search-query').blur(function() {
+                $(this).animate({width: '156px'});
+            })
+            
+        })
+    </script>
 
 </html>
 
