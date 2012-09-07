@@ -48,10 +48,16 @@
         <div class="grid_8">
             <section id="user-list-bookmark" class="wb-box-with-shadow popular-content">
                 <div class="list-header">
-                    <h4 class="wb-left-float">Seus favoritos</h4>
-                    <a href="#add-bookmark-modal" class="btn btn-primary btn-mini wb-right-float" id="add-bookmark" data-toggle="modal">
-                        <i class="icon-plus icon-white"></i>Adicionar Favorito
-                    </a>
+                    <h4>Seus favoritos</h4>
+                    <div class="bookmark-preview">
+                        <div class="input-append">
+                            <input class="input-xxlarge" id="input-bookmark-preview" placeholder="Cole uma url" type="text">
+                            <button id="btn-bookmark-preview" class="btn btn-primary" rel="tooltip" title="Adicione um favorito" type="button"><i class="icon-plus icon-white"></i></button>
+                        </div>
+                    </div>
+                    <!--                    <a href="#add-bookmark-modal" class="btn btn-primary btn-mini wb-right-float" id="add-bookmark" data-toggle="modal">
+                                            <i class="icon-plus icon-white"></i>Adicionar Favorito
+                                        </a>-->
                 </div>
                 <c:forEach items="${bookmarkList.content}" var="bookmark">
                     <div class="bookmark-item">
@@ -137,13 +143,15 @@
 
         <div id="add-bookmark-modal" class="modal hide" style="display: none">
 
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4>Adicionar Favorito</h4>
+
+            </div>
             <form:form action="${currentUrl}" commandName="bookmark" method="post" id="modal-form">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h4>Adicionar Favorito</h4>
-                </div>
+                <div class="loading" style="display: none"><img class="ajax-loader" src="resources/img/ajax-loader.gif" /></div>
                 <div class="modal-body">
-                    <fieldset>
+                    <fieldset class="bookmark-form">
                         <form:hidden path="id" id="id" />
                         <div class="field-block">
                             <div class="field-title">
@@ -191,8 +199,8 @@
                 <div class="modal-footer">
                     <div class="controls">
                         <div class="control">
-                            <button class="btn" type="reset">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Adicionar favorito</button>
+                            <button id="btn-bookmark-modal-cancel" class="btn" data-dismiss="modal" type="reset">Cancelar</button>
+                            <button id="btn-bookmark-modal-post" type="submit" class="btn btn-primary">Adicionar favorito</button>
                         </div>
                     </div>
                 </div>
@@ -288,6 +296,30 @@
                     });
 
                     
+                });
+                
+                $("#btn-bookmark-preview").click(function(){
+                    var url =  $("#input-bookmark-preview").val();
+                    
+                    $("fieldset.bookmark-form").hide();
+                    $("div.loading").show();
+                    $("#btn-bookmark-modal-post").addClass("disabled");
+                        
+                    openModal();
+                    
+                    $.getJSON('${pageContext.request.contextPath}/bookmarks/scraping',{url: url} , function(data){
+                        
+                        $("#title").val(data.title);
+                        $("#url").val(data.url);
+                        $("#description").val(data.description);
+                        $("#tags").val(data.keywords);
+                        
+                        $("fieldset.bookmark-form").show();
+                        $("div.loading").hide();
+                        $("#btn-bookmark-modal-post").removeClass("disabled");
+                        
+                    });
+                   
                 });
                 
                 

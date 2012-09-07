@@ -8,6 +8,8 @@ import br.com.webbook.domain.Bookmark;
 import br.com.webbook.domain.User;
 import br.com.webbook.service.BookmarkService;
 import br.com.webbook.service.UserService;
+import br.com.webbook.support.scraping.BookmarkScraping;
+import br.com.webbook.support.scraping.WebScraper;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
@@ -118,6 +120,12 @@ public class BookmarkController {
     @RequestMapping(value = "/comments", method = RequestMethod.GET)
     public String getComments() {
         return "bookmark/comments";
+    }
+
+    @RequestMapping(value = "/scraping", method = RequestMethod.GET)
+    @ResponseBody
+    public BookmarkScraping bookmarkPreview(@RequestParam String url) {
+        return WebScraper.scrapingHtml(url);
     }
 
     private User loadCurrentUser() {
