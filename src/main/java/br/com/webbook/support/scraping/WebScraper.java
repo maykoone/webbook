@@ -4,6 +4,7 @@
  */
 package br.com.webbook.support.scraping;
 
+import br.com.webbook.domain.Bookmark;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,7 +18,11 @@ import org.jsoup.select.Elements;
  */
 public class WebScraper {
 
-    public static BookmarkScraping scrapingHtml(String url) {
+    public static Bookmark scrapingHtml(String url) {
+        if (url == null || url.equals("")) {
+            return null;
+        }
+
         try {
             Document doc = Jsoup.connect(url).get();
 
@@ -27,13 +32,13 @@ public class WebScraper {
             if (descriptionQuery != null && !descriptionQuery.isEmpty()) {
                 desc = descriptionQuery.first().attr("content");
             }
-            Elements tagsQuery = doc.select("meta[name=keywords]");
-            String tags = "";
-            if (tagsQuery != null && !tagsQuery.isEmpty()) {
-                tags = tagsQuery.first().attr("content");
-            }
+//            Elements tagsQuery = doc.select("meta[name=keywords]");
+//            String tags = "";
+//            if (tagsQuery != null && !tagsQuery.isEmpty()) {
+//                tags = tagsQuery.first().attr("content");
+//            }
 
-            return new BookmarkScraping(url, desc, tags, title);
+            return new Bookmark(title, url, desc);
 
         } catch (IOException e) {
             Logger.getLogger(WebScraper.class.getName()).log(Level.SEVERE, null, e);

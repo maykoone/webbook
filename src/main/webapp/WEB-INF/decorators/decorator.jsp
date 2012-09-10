@@ -1,10 +1,12 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <!DOCTYPE html>
-<html lang="en">
-    <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
+<html>
+    <%@taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
     <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
     <%@taglib uri="/WEB-INF/tags/webbook.tld" prefix="wb" %>
     <head>
-        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><decorator:title /></title>
         <!-- <link href='http://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'> -->
         <!-- <link href='http://fonts.googleapis.com/css?family=Lato|Metrophobic' rel='stylesheet' type='text/css'> -->
@@ -25,7 +27,7 @@
     </head>
 
     <body class="webbook">
-        <!-- Cabeçalho -->
+        <!-- CabeÃ§alho -->
         <header>
             <nav class="container_16">
                 <a class="logo wb-left-float" href="">Webbook</a>
@@ -33,9 +35,9 @@
                                     <input id="search" class="wb-left-float" type="text">
                                     <input id="submit" type="submit" class="wb-left-float" value="Pesquisar">
                                 </form>-->
-                <form class="form-search" id="searchbox">
+                <form class="form-search" id="searchbox" action="${pageContext.request.contextPath}/search">
                     <div class="input-append">
-                        <input type="text" class="span2 search-query"  placeholder="Pesquisar">
+                        <input type="text" class="span2 search-query" name="q"  placeholder="Pesquisar">
                         <button type="submit" class="btn"><i class="icon-search"></i></button>
                     </div>
                 </form>
@@ -78,12 +80,12 @@
 
             </nav>
         </header>
-        <!-- Conte�do-->
+        <!-- Conteúdo-->
         <section id="content" class="container_12">
             <decorator:body />
         </section>
 
-        <!--Rodap�-->
+        <!--Rodapé-->
         <footer>
             <ul>
                 <li><a href="#">Sobre</a></li>
@@ -100,7 +102,7 @@
 
                 <li><a href="#">Termos de uso</a></li>
 
-                <li><a href="#">Pol�tica de privacidade</a></li>
+                <li><a href="#">Política de privacidade</a></li>
 
             </ul>
         </footer>

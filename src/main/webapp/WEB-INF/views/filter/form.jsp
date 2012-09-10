@@ -13,7 +13,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
     <body>
@@ -44,7 +43,7 @@
                 <c:if test="${filterInstance.id ne null}">
                     <c:set var="formMethod" value="put"/>
                 </c:if>
-                <form:form action="${pageContext.request.contextPath}/filters" commandName="filterInstance" method="${formMethod}" id="login-form">
+                <form:form action="${pageContext.request.contextPath}/filters" commandName="filterInstance" method="${formMethod}" cssClass="form-horizontal form">
                     <legend>Cadastro de filtro</legend>
                     <form:hidden path="id" />
                     <div class="field-block">
@@ -53,7 +52,8 @@
                         </div>
                         <div class="field-input">
                             <form:errors path="title" />
-                            <input class="" type="text" name="title" value="${filterInstance.title}" />
+                            <input class="input-xxlarge" type="text" name="title" value="${filterInstance.title}" />
+                            <span class="help-block">Dê um título ao seu filtro (Obrigatório)</span>
                         </div>
                     </div>
                     <div class="field-block">
@@ -62,7 +62,8 @@
                             <label>Descrição</label>
                         </div>
                         <div class="field-input">
-                            <textarea rows="3" cols="4" name="description">${filterInstance.description}</textarea>
+                            <textarea class="input-xxlarge" rows="3" cols="4" name="description">${filterInstance.description}</textarea>
+                            <span class="help-block">Informe uma descrição</span>
                         </div>
                     </div>
                     <div class="field-block">
@@ -70,7 +71,8 @@
                             <label>Tags</label>
                         </div>
                         <div class="field-input">
-                            <input class=""type="text" name="tags" value="${filterInstance.tags}" />
+                            <input class="input-xxlarge"type="text" name="tags" value="${filterInstance.tags}" />
+                            <span class="help-block">Todos os links que correspondem a essas tags serão visualizadas através desse filtro</span>
                         </div>
                     </div>
                     <div class="control-group">

@@ -4,10 +4,14 @@
  */
 package br.com.webbook.controller;
 
+import br.com.webbook.domain.Bookmark;
+import br.com.webbook.domain.User;
 import br.com.webbook.service.BookmarkService;
 import br.com.webbook.service.SearchService;
 import br.com.webbook.service.UserService;
+import br.com.webbook.tags.MessageBean;
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,11 +39,29 @@ public class SearchController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String search(@RequestParam String q, Principal principal, Model model) {
-        return null;
+        User user = userService.findByUserName(principal.getName());
+
+        List<Bookmark> bookmarkResults = searchService.searchBookmarks(q);
+        if (bookmarkResults == null || bookmarkResults.isEmpty()) {
+            model.addAttribute("messageBookmarks", new MessageBean("Não encontrado nenhum resultado de favorito com esse termo.", MessageBean.TYPE.INFO));
+        }
+        model.addAttribute("bookmarksResults", bookmarkResults);
+
+        List<User> userResults = searchService.searchUsers(q);
+        if (userResults == null || userResults.isEmpty()) {
+            model.addAttribute("messageUsers", new MessageBean("Não encontrado nenhum resultado de usuário com esse termo.", MessageBean.TYPE.INFO));
+        }
+        model.addAttribute("userResults", userResults);
+
+        model.addAttribute("userInstance", user);
+        model.addAttribute("querySearch", q);
+
+        return "search/list";
     }
 
     @RequestMapping(value = "/ranking/{userName}", method = RequestMethod.GET)
-    public @ResponseBody Map<String, Long> getTagRanking(@PathVariable String userName) {
-        return searchService.tagRankingByUser(userName);
+    public @ResponseBody
+    Map<String, Long> getTagRanking(@PathVariable String userName) {
+        return searchService.tagsByUser(userName);
     }
 }

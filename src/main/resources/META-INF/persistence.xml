@@ -18,8 +18,8 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="javax.persistence.validation.mode" value="none"/>
             <!--Hibernate Search-->
-<!--            <property name="hibernate.search.default.directory_provider" value="filesystem"/> 
-            <property name="hibernate.search.default.indexBase" value="/home/maykoone/lucene/indexes"/> -->
+            <property name="hibernate.search.default.directory_provider" value="filesystem"/> 
+            <property name="hibernate.search.default.indexBase" value="/home/maykoone/lucene/indexes"/> 
         </properties>
     </persistence-unit>
 </persistence>

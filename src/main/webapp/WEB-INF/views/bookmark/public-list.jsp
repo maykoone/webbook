@@ -11,9 +11,8 @@
 <%@taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@taglib uri="/WEB-INF/tags/webbook.tld" prefix="wb" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <meta charset="utf-8" />
         <title>Lista de favoritos</title>
         <!--<link rel="stylesheet" href="css/tagify-style.css" />-->
         <!--<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/base/jquery-ui.css" />-->

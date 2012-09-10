@@ -7,8 +7,8 @@ package br.com.webbook.controller;
 import br.com.webbook.domain.Bookmark;
 import br.com.webbook.domain.User;
 import br.com.webbook.service.BookmarkService;
+import br.com.webbook.service.SearchService;
 import br.com.webbook.service.UserService;
-import br.com.webbook.support.scraping.BookmarkScraping;
 import br.com.webbook.support.scraping.WebScraper;
 import java.security.Principal;
 import java.util.HashMap;
@@ -16,6 +16,8 @@ import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +41,8 @@ public class BookmarkController {
     private BookmarkService bookmarkService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private SearchService searchService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView list(@RequestParam(required = false) Integer page, Principal principal) {
@@ -124,8 +128,15 @@ public class BookmarkController {
 
     @RequestMapping(value = "/scraping", method = RequestMethod.GET)
     @ResponseBody
-    public BookmarkScraping bookmarkPreview(@RequestParam String url) {
-        return WebScraper.scrapingHtml(url);
+    public ResponseEntity<Bookmark> bookmarkPreview(@RequestParam String url) {
+        Bookmark bookmark = WebScraper.scrapingHtml(url);
+        if (bookmark == null) {
+            return new ResponseEntity<Bookmark>(HttpStatus.NOT_FOUND);
+        }
+
+        //recomendation
+        bookmark.setTags(searchService.tagsByUrl(url));
+        return new ResponseEntity<Bookmark>(bookmark, HttpStatus.OK);
     }
 
     private User loadCurrentUser() {

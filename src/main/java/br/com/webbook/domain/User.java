@@ -20,6 +20,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.validation.groups.Default;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -30,6 +35,7 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 @Table(name = "wb_user_account", uniqueConstraints = {
     @UniqueConstraint(name = "unique_username", columnNames = "username")})
+@Indexed
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,6 +59,7 @@ public class User implements Serializable {
     @Size(min = 3, max = 20, message = "O nome de usuário deve ter no mínimo 3 e no máximo 20 caracteres", groups = {Default.class, ProfileChecks.class})
     @NotBlank(message = "O nome de usuário é obrigatório", groups = {Default.class, ProfileChecks.class})
     @NotNull(message = "O nome de usuário é obrigatório", groups = {Default.class, ProfileChecks.class})
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     private String userName;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @JsonIgnore
@@ -190,12 +197,13 @@ public class User implements Serializable {
         return userName;
     }
     //</editor-fold>
-    
+
     /**
-     * método para verificar se um dado usuário está sendo seguido pelo
-     * usuário atual. (this)
+     * método para verificar se um dado usuário está sendo seguido pelo usuário
+     * atual. (this)
+     *
      * @param user
-     * @return 
+     * @return
      */
     public boolean isFollowing(User user) {
         if (this.getFollowings() == null) {
@@ -209,6 +217,4 @@ public class User implements Serializable {
         }
         return false;
     }
-
-    
 }

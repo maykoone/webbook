@@ -7,9 +7,12 @@ package br.com.webbook.service.impl;
 import br.com.webbook.domain.Bookmark;
 import br.com.webbook.domain.User;
 import br.com.webbook.service.SearchService;
+import br.com.webbook.utils.MD5Util;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Tuple;
@@ -18,6 +21,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.SetJoin;
+import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +39,7 @@ public class SearchServiceImpl implements SearchService {
     private EntityManager entityManager;
 
     @Override
-    public Map<String, Long> tagRankingByUser(String userName) {
+    public Map<String, Long> tagsByUser(String userName) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Tuple> query = cb.createTupleQuery();
 
@@ -56,5 +62,62 @@ public class SearchServiceImpl implements SearchService {
         }
 
         return tagRanking;
+    }
+
+    @Override
+    public Set<String> tagsByUrl(String url) {
+        String hashUrl = MD5Util.md5Hex(url);
+
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Tuple> query = cb.createTupleQuery();
+
+        Root<Bookmark> root = query.from(Bookmark.class);
+        //joins
+        SetJoin<Bookmark, String> tagsJoin = root.joinSet("tags");
+
+        query.select(cb.tuple(tagsJoin.alias("tag"), cb.count(tagsJoin).alias("count_tags")));
+        query.where(cb.equal(root.get("hashUrl"), hashUrl));
+        query.groupBy(tagsJoin);
+        query.orderBy(cb.desc(cb.count(tagsJoin)));
+
+        //top five tags
+        List<Tuple> result = entityManager.createQuery(query).setMaxResults(5).getResultList();
+
+        Set<String> topTags = new HashSet<String>();
+
+        for (Tuple t : result) {
+            topTags.add((String) t.get("tag"));
+        }
+
+        return topTags;
+    }
+
+    @Override
+    public List<User> searchUsers(String querySearch) {
+        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
+        QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(User.class).get();
+
+        //query nativa do apache lucene
+        org.apache.lucene.search.Query query = qb.keyword().onFields("userName").matching(querySearch).createQuery();
+
+        javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(query, User.class);
+
+        //@TODO: paginação
+        return jpaQuery.getResultList();
+
+    }
+
+    @Override
+    public List<Bookmark> searchBookmarks(String querySearch) {
+        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
+        QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Bookmark.class).get();
+
+        //query nativa do apache lucene
+        org.apache.lucene.search.Query query = qb.keyword().onFields("title", "description").matching(querySearch).createQuery();
+
+        javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(query, Bookmark.class);
+
+        //@TODO: paginação
+        return jpaQuery.getResultList();
     }
 }

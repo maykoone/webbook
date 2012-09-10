@@ -11,9 +11,8 @@
 <%@taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@taglib uri="/WEB-INF/tags/webbook.tld" prefix="wb" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <meta charset="utf-8" />
         <title>Amigos que seguem você</title>
         <!--<link rel="stylesheet" href="css/tagify-style.css" />-->
         <!--<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/base/jquery-ui.css" />-->
@@ -46,7 +45,7 @@
                                 <li>
                                     <form:form action="${rootUrl}/users/${following.followed.userName}/unfollow" method="delete">
                                         <input type="hidden" name="friendship" value="${following.id}">
-                                        <button class="btn btn-mini btn-danger">Para de acompanhar</button>
+                                        <button class="btn btn-mini btn-danger">Parar de acompanhar</button>
                                     </form:form>
                                 </li>
                             </ul>

@@ -69,19 +69,19 @@ public class UserController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
-    public String update(@Validated({ProfileChecks.class}) User userForm, BindingResult results, Principal principal, RedirectAttributes redirectAttributes) {
-        //carrega os dados do usuário logado.
-        User user = service.findByUserName(principal.getName());
+    public String update(@Validated({ProfileChecks.class}) User userInstance, BindingResult results, Principal principal, RedirectAttributes redirectAttributes) {
 //        if (ValidationUtils.isValid(results, user, ProfileChecks.class)) {
         if (results.hasErrors()) {
             return "user/edit";
         }
+        //carrega os dados do usuário logado.
+        User user = service.findByUserName(principal.getName());
 
         //evitar que altere outro usuário
         if (user != null) {
-            user.setName(userForm.getName());
-            user.setEmail(userForm.getEmail());
-            user.setLastName(userForm.getLastName());
+            user.setName(userInstance.getName());
+            user.setEmail(userInstance.getEmail());
+            user.setLastName(userInstance.getLastName());
 
             service.editProfile(user);
             redirectAttributes.addFlashAttribute("message", new MessageBean("O seu perfil foi atualizado com sucesso.", MessageBean.TYPE.SUCESS));

@@ -11,9 +11,8 @@
 <%@taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@taglib uri="/WEB-INF/tags/webbook.tld" prefix="wb" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <meta charset="utf-8" />
         <title>Lista de favoritos</title>
         <!--<link rel="stylesheet" href="css/tagify-style.css" />-->
         <!--<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/base/jquery-ui.css" />-->
@@ -65,9 +64,9 @@
                             <div class="default-thumb"></div>
                         </a>
                         <div class="bookmark-info">
-                            <h3><a href="" class="bookmark-title wb-font-medium">${bookmark.title}&nbsp;<c:if test="${bookmark.privateBookmark}"><i class="icon-lock"></i></c:if></a></h3>
-                            <a href="" class="bookmark-url wb-font-small">${bookmark.url}</a>
+                            <p><a href="" class="bookmark-title wb-font-medium">${bookmark.title}&nbsp;<c:if test="${bookmark.privateBookmark}"><i class="icon-lock"></i></c:if></a><p>
                             <p class="wb-font-small">${bookmark.description}</p>
+                            <a href="" class="bookmark-url wb-font-small">${bookmark.url}</a>
                             <ul class="bookmark-tag-list">
                                 <c:forEach items="${bookmark.tags}" var="tag">
                                     <li><a href="${currentUrl}/tags/${tag}"><span class="tag">#${tag}</span></a></li>
@@ -158,7 +157,7 @@
                                 <label>Título</label>
                             </div>
                             <div class="field-input">
-                                <input class=""type="text" name="title" id="title">
+                                <input class="input-xxlarge" type="text" name="title" id="title">
                             </div>
                         </div>
                         <div class="field-block">
@@ -167,7 +166,7 @@
                             </div>
                             <div class="field-input">
                                 <form:errors path="url" />
-                                <input class=""type="text" name="url" id="url">
+                                <input class="input-xxlarge" type="text" name="url" id="url">
                             </div>
                         </div>
                         <div class="field-block">
@@ -175,7 +174,7 @@
                                 <label>Descrição</label>
                             </div>
                             <div class="field-input">
-                                <textarea name="description" id="description" rows="3"></textarea>
+                                <textarea maxlength="140" class="input-xxlarge" name="description" id="description" rows="3"></textarea>
                             </div>
                         </div>
                         <div class="field-block">
@@ -183,7 +182,7 @@
                                 <label>Tags</label>
                             </div>
                             <div class="field-input">
-                                <input class=""type="text" name="tags" id="tags">
+                                <input class="input-xxlarge" type="text" name="tags" id="tags">
                             </div>
                         </div>
 
@@ -291,7 +290,7 @@
 
                     $.each(data, function(key, val) {
                         
-                        $('div.top-tags ul').prepend('<li><span class="label label-success">'+ key +'</span> <span class="badge"> ('+ val +')'+ '</span></li>');
+                        $('div.top-tags ul').prepend('<li><span class="label label-success">'+ key +'</span> <span class="badge">'+ val + '</span></li>');
                         //                        items.push('<li>'+ key +' ('+ val +')'+ '</li>');
                     });
 
@@ -304,6 +303,8 @@
                     $("fieldset.bookmark-form").hide();
                     $("div.loading").show();
                     $("#btn-bookmark-modal-post").addClass("disabled");
+                    $("#btn-bookmark-modal-post").attr("disabled", "disabled");
+                    $("#btn-bookmark-modal-post").text("Carregando...");
                         
                     openModal();
                     
@@ -312,11 +313,13 @@
                         $("#title").val(data.title);
                         $("#url").val(data.url);
                         $("#description").val(data.description);
-                        $("#tags").val(data.keywords);
+                        $("#tags").val(data.tags);
                         
                         $("fieldset.bookmark-form").show();
                         $("div.loading").hide();
                         $("#btn-bookmark-modal-post").removeClass("disabled");
+                        $("#btn-bookmark-modal-post").removeAttr("disabled");
+                        $("#btn-bookmark-modal-post").text("Adicionar Favorito");
                         
                     });
                    

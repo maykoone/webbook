@@ -340,7 +340,7 @@ textarea{}
     padding: 5px; 
     font-size: 12px; 
     border: 1px solid #DDD;
-    color: #AAA;
+    color: #515151;
 }
 
 #login-form-container h3,
@@ -458,6 +458,7 @@ span.tag{
 }
 
 .bookmark-info p{
+    font-size: 14px;
     width: 475px;
     margin: 5px 0;
 }
@@ -468,6 +469,7 @@ a.bookmark-url{
 a.bookmark-title{
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: #2F96B4;
+    font-size: 13px;
 
 }
 .bookmark-tag-list{
@@ -513,7 +515,7 @@ a.bookmark-title{
     height: 25px;
 }
 #add-bookmark-modal{
-    width: 480px;
+    width: 600px;
     /*padding: 15px;*/
 }
 #add-bookmark-modal .modal-body{
@@ -642,12 +644,15 @@ a.bookmark-title{
     margin-right: 10px;
 }
 .friendship-control{
-    margin-left: 50px;
+    margin-right: -10px;
     float: right
 }
 .friendship-control li{
     display: inline;
-    margin: 0px;
+    margin:0 10px 0 0;
+}
+.friendship-control form{
+    display: inline;
 }
 .webbook .pagination a{
     background-color: white
@@ -671,5 +676,31 @@ a.bookmark-title{
     /*margin-top: -32px;   -1 * image height / 2 */
     display: block;
 }
-
-
+.form{
+    padding:10px 0 0 20px;
+}
+.search-item{
+    margin-bottom: 20px;
+    position: relative;
+}
+.search-item p{
+    margin: 0;
+}
+.search-item .avatar{
+    width: 32px;
+    height: 32px;
+    float: left;
+    margin-top: 3px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.search-item h4{
+    font-size: 110%;
+}
+.search-item .user-result{
+    margin-left: 50px;
+}
+.search-item .user-result .details{
+    font-size: 80%;
+}

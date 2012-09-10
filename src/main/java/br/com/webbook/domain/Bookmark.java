@@ -4,6 +4,7 @@
  */
 package br.com.webbook.domain;
 
+import br.com.webbook.search.IndexPublicBookmarkInterceptor;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,6 +23,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
+import org.hibernate.search.bridge.builtin.IterableBridge;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
@@ -31,6 +39,7 @@ import org.hibernate.validator.constraints.URL;
  */
 @Entity
 @Table(name = "wb_bookmark")
+@Indexed(interceptor = IndexPublicBookmarkInterceptor.class)
 public class Bookmark implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,6 +47,7 @@ public class Bookmark implements Serializable {
     @GeneratedValue(generator = "wb_bookmark_seq", strategy = GenerationType.AUTO)
     @SequenceGenerator(name = "wb_bookmark_seq", sequenceName = "wb_bookmark_seq", allocationSize = 1)
     private Long id;
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     private String title;
     @URL(message = "entre com uma URL válida")
     @NotNull(message = "url é um campo obrigatório")
@@ -45,6 +55,7 @@ public class Bookmark implements Serializable {
     private String url;
     private String hashUrl;
     @Size(max = 140, message = "A descrição pode ter no máximo 140 caracteres")
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     private String description;
     private Boolean privateBookmark;
     @ElementCollection(fetch = FetchType.EAGER)
@@ -62,6 +73,12 @@ public class Bookmark implements Serializable {
     //<editor-fold defaultstate="collapsed" desc="constructors">
     public Bookmark(String url) {
         this.url = url;
+    }
+
+    public Bookmark(String title, String url, String description) {
+        this.title = title;
+        this.url = url;
+        this.description = description;
     }
 
     public Bookmark() {
@@ -126,7 +143,7 @@ public class Bookmark implements Serializable {
     }
 
     public Boolean getPrivateBookmark() {
-        return privateBookmark;
+        return privateBookmark != null ? privateBookmark : false;
     }
 
     public void setPrivateBookmark(Boolean privateBookmark) {
