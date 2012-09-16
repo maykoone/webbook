@@ -113,7 +113,7 @@ public class SearchServiceImpl implements SearchService {
         QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Bookmark.class).get();
 
         //query nativa do apache lucene
-        org.apache.lucene.search.Query query = qb.keyword().onFields("title", "description").matching(querySearch).createQuery();
+        org.apache.lucene.search.Query query = qb.keyword().onFields("title", "description", "tags").matching(querySearch).createQuery();
 
         javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(query, Bookmark.class);
 

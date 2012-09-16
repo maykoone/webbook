@@ -11,24 +11,28 @@
         <div class="span4">
 
             <div id="bookmark-summary">
-                <h4>${bookmark.title}</h4>
-                <p>${bookmark.url}</p>
+                <h5>${bookmark.title}</h5>
+                <p><a href="">${bookmark.url}<a/></p>
             </div> 
-            <div>
-                <form action="#" id="comment-form" method="post">
-                    <input type="hidden" name="bookmark.id" value="${bookmark.id}"/>
-                    <!--<label>Comente</label>-->
-                    <textarea rows="3" name="text"></textarea>
-                    <div class="control-group">
-                        <div class="controls">
-                            <button type="submit" class="btn" data-loading-text="Carregando...">Comentar</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
         </div>
         <div class="span8">
+            <form action="#" id="comment-form" method="post">
+                <input type="hidden" name="bookmark.id" value="${bookmark.id}"/>
+                <!--<label>Comente</label>-->
+                <textarea rows="2" name="text"></textarea>
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" class="btn btn-primary btn-small" data-loading-text="Carregando...">Comentar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr />
+    <div class="row-fluid">
+        <div class="span12">
             <ul id="comments-list">
+                <h5>${fn:length(comments)} Comentários </h5>
                 <c:forEach var="comment" items="${comments}">
                     <li class="comment-item">
                         <div class="comment-content">
@@ -45,6 +49,7 @@
             </ul>
         </div>
     </div>
+
 </div>
 <script type="text/javascript">
     $(document).ready(function(){

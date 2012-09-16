@@ -22,6 +22,12 @@ h1, h2, h3, h4 , h5, h6{
     font-family: 'Metrophobic', sans-serif;
     /*margin: 0*/
 }
+hr{
+    margin: 10px 0;
+    border: 0;
+    border-top: 1px solid #EEE;
+    border-bottom: 1px solid white;
+}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
     display: block;
 }
@@ -481,7 +487,7 @@ a.bookmark-title{
     display: inline;
     font-size: 12px;
     font-weight: bold;
-    margin-left: 5px;
+    margin-left: 1px;
 }
 .bookmark-item .bookmark-item-control{
     font-size: 12px;
@@ -597,7 +603,7 @@ a.bookmark-title{
 }
 #comments-list{
     box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
-    margin-left: 50px;
+    margin-left: 0;
 }
 .comment-text{
     margin-right: 60px;
@@ -620,6 +626,8 @@ a.bookmark-title{
 .comment-item .avatar img{
     border: 1px solid #DDD;
     padding: 2px;
+    width: 32px;
+    height: 32px;
 }
 .comment-text .arrow {
     position: absolute;
@@ -633,6 +641,12 @@ a.bookmark-title{
     width: 0;
     height: 0;
     border-style: solid;
+}
+#comment-form textarea{
+    width: 390px;
+}
+#comment-form .controls{
+    text-align: right;
 }
 .friendship{
     padding: 5px;

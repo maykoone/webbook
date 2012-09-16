@@ -31,11 +31,14 @@
                 <div class="user-info">
                     <a hreaf="" class="wb-font-big">
                         <strong>@<sec:authentication property="principal.username" /></strong>
-                    </a>&nbsp;<span class="wb-font-big">[${userInstance.name}]</span>
+                    </a>&nbsp;
+                    <c:if test="${not empty userInstance.name}">
+                        <span class="wb-font-big">[${userInstance.name}]</span>
+                    </c:if>
                     <ul class="user-stats">
                         <li class="wb-font-small"><a href="${pageContext.request.contextPath}/bookmarks" data-placement="bottom"  rel="tooltip" title="Seus favoritos">${bookmarkList.totalElements} Bookmarks</a></li>
-                        <li class="wb-font-small"><a href="users/followings"  data-placement="bottom"  rel="tooltip" title="Veja quais amigos você acompanha">${fn:length(userInstance.followings)} Amigos que você acompanha</a></li>
-                        <li class="wb-font-small"><a href="users/followers">${fn:length(userInstance.followers)} Amigos que te acompanham</a></li>
+                        <li class="wb-font-small"><a href="users/followings"  data-placement="bottom"  rel="tooltip" title="Veja quais amigos você acompanha">${fn:length(userInstance.followings)} Seguindo</a></li>
+                        <li class="wb-font-small"><a href="users/followers"data-placement="bottom"  rel="tooltip" title="Veja quais pessoas acompanham você">${fn:length(userInstance.followers)} Seguidores</a></li>
                         <li class="wb-font-small"><a href="${pageContext.request.contextPath}/filters">10 Filtros</a></li>
                         <li class="wb-font-small"><strong><a href="users/account/profile" class="btn btn-mini"><i class="icon-user"></i>Edite seu Perfil</a></strong></li>
                     </ul>
@@ -65,11 +68,11 @@
                         </a>
                         <div class="bookmark-info">
                             <p><a href="" class="bookmark-title wb-font-medium">${bookmark.title}&nbsp;<c:if test="${bookmark.privateBookmark}"><i class="icon-lock"></i></c:if></a><p>
+                                <a href="" class="bookmark-url wb-font-small">${bookmark.url}</a>
                             <p class="wb-font-small">${bookmark.description}</p>
-                            <a href="" class="bookmark-url wb-font-small">${bookmark.url}</a>
                             <ul class="bookmark-tag-list">
                                 <c:forEach items="${bookmark.tags}" var="tag">
-                                    <li><a href="${currentUrl}/tags/${tag}"><span class="tag">#${tag}</span></a></li>
+                                    <li><a href="${currentUrl}/tags/${tag}"><span class="label label-success">${tag}</span></a></li>
                                 </c:forEach>
                             </ul>
                         </div>
@@ -158,6 +161,7 @@
                             </div>
                             <div class="field-input">
                                 <input class="input-xxlarge" type="text" name="title" id="title">
+                                <span class="help-block">Título do link</span>
                             </div>
                         </div>
                         <div class="field-block">
@@ -174,7 +178,9 @@
                                 <label>Descrição</label>
                             </div>
                             <div class="field-input">
+                                <span class="char-counter">0</span>
                                 <textarea maxlength="140" class="input-xxlarge" name="description" id="description" rows="3"></textarea>
+                                <span class="help-block">Se quiser informe uma descrição com no máximo 140 caracteres</span>
                             </div>
                         </div>
                         <div class="field-block">
@@ -183,6 +189,7 @@
                             </div>
                             <div class="field-input">
                                 <input class="input-xxlarge" type="text" name="tags" id="tags">
+                                <span class="help-block">Tags são palavras chaves, informe quantas quiser separadas por vírgula</span>
                             </div>
                         </div>
 
@@ -313,6 +320,7 @@
                         $("#title").val(data.title);
                         $("#url").val(data.url);
                         $("#description").val(data.description);
+                        $(".char-counter").text(data.description.length);
                         $("#tags").val(data.tags);
                         
                         $("fieldset.bookmark-form").show();
@@ -323,6 +331,9 @@
                         
                     });
                    
+                });
+                $("textarea#description").keyup(function(){
+                    $(".char-counter").text($(this).val().length);
                 });
                 
                 

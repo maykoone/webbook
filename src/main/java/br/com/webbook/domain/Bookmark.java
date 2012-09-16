@@ -30,6 +30,7 @@ import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.search.bridge.builtin.IterableBridge;
+import org.hibernate.search.bridge.builtin.impl.BuiltinIterableBridge;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
@@ -61,6 +62,8 @@ public class Bookmark implements Serializable {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "wb_bookmark_tags", joinColumns = {
         @JoinColumn(name = "bookmark_id")})
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+    @FieldBridge(impl = BuiltinIterableBridge.class)
     private Set<String> tags = new HashSet<String>();
     @JsonIgnore
     @ManyToOne
