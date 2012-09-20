@@ -31,17 +31,13 @@
         <header>
             <nav class="container_16">
                 <a class="logo wb-left-float" href="">Webbook</a>
-                <!--                <form id="searchbox" class="wb-left-float" action="">
-                                    <input id="search" class="wb-left-float" type="text">
-                                    <input id="submit" type="submit" class="wb-left-float" value="Pesquisar">
-                                </form>-->
-                <form class="form-search" id="searchbox" action="${pageContext.request.contextPath}/search">
-                    <div class="input-append">
-                        <input type="text" class="span2 search-query" name="q"  placeholder="Pesquisar">
-                        <button type="submit" class="btn"><i class="icon-search"></i></button>
-                    </div>
-                </form>
                 <sec:authorize access="isAuthenticated()">
+                    <form class="form-search" id="searchbox" action="${pageContext.request.contextPath}/search">
+                        <div class="input-append">
+                            <input type="text" class="span2 search-query" name="q"  placeholder="Pesquisar">
+                            <button type="submit" class="btn"><i class="icon-search"></i></button>
+                        </div>
+                    </form>
                     <ul class="user-account wb-right-float">
                         <li>
                             <a href="#" class="avatar">

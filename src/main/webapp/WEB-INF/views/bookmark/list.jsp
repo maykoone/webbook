@@ -72,7 +72,7 @@
                             <p class="wb-font-small">${bookmark.description}</p>
                             <ul class="bookmark-tag-list">
                                 <c:forEach items="${bookmark.tags}" var="tag">
-                                    <li><a href="${currentUrl}/tags/${tag}"><span class="label label-success">${tag}</span></a></li>
+                                    <li><a href="${currentUrl}/tags/${tag}"><span class="label label-success">#${tag}</span></a></li>
                                 </c:forEach>
                             </ul>
                         </div>

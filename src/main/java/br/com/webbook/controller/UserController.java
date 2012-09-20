@@ -63,27 +63,27 @@ public class UserController {
     @RequestMapping(value = "/account/profile", method = RequestMethod.GET)
     public String edit(Principal principal, Model model) {
         User user = service.findByUserName(principal.getName());
-        model.addAttribute("userInstance", user);
-        model.addAttribute("userChangePassword", new UserChangePasswordForm());
+        model.addAttribute("user", user);
+        model.addAttribute("userChangePasswordForm", new UserChangePasswordForm());
         return "user/edit";
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
-    public String update(@Validated({ProfileChecks.class}) User userInstance, BindingResult results, Principal principal, RedirectAttributes redirectAttributes) {
+    public String update(@Validated({ProfileChecks.class}) User user, BindingResult results, Principal principal, RedirectAttributes redirectAttributes) {
 //        if (ValidationUtils.isValid(results, user, ProfileChecks.class)) {
         if (results.hasErrors()) {
             return "user/edit";
         }
         //carrega os dados do usuário logado.
-        User user = service.findByUserName(principal.getName());
+        User userEdit = service.findByUserName(principal.getName());
 
         //evitar que altere outro usuário
-        if (user != null) {
-            user.setName(userInstance.getName());
-            user.setEmail(userInstance.getEmail());
-            user.setLastName(userInstance.getLastName());
+        if (userEdit != null) {
+            userEdit.setName(user.getName());
+            userEdit.setEmail(user.getEmail());
+            userEdit.setLastName(user.getLastName());
 
-            service.editProfile(user);
+            service.editProfile(userEdit);
             redirectAttributes.addFlashAttribute("message", new MessageBean("O seu perfil foi atualizado com sucesso.", MessageBean.TYPE.SUCESS));
 
         } else {
@@ -95,15 +95,17 @@ public class UserController {
     }
 
     @RequestMapping(value = "/edit/password", method = RequestMethod.PUT)
-    public String changePassword(@Valid UserChangePasswordForm userChangePassword, BindingResult results, RedirectAttributes redirectAttributes, Principal principal) {
+    public String changePassword(@Valid UserChangePasswordForm userChangePasswordForm, BindingResult results, RedirectAttributes redirectAttributes, Principal principal, Model model) {
         if (!results.hasErrors()) {
-            if (service.changePassword(principal.getName(), userChangePassword.getOldPassword(), userChangePassword.getNewPassword())) {
+            if (service.changePassword(principal.getName(), userChangePasswordForm.getOldPassword(), userChangePasswordForm.getNewPassword())) {
                 redirectAttributes.addFlashAttribute("message", new MessageBean("Sua senha foi alterada com sucesso", MessageBean.TYPE.SUCESS));
 
             } else {
                 redirectAttributes.addFlashAttribute("message", new MessageBean("Não foi possível alterar a senha. Verifique se você digitou a senha atual corretamente.", MessageBean.TYPE.ERROR));
             }
         } else {
+            User user = service.findByUserName(principal.getName());
+            model.addAttribute("user", user);
             return "user/edit";
         }
         return REDIRECT_USERS + "/account/profile";

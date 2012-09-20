@@ -21,16 +21,19 @@
         <!-- Conteúdo-->
         <div class="grid_4">
             <section class="wb-box-with-shadow popular-content register-presentation">
-                <h3>Organize a sua Web</h3>
-                <p class="wb-font-medium">"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."</p>
+                <h4>Organize a sua Web</h4>
+                <p class="wb-font-medium">"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
+                <a href="" class="btn btn-small">Saiba Mais >></a>
             </section>
             <section class="wb-box-with-shadow popular-content register-presentation">
-                <h3>Encontre conteúdo do seu Interesse na Internet</h3>
-                <p class="wb-font-medium">"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."</p>
+                <h4>Encontre conteúdo do seu Interesse na Internet</h4>
+                <p class="wb-font-medium">"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
+                <a href="" class="btn btn-small">Saiba Mais >></a>
             </section>
             <section class="wb-box-with-shadow popular-content register-presentation">
-                <h3>Compartilhe</h3>
-                <p class="wb-font-medium">"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."</p>
+                <h4>Compartilhe</h4>
+                <p class="wb-font-medium">"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
+                <a href="" class="btn btn-small">Saiba Mais >></a>
             </section>
         </div>
         <div class="grid_8" >
@@ -66,14 +69,14 @@
                         </div>
                     </div>
 
-                    <div class="field-block">
-                        <div class="field-title">
-                            <label>Senha novamente</label>
-                        </div>
-                        <div class="field-input">
-                            <input class="" type="password">
-                        </div>
-                    </div>
+                    <!--                    <div class="field-block">
+                                            <div class="field-title">
+                                                <label>Senha novamente</label>
+                                            </div>
+                                            <div class="field-input">
+                                                <input class="" type="password">
+                                            </div>
+                                        </div>-->
                     <span class="wb-font-medium"><a href="">Leia o Termo de Uso antes de se Cadastrar</a></span>
                     <div class="field-block">
 

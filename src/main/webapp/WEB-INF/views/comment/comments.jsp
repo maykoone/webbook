@@ -31,8 +31,8 @@
     <hr />
     <div class="row-fluid">
         <div class="span12">
+            <h5>${fn:length(comments)} Comentários </h5>
             <ul id="comments-list">
-                <h5>${fn:length(comments)} Comentários </h5>
                 <c:forEach var="comment" items="${comments}">
                     <li class="comment-item">
                         <div class="comment-content">

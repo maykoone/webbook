@@ -25,7 +25,7 @@
         <div class="grid_12">
             <section id="" class="wb-box-with-shadow popular-content">
                 <div class="list-header">
-                    <h4>Amigos que você acompanha</h4>
+                    <h4>Amigos que você segue</h4>
                     <wb:message messageBean="${message}" />
                 </div>
                 <c:forEach items="${followings}" var="following">
@@ -45,7 +45,7 @@
                                 <li>
                                     <form:form action="${rootUrl}/users/${following.followed.userName}/unfollow" method="delete">
                                         <input type="hidden" name="friendship" value="${following.id}">
-                                        <button class="btn btn-mini btn-danger">Parar de acompanhar</button>
+                                        <button class="btn btn-mini btn-danger">Parar de seguir</button>
                                     </form:form>
                                 </li>
                             </ul>

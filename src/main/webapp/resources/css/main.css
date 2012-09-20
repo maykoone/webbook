@@ -134,6 +134,10 @@ footer li a {
     /*text-indent: -9999px;*/
     width: 145px;	
 }
+.logo:hover{
+    color: whitesmoke;
+    text-decoration: none;
+}
 /*search box*/
 
 #searchbox {

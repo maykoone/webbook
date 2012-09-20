@@ -44,7 +44,7 @@
                         <div class="tab-pane active" id="tab1">
                             <h4>Seu Perfil</h4>
                             <wb:message messageBean="${message}" />
-                            <form:form action="${pageContext.request.contextPath}/users/edit" method="put" id="login-form" commandName="userInstance">
+                            <form:form action="${pageContext.request.contextPath}/users/edit" method="put" id="login-form" commandName="user">
                                 <form:hidden path="id" />
                                 <div class="field-block">
                                     <div class="field-title">
@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="field-input">
                                         <form:errors path="userName" cssClass="error" />
-                                        <input class="disabled" type="text" name="userName" value="${userInstance.userName}">
+                                        <input class="disabled" type="text" name="userName" value="${user.userName}">
                                     </div>
                                 </div>
                                 <div class="field-block">
@@ -61,7 +61,7 @@
                                     </div>
                                     <div class="field-input">
                                         <form:errors path="name" cssClass="error"/>
-                                        <input class=""type="text" name="name" value="${userInstance.name}">
+                                        <input class=""type="text" name="name" value="${user.name}">
                                     </div>
                                 </div>
                                 <div class="field-block">
@@ -70,7 +70,7 @@
                                     </div>
                                     <div class="field-input">
                                         <form:errors path="lastName" cssClass="error" />
-                                        <input class=""type="text" name="lastName" value="${userInstance.lastName}">
+                                        <input class=""type="text" name="lastName" value="${user.lastName}">
                                     </div>
                                 </div>
 
@@ -80,7 +80,7 @@
                                     </div>
                                     <div class="field-input">
                                         <form:errors path="email" cssClass="error"/>
-                                        <input class=""type="text" name="email" value="${userInstance.email}">
+                                        <input class=""type="text" name="email" value="${user.email}">
                                     </div>
                                 </div>
 
@@ -96,7 +96,7 @@
                         </div>
                         <div class="tab-pane" id="tab2">
                             <h4>Altere sua Senha</h4>
-                            <form:form action="${pageContext.request.contextPath}/users/edit/password" id="login-form" commandName="userChangePassword" method="put">
+                            <form:form action="${pageContext.request.contextPath}/users/edit/password" id="login-form" commandName="userChangePasswordForm" method="put">
                                 <div class="field-block">
                                     <div class="field-title">
                                         <label>Senha Antiga</label>
