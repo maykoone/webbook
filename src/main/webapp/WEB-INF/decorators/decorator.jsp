@@ -21,6 +21,7 @@
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.json-2.2.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.masonry.min.js"></script>
+        <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 
 
         <decorator:head />

@@ -17,9 +17,9 @@
     <body>
         <div class="grid_8 prefix_2 suffix_2" >
             <div class="wb-box-with-shadow popular-content" id="login-form-container">
+                <wb:message messageBean="${message}"/>
                 <h3 class="wb-font-x-big">Faça seu Login</h3>
                 <p class="wb-font-small">Ainda não tem uma conta? <a href="users/register">Cadastre-se</a></p>
-                <wb:message messageBean="${message}"/>
                 <form action="<c:url value='j_spring_security_check' />" method="post" id="login-form">
                     <div class="field-block">
                         <div class="field-title">

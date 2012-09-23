@@ -87,7 +87,7 @@
                                         </a>
                                     </li>
                                 </c:if>
-                                <li><a href=""><i class="icon-share"></i>Compartilhar</a></li>
+                                <li><a href="#" class="share-button" data-url="${bookmark.url}" data-title="${bookmark.title}" data-username="${userInstance.userName}"><i class="icon-share"></i>Compartilhar</a></li>
                             </ul>
                         </div>
                     </div>
@@ -143,7 +143,7 @@
             </div>
         </div>
 
-        <div id="add-bookmark-modal" class="modal hide" style="display: none">
+        <div id="add-bookmark-modal" class="modal hide fade" style="display: none">
 
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">×</button>
@@ -212,7 +212,7 @@
                 </div>
             </form:form>
         </div>
-        <div id="comments-modal" class="modal hide">  
+        <div id="comments-modal" class="modal hide fade">  
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">×</button>
                 <h4>Comentários</h4>
@@ -220,6 +220,36 @@
             <div class="modal-body"></div>
             <div class="modal-footer">
                 <a href="#" class="btn">Fechar</a>
+            </div>
+        </div>
+        <div id="share-modal" class="modal hide fade">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4>Compartilhar Favorito</h4>
+            </div>
+            <div class="modal-body">
+                <ul class="share-actions">
+                    <li id="twitter-share"></li>
+                    <hr />
+                    <li id="gplus-share">
+                        <a class="gplus-share-button" href="" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+                            <img  src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"/>
+                        </a>
+                        <p>Compartilhar isto no Google+</p>
+                    </li>
+                    <hr />
+                    <li>
+                        <iframe class="facebook-share-button" src="" scrolling="no" frameborder="0" style="border:none; width:450px; height:80px"></iframe>
+                    </li>
+                    <hr />
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <div class="controls">
+                    <div class="control">
+                        <button id="btn-bookmark-modal-cancel" class="btn" data-dismiss="modal" type="reset">Cancelar</button>
+                    </div>
+                </div>
             </div>
         </div>
         <!--        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
@@ -263,6 +293,24 @@
                         openModal();
                     });
                 }
+                
+                $(".share-button").click(function(){
+                    var shareUrl = $(this).data('url');
+                    var shareUrlText = $(this).data('title');
+                    //                    var twitterUrl = "https://twitter.com/share?hashtags=bookmark&source=tweetbutton&url=" + shareUrl;
+                    var gplusUrl = "https://plus.google.com/share?url=" + shareUrl;
+                    var facebookUrl = "https://www.facebook.com/plugins/like.php?href=" + shareUrl;
+                    
+//                    $(".share-actions").prepend('<li><a href="https://twitter.com/share" data-text="'+shareUrlText+'" data-url="'+ shareUrl +'" class="twitter-share-button" data-lang="pt" data-size="large">Tweetar</a></li>');
+                    $("#twitter-share").html('<a href="https://twitter.com/share" data-text="'+shareUrlText+'" data-url="'+ shareUrl +'" class="twitter-share-button" data-lang="pt" data-size="large" data-hashtags="bookmark">Tweetar</a>');
+                    
+                    $(".gplus-share-button").attr('href', gplusUrl);
+                    $(".facebook-share-button").attr('src', facebookUrl);
+                    
+                    twttr.widgets.load();
+                    $("#share-modal").modal();
+                    
+                });
                 
                 function destroy(){
                     var url = $(this).attr("href");
