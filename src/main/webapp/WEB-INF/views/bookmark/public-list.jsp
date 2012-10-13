@@ -38,7 +38,7 @@
                         <li class="wb-font-small"><a href="${rootUrl}/users/${userSearch.userName}/following"><strong>10</strong> seguindo</a></li>
                         <li class="wb-font-small"><a href="${rootUrl}/users/${userSearch.userName}/followers"><strong>10</strong> seguidores</a></li>
                         <li class="wb-font-small"><a href="${rootUrl}/filters/${userSearch.userName}"><strong>10</strong> Filtros</a></li>
-                        <li class="wb-font-small"><strong><a href="${rootUrl}/users/${userSearch.userName}/follow" class="btn btn-info btn-mini">Acompanhar</a></strong></li>
+                        <li class="wb-font-small"><strong><a href="${rootUrl}/users/${userSearch.userName}/follow" class="btn btn-info btn-mini">Seguir</a></strong></li>
                     </ul>
                 </div>
             </section>
@@ -116,8 +116,7 @@
         </div>
         <div class="grid_4">
             <div class="wb-box-with-shadow popular-content">
-                <h4>Lorem Ipsum</h4>
-                <p class="wb-font-medium">"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
+                <h4><i class="icon-tags"></i>Tags Usadas</h4>
             </div>
         </div>
 

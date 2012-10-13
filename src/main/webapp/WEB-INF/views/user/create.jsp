@@ -22,17 +22,17 @@
         <div class="grid_4">
             <section class="wb-box-with-shadow popular-content register-presentation">
                 <h4>Organize a sua Web</h4>
-                <p class="wb-font-medium">"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
+                <p class="wb-font-medium">"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor."</p>
                 <a href="" class="btn btn-small">Saiba Mais >></a>
             </section>
             <section class="wb-box-with-shadow popular-content register-presentation">
                 <h4>Encontre conteúdo do seu Interesse na Internet</h4>
-                <p class="wb-font-medium">"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
+                <p class="wb-font-medium">"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor."</p>
                 <a href="" class="btn btn-small">Saiba Mais >></a>
             </section>
             <section class="wb-box-with-shadow popular-content register-presentation">
                 <h4>Compartilhe</h4>
-                <p class="wb-font-medium">"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
+                <p class="wb-font-medium">"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor."</p>
                 <a href="" class="btn btn-small">Saiba Mais >></a>
             </section>
         </div>

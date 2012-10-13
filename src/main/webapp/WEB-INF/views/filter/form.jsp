@@ -86,8 +86,8 @@
         </div>
         <div class="grid_4">
             <div class="wb-box-with-shadow popular-content" id="comments">
-                <h4>Lorem Ipsum</h4>
-                <p class="wb-font-medium" >"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."</p>
+                <h4>Seus filtros</h4>
+                <p class="wb-font-medium" ></p>
             </div>
         </div>
         

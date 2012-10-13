@@ -228,6 +228,9 @@
                 <h4>Compartilhar Favorito</h4>
             </div>
             <div class="modal-body">
+                <h4><span class="share-bookmark-title"></span></h4>
+                <p><a href="" class="share-bookmark-url"></span></p>
+                <hr />
                 <ul class="share-actions">
                     <li id="twitter-share"></li>
                     <hr />
@@ -297,15 +300,15 @@
                 $(".share-button").click(function(){
                     var shareUrl = $(this).data('url');
                     var shareUrlText = $(this).data('title');
-                    //                    var twitterUrl = "https://twitter.com/share?hashtags=bookmark&source=tweetbutton&url=" + shareUrl;
                     var gplusUrl = "https://plus.google.com/share?url=" + shareUrl;
                     var facebookUrl = "https://www.facebook.com/plugins/like.php?href=" + shareUrl;
                     
-//                    $(".share-actions").prepend('<li><a href="https://twitter.com/share" data-text="'+shareUrlText+'" data-url="'+ shareUrl +'" class="twitter-share-button" data-lang="pt" data-size="large">Tweetar</a></li>');
                     $("#twitter-share").html('<a href="https://twitter.com/share" data-text="'+shareUrlText+'" data-url="'+ shareUrl +'" class="twitter-share-button" data-lang="pt" data-size="large" data-hashtags="bookmark">Tweetar</a>');
                     
                     $(".gplus-share-button").attr('href', gplusUrl);
                     $(".facebook-share-button").attr('src', facebookUrl);
+                    $(".share-bookmark-title").text(shareUrlText);
+//                    $(".share-bookmark-url").text(shareUrl);
                     
                     twttr.widgets.load();
                     $("#share-modal").modal();

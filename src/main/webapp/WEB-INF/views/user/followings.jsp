@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Amigos que seguem você</title>
+        <title>Amigos que você segue</title>
         <!--<link rel="stylesheet" href="css/tagify-style.css" />-->
         <!--<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/base/jquery-ui.css" />-->
         <!--<link rel="stylesheet" href="resources/css/bootstrap.css" />-->
@@ -25,8 +25,8 @@
         <div class="grid_12">
             <section id="" class="wb-box-with-shadow popular-content">
                 <div class="list-header">
-                    <h4>Amigos que você segue</h4>
                     <wb:message messageBean="${message}" />
+                    <h4>Amigos que você segue</h4>
                 </div>
                 <c:forEach items="${followings}" var="following">
                     <div class="friendship">
