@@ -109,16 +109,19 @@ public class BookmarkController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public String destroy(@PathVariable Long id) {
+    public ResponseEntity<String> destroy(@PathVariable Long id) {
         String principalUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+        ResponseEntity<String> response = null;
 
         Bookmark bookmark = bookmarkService.findById(id);
 
         if (!bookmark.getUser().getUserName().equals(principalUserName)) {
-            return null;
+            response = new ResponseEntity<String>(HttpStatus.FORBIDDEN);
+        } else {
+            bookmarkService.remove(bookmark);
+            response = new ResponseEntity<String>(HttpStatus.OK);
         }
-        bookmarkService.remove(bookmark);
-        return "sucess";
+        return response;
     }
 
     @RequestMapping(value = "/comments", method = RequestMethod.GET)

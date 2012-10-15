@@ -57,7 +57,7 @@ public class UserController {
 
     @RequestMapping(value = "/{userName}", method = RequestMethod.GET)
     public String show(@PathVariable String userName) {
-        return "forward:/bookmarks/{userName}";
+        return "redirect:/bookmarks/{userName}";
     }
 
     @RequestMapping(value = "/account/profile", method = RequestMethod.GET)
@@ -70,7 +70,6 @@ public class UserController {
 
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
     public String update(@Validated({ProfileChecks.class}) User user, BindingResult results, Principal principal, RedirectAttributes redirectAttributes) {
-//        if (ValidationUtils.isValid(results, user, ProfileChecks.class)) {
         if (results.hasErrors()) {
             return "user/edit";
         }
@@ -163,9 +162,4 @@ public class UserController {
         model.addAttribute("followings", user.getFollowings());
         return "user/followings";
     }
-//    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-//    public String delete(@PathVariable Long id) {
-//        service.remove(service.findById(id));
-//        return REDIRECT_USERS;
-//    }
 }

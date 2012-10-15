@@ -219,7 +219,7 @@
             </div>
             <div class="modal-body"></div>
             <div class="modal-footer">
-                <a href="#" class="btn">Fechar</a>
+                <button class="btn" data-dismiss="modal" type="reset">Fechar</button>
             </div>
         </div>
         <div id="share-modal" class="modal hide fade">
@@ -228,8 +228,8 @@
                 <h4>Compartilhar Favorito</h4>
             </div>
             <div class="modal-body">
-                <h4><span class="share-bookmark-title"></span></h4>
-                <p><a href="" class="share-bookmark-url"></span></p>
+                <h5><span class="share-bookmark-title"></span></h5>
+                <p><a href="" class="share-bookmark-url"></a></p>
                 <hr />
                 <ul class="share-actions">
                     <li id="twitter-share"></li>
@@ -261,16 +261,7 @@
         <!--<script type="text/javascript" src="js/jquery.simplemodal.1.4.2.min.js"></script>-->
         <script type="text/javascript">
             $(document).ready(function() {
-                
-                
-                //                function openModal(){
-                //                    $('#add-bookmark-modal').modal({
-                //                        opacity:60,
-                //                        overlayCss: {backgroundColor:"#fff"},
-                //                        overlayClose:true
-                //                
-                //                    });
-                //                }
+
                 //twitter bootstrap modal
                 function openModal(){
                     $('#add-bookmark-modal').modal();
@@ -279,11 +270,7 @@
                 function openCommentsModal(){
                     $("#comments-modal").modal()
                 }
-                
-                
-                //                $('#add-bookmark').click( function(){ 
-                //                    openModal();
-                //                });
+
                 function loadData(){
                     var url = $(this).attr("href");
                     $.get(url, function(data){
@@ -308,7 +295,8 @@
                     $(".gplus-share-button").attr('href', gplusUrl);
                     $(".facebook-share-button").attr('src', facebookUrl);
                     $(".share-bookmark-title").text(shareUrlText);
-//                    $(".share-bookmark-url").text(shareUrl);
+                    $(".share-bookmark-url").text(shareUrl);
+                    $(".share-bookmark-url").attr("href", shareUrl);
                     
                     twttr.widgets.load();
                     $("#share-modal").modal();

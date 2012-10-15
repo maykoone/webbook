@@ -8,6 +8,7 @@ import br.com.webbook.search.IndexPublicBookmarkInterceptor;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -69,7 +70,7 @@ public class Bookmark implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_account")
     private User user;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bookmark")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bookmark", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Set<Comment> comments;
 

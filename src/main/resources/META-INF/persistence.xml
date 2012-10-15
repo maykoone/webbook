@@ -22,4 +22,5 @@
             <property name="hibernate.search.default.indexBase" value="/home/maykoone/lucene/indexes"/> 
         </properties>
     </persistence-unit>
+    
 </persistence>

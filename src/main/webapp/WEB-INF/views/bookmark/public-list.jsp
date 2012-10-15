@@ -32,12 +32,14 @@
                 <div class="user-info">
                     <a hreaf="" class="wb-font-big">
                         <strong>@${userSearch.userName}</strong>
-                    </a>&nbsp;<span class="wb-font-big">[${userSearch.name}]</span>
+                    </a>&nbsp;
+                    <c:if test="${not empty userInstance.name}">
+                        <span class="wb-font-big">[${userSearch.name}]</span>
+                    </c:if>
                     <ul class="user-stats">
-                        <li class="wb-font-small"><a href="" rel="tooltip" title="first tooltip"><strong>${bookmarkList.totalElements}</strong> Bookmarks</a></li>
-                        <li class="wb-font-small"><a href="${rootUrl}/users/${userSearch.userName}/following"><strong>10</strong> seguindo</a></li>
-                        <li class="wb-font-small"><a href="${rootUrl}/users/${userSearch.userName}/followers"><strong>10</strong> seguidores</a></li>
-                        <li class="wb-font-small"><a href="${rootUrl}/filters/${userSearch.userName}"><strong>10</strong> Filtros</a></li>
+                        <li class="wb-font-small"><a href="" data-placement="bottom"  rel="tooltip" title="favoritos de ${userSearch.userName}"><strong>${bookmarkList.totalElements}</strong> Bookmarks</a></li>
+                        <li class="wb-font-small"><a href="${rootUrl}/users/${userSearch.userName}/following" data-placement="bottom"  rel="tooltip" title="Pessoas que ${userSearch.userName} está seguindo"><strong>10</strong> seguindo</a></li>
+                        <li class="wb-font-small"><a href="${rootUrl}/users/${userSearch.userName}/followers" data-placement="bottom"  rel="tooltip" title="Pessoas que seguem ${userSearch.userName}"><strong>10</strong> seguidores</a></li>
                         <li class="wb-font-small"><strong><a href="${rootUrl}/users/${userSearch.userName}/follow" class="btn btn-info btn-mini">Seguir</a></strong></li>
                     </ul>
                 </div>

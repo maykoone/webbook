@@ -11,8 +11,9 @@ import br.com.webbook.service.SearchService;
 import br.com.webbook.service.UserService;
 import br.com.webbook.tags.MessageBean;
 import java.security.Principal;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,13 +42,13 @@ public class SearchController {
     public String search(@RequestParam String q, Principal principal, Model model) {
         User user = userService.findByUserName(principal.getName());
 
-        List<Bookmark> bookmarkResults = searchService.searchBookmarks(q);
+        Set<Bookmark> bookmarkResults = new HashSet<Bookmark>(searchService.searchBookmarks(q));
         if (bookmarkResults == null || bookmarkResults.isEmpty()) {
             model.addAttribute("messageBookmarks", new MessageBean("Não encontrado nenhum resultado de favorito com esse termo.", MessageBean.TYPE.INFO));
         }
         model.addAttribute("bookmarksResults", bookmarkResults);
 
-        List<User> userResults = searchService.searchUsers(q);
+        Set<User> userResults = new HashSet<User>(searchService.searchUsers(q));
         if (userResults == null || userResults.isEmpty()) {
             model.addAttribute("messageUsers", new MessageBean("Não encontrado nenhum resultado de usuário com esse termo.", MessageBean.TYPE.INFO));
         }
@@ -60,8 +61,7 @@ public class SearchController {
     }
 
     @RequestMapping(value = "/ranking/{userName}", method = RequestMethod.GET)
-    public @ResponseBody
-    Map<String, Long> getTagRanking(@PathVariable String userName) {
+    public @ResponseBody Map<String, Long> getTagRanking(@PathVariable String userName) {
         return searchService.tagsByUser(userName);
     }
 }
