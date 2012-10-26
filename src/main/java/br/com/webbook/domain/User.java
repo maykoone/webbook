@@ -6,6 +6,7 @@ package br.com.webbook.domain;
 
 import br.com.webbook.validation.ProfileChecks;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -73,6 +75,8 @@ public class User implements Serializable {
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "follower")
     private Set<Friendship> followings;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date creationDate;
 
     //<editor-fold defaultstate="collapsed" desc="constructors">
     public User() {
@@ -164,6 +168,14 @@ public class User implements Serializable {
 
     public void setFollowings(Set<Friendship> followings) {
         this.followings = followings;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     @Override

@@ -526,10 +526,14 @@ a.bookmark-title{
 }
 #add-bookmark-modal{
     width: 600px;
+    margin: -450px 0 0 -280px;
     /*padding: 15px;*/
 }
 #add-bookmark-modal .modal-body{
     max-height: none
+}
+#add-bookmark-modal .field-input{
+    padding-bottom: 0;
 }
 #add-bookmark-form{
     padding: 10px 20px;

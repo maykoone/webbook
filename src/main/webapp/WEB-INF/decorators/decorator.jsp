@@ -16,12 +16,14 @@
         <link rel="stylesheet" href="<%= request.getContextPath()%>/resources/css/960.css" />
         <link rel="stylesheet" href="<%= request.getContextPath()%>/resources/css/bootstrap.min.css" />
         <link rel="stylesheet" href="<%= request.getContextPath()%>/resources/css/main.css" />
+        <link rel="stylesheet" href="<%= request.getContextPath()%>/resources/css/jquery.tagsinput.css" />
 
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.json-2.2.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.masonry.min.js"></script>
         <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.tagsinput.min.js"></script>
 
 
         <decorator:head />

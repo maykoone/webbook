@@ -6,6 +6,7 @@ package br.com.webbook.domain;
 
 import br.com.webbook.search.IndexPublicBookmarkInterceptor;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -21,6 +22,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -30,7 +32,6 @@ import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
-import org.hibernate.search.bridge.builtin.IterableBridge;
 import org.hibernate.search.bridge.builtin.impl.BuiltinIterableBridge;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
@@ -73,6 +74,8 @@ public class Bookmark implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bookmark", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Set<Comment> comments;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date creationDate;
 
     //<editor-fold defaultstate="collapsed" desc="constructors">
     public Bookmark(String url) {
@@ -160,6 +163,14 @@ public class Bookmark implements Serializable {
 
     public void setHashUrl(String hashUrl) {
         this.hashUrl = hashUrl;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     @Override

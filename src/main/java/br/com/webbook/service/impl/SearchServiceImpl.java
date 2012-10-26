@@ -65,7 +65,7 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public Set<String> tagsByUrl(String url) {
+    public Set<String> getTagsSuggest(String url) {
         String hashUrl = MD5Util.md5Hex(url);
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();

@@ -5,6 +5,7 @@
 package br.com.webbook.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -23,5 +24,10 @@ public class HomeController {
     @RequestMapping(value="/error404", method= RequestMethod.GET)
     public String error404(){
         return "errors/error404";
+    }
+    
+    @RequestMapping(value="/{userName}")
+    public String userHome(@PathVariable String userName){
+        return "redirect:/bookmarks/{userName}";
     }
 }

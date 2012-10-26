@@ -18,7 +18,7 @@ public interface SearchService {
 
     Map<String, Long> tagsByUser(String userName);
 
-    Set<String> tagsByUrl(String url);
+    Set<String> getTagsSuggest(String url);
 
     List<User> searchUsers(String querySearch);
 

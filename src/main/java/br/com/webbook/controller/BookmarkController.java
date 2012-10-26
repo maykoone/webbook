@@ -7,6 +7,7 @@ package br.com.webbook.controller;
 import br.com.webbook.domain.Bookmark;
 import br.com.webbook.domain.User;
 import br.com.webbook.service.BookmarkService;
+import br.com.webbook.service.FilterService;
 import br.com.webbook.service.SearchService;
 import br.com.webbook.service.UserService;
 import br.com.webbook.support.scraping.WebScraper;
@@ -43,6 +44,8 @@ public class BookmarkController {
     private UserService userService;
     @Autowired
     private SearchService searchService;
+    @Autowired
+    private FilterService filterService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView list(@RequestParam(required = false) Integer page, Principal principal) {
@@ -53,6 +56,7 @@ public class BookmarkController {
         model.addObject("bookmark", new Bookmark());
         model.addAllObjects(configurePagination(pageResult));
         model.addObject("userInstance", user);
+        model.addObject("filterCount", filterService.countByUser(user));
         return model;
     }
 
@@ -137,8 +141,8 @@ public class BookmarkController {
             return new ResponseEntity<Bookmark>(HttpStatus.NOT_FOUND);
         }
 
-        //recomendation
-        bookmark.setTags(searchService.tagsByUrl(url));
+        //recommendation
+        bookmark.setTags(searchService.getTagsSuggest(url));
         return new ResponseEntity<Bookmark>(bookmark, HttpStatus.OK);
     }
 

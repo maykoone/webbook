@@ -279,6 +279,7 @@
                         $("#url").val(data.url);
                         $("#description").val(data.description);
                         $("#tags").val(data.tags);
+                        $("#tags").importTags(data.tags.toString());
                         data.privateBookmark?$("#privateBookmark").attr("checked", "checked"):$("#privateBookmark").removeAttr("checked");
                         openModal();
                     });
@@ -362,6 +363,7 @@
                         $(".char-counter").text(data.description.length);
                         $("#tags").val(data.tags);
                         
+                        
                         $("fieldset.bookmark-form").show();
                         $("div.loading").hide();
                         $("#btn-bookmark-modal-post").removeClass("disabled");
@@ -375,7 +377,11 @@
                     $(".char-counter").text($(this).val().length);
                 });
                 
-                
+                $("#tags").tagsInput({
+                    'height':'auto',
+                    'width':'auto',
+                    'defaultText':'add uma tag'
+                });
 
             });
         </script>
