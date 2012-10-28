@@ -64,7 +64,6 @@ public class BookmarkServiceImpl implements BookmarkService {
     @Override
     public Page<Bookmark> list(Integer pageNumber, Integer pageSize) {
         PageRequest request = new PageRequest(pageNumber - 1, pageSize);
-        Collections.sort(null, this);
         return bookmarkRepository.findAll(request);
     }
 
