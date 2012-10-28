@@ -10,6 +10,8 @@ import br.com.webbook.repositories.BookmarkRepository;
 import br.com.webbook.repositories.query.BookmarkSpecifications;
 import br.com.webbook.service.BookmarkService;
 import br.com.webbook.utils.MD5Util;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,7 @@ public class BookmarkServiceImpl implements BookmarkService {
         //para facilitar as pesquisas sobre a url
         String hashUrl = MD5Util.md5Hex(bookmark.getUrl());
         bookmark.setHashUrl(hashUrl);
+        bookmark.setCreationDate(new Date());
         return bookmarkRepository.save(bookmark);
     }
 
@@ -61,6 +64,7 @@ public class BookmarkServiceImpl implements BookmarkService {
     @Override
     public Page<Bookmark> list(Integer pageNumber, Integer pageSize) {
         PageRequest request = new PageRequest(pageNumber - 1, pageSize);
+        Collections.sort(null, this);
         return bookmarkRepository.findAll(request);
     }
 

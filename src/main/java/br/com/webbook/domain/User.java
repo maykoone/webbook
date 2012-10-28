@@ -36,7 +36,8 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 @Entity
 @Table(name = "wb_user_account", uniqueConstraints = {
-    @UniqueConstraint(name = "unique_username", columnNames = "username")})
+    @UniqueConstraint(name = "unique_username", columnNames = "username"),
+    @UniqueConstraint(name = "unique_email", columnNames = "email")})
 @Indexed
 public class User implements Serializable {
 
@@ -45,9 +46,9 @@ public class User implements Serializable {
     @GeneratedValue(generator = "wb_user_account_seq", strategy = GenerationType.AUTO)
     @SequenceGenerator(name = "wb_user_account_seq", sequenceName = "wb_user_account_seq", allocationSize = 1)
     private Long id;
-    @Size(min = 3, max = 30, message = "O nome deve ter no mínimo 3 e no máximo 30 caracteres.", groups = {ProfileChecks.class})
+    @Size(max = 30, message = "O nome deve ter no máximo 30 caracteres.", groups = {ProfileChecks.class})
     private String name;
-    @Size(min = 3, max = 30, message = "O sobrenome deve ter no mínimo 3 e no máximo 30 caracteres.", groups = {ProfileChecks.class})
+    @Size(max = 30, message = "O sobrenome deve ter no máximo 30 caracteres.", groups = {ProfileChecks.class})
     private String lastName;
     @NotNull(message = "A senha é obrigatória", groups = {Default.class})
     @NotBlank(message = "A senha é obrigatória", groups = {Default.class})

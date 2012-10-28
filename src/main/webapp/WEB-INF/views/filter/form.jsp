@@ -39,20 +39,17 @@
         <div class="clear"></div>
         <div class="grid_8" >
             <div class="wb-box-with-shadow">
-                <c:set var="formMethod" value="post" />
-                <c:if test="${filterInstance.id ne null}">
-                    <c:set var="formMethod" value="put"/>
-                </c:if>
                 <form:form action="${pageContext.request.contextPath}/filters" commandName="filterInstance" method="${formMethod}" cssClass="form-horizontal form">
                     <legend>Cadastro de filtro</legend>
-                    <form:hidden path="id" />
+                    <div class="loading" style="display: none"><img class="ajax-loader" src="${pageContext.request.contextPath}/resources/img/ajax-loader.gif" /></div>
+                    <input type="hidden" name="id" id="id"/>
                     <div class="field-block">
                         <div class="field-title">
                             <label>Título</label>
                         </div>
                         <div class="field-input">
                             <form:errors path="title" />
-                            <input class="input-xxlarge" type="text" name="title" value="${filterInstance.title}" />
+                            <input class="input-xxlarge" type="text" id="title" name="title" />
                             <span class="help-block">Dê um título ao seu filtro (Obrigatório)</span>
                         </div>
                     </div>
@@ -62,7 +59,7 @@
                             <label>Descrição</label>
                         </div>
                         <div class="field-input">
-                            <textarea class="input-xxlarge" rows="3" cols="4" name="description">${filterInstance.description}</textarea>
+                            <textarea class="input-xxlarge" rows="3" cols="4" id="description" name="description"></textarea>
                             <span class="help-block">Informe uma descrição</span>
                         </div>
                     </div>
@@ -71,7 +68,7 @@
                             <label>Tags</label>
                         </div>
                         <div class="field-input">
-                            <input class="input-xxlarge"type="text" name="tags" value="${filterInstance.tags}" />
+                            <input class="input-xxlarge"type="text" name="tags" id="tags" id="tags" />
                             <span class="help-block">Todos os links que correspondem a essas tags serão visualizadas através desse filtro</span>
                         </div>
                     </div>
@@ -90,6 +87,30 @@
                 <p class="wb-font-medium" ></p>
             </div>
         </div>
-        
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("div.loading").ajaxStart(function() {
+                    $(this).show();
+                });
+                $("div.loading").ajaxComplete(function() {
+                    $(this).hide();
+                });
+            <c:if test="${filterId ne null}">
+                
+                $.get("${pageContext.request.contextPath}/filters/${filterId}", function(data){
+                    $("#id").val(data.id);
+                    $("#title").val(data.title);
+                    $("#description").val(data.description);
+                    $("#tags").val(data.tags);
+                    $("#tags").importTags(data.tags.toString());
+                });
+            </c:if>
+                $("#tags").tagsInput({
+                    'height':'auto',
+                    'width':'530px',
+                    'defaultText':'add uma tag'
+                });
+        })
+        </script>
     </body>
 </html>

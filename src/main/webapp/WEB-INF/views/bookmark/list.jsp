@@ -8,6 +8,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@taglib uri="/WEB-INF/tags/webbook.tld" prefix="wb" %>
 <!DOCTYPE html>
@@ -61,13 +62,16 @@
                                             <i class="icon-plus icon-white"></i>Adicionar Favorito
                                         </a>-->
                 </div>
+
                 <c:forEach items="${bookmarkList.content}" var="bookmark">
                     <div class="bookmark-item">
                         <a href="" class="bookmark-thumbnail">
                             <div class="default-thumb"></div>
                         </a>
                         <div class="bookmark-info">
-                            <p><a href="" class="bookmark-title wb-font-medium">${bookmark.title}&nbsp;<c:if test="${bookmark.privateBookmark}"><i class="icon-lock"></i></c:if></a><p>
+                            <p>
+                                <a href="" class="bookmark-title wb-font-medium">${bookmark.title}&nbsp;<c:if test="${bookmark.privateBookmark}"><i class="icon-lock"></i></c:if></a>&nbsp;<small><fmt:formatDate value="${bookmark.creationDate}" pattern="d MMM, yyyy"/></small>
+                            <p>
                                 <a href="" class="bookmark-url wb-font-small">${bookmark.url}</a>
                             <p class="wb-font-small">${bookmark.description}</p>
                             <ul class="bookmark-tag-list">
@@ -338,7 +342,6 @@
                     $.each(data, function(key, val) {
                         
                         $('div.top-tags ul').prepend('<li><span class="label label-success">'+ key +'</span> <span class="badge">'+ val + '</span></li>');
-                        //                        items.push('<li>'+ key +' ('+ val +')'+ '</li>');
                     });
 
                     
@@ -360,9 +363,12 @@
                         $("#title").val(data.title);
                         $("#url").val(data.url);
                         $("#description").val(data.description);
-                        $(".char-counter").text(data.description.length);
-                        $("#tags").val(data.tags);
-                        
+                        if(data.description != null){
+                            $(".char-counter").text(data.description.length);
+                        }
+                        if(data.tags != null){
+                            $("#tags").importTags(data.tags.toString());
+                        }
                         
                         $("fieldset.bookmark-form").show();
                         $("div.loading").hide();

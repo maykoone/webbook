@@ -9,6 +9,7 @@ import br.com.webbook.domain.User;
 import br.com.webbook.repositories.FriendshipRepository;
 import br.com.webbook.repositories.UserRepository;
 import br.com.webbook.service.UserService;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -37,6 +38,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     @Transactional
     public User save(User user) {
+        user.setCreationDate(new Date());
         userRepository.save(user);
         String encodePassword = passwordEncoder.encodePassword(user.getPassword(), user.getId());
         user.setPassword(encodePassword);
@@ -117,5 +119,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean isUniqueUserName(String userName) {
+        User user = userRepository.findByUserName(userName);
+        return user == null;
+    }
+
+    @Override
+    public boolean isUniqueEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        return user == null;
+    }
+
+    @Override
+    public boolean validUnique(User user) {
+        return this.isUniqueUserName(user.getUserName()) && this.isUniqueEmail(user.getEmail());
     }
 }

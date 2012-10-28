@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +32,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/users")
 public class UserController {
 
-    private static final String REDIRECT_USERS = "redirect:/users";
+    public static final String REDIRECT_USERS = "redirect:/users";
+    public static final String VIEW_CREATE = "user/create";
+    public static final String VIEW_EDIT = "user/edit";
     @Autowired
     private UserService service;
 
@@ -42,13 +45,19 @@ public class UserController {
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView create() {
-        return new ModelAndView("user/create", "contato", new User());
+        return new ModelAndView(VIEW_CREATE, "contato", new User());
     }
 
     @RequestMapping(value = "/create_account", method = RequestMethod.POST)
     public String save(@Validated({Default.class}) User user, BindingResult result, RedirectAttributes attributes) {
+        if (!service.isUniqueUserName(user.getUserName())) {
+            result.addError(new FieldError("user", "userName", "Este nome de usuário já está sendo utilizado"));
+        }
+        if (!service.isUniqueEmail(user.getEmail())) {
+            result.addError(new FieldError("user", "email", "Este email já está registrado para outro usuário"));
+        }
         if (result.hasErrors()) {
-            return "user/create";
+            return VIEW_CREATE;
         }
         service.save(user);
         attributes.addFlashAttribute("message", new MessageBean("Seu cadastro foi realizado com sucesso. Efetue o login para acesso."));
@@ -65,19 +74,36 @@ public class UserController {
         User user = service.findByUserName(principal.getName());
         model.addAttribute("user", user);
         model.addAttribute("userChangePasswordForm", new UserChangePasswordForm());
-        return "user/edit";
+        return VIEW_EDIT;
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
-    public String update(@Validated({ProfileChecks.class}) User user, BindingResult results, Principal principal, RedirectAttributes redirectAttributes) {
-        if (results.hasErrors()) {
-            return "user/edit";
+    public String update(@Validated({ProfileChecks.class}) User user, BindingResult result, Principal principal, RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            return VIEW_EDIT;
         }
+
         //carrega os dados do usuário logado.
         User userEdit = service.findByUserName(principal.getName());
 
-        //evitar que altere outro usuário
-        if (userEdit != null) {
+        if (userEdit != null && user.equals(userEdit)) {
+            if (!user.getEmail().equals(userEdit.getEmail())) {
+                //se estiver trocando o email validar se já não está sendo usado
+                if (!service.isUniqueEmail(user.getEmail())) {
+                    result.addError(new FieldError("user", "email", "Este email já está registrado para outro usuário"));
+                }
+
+            }
+            if (!user.getUserName().equals(userEdit.getUserName())) {
+                if (!service.isUniqueUserName(user.getUserName())) {
+                    result.addError(new FieldError("user", "userName", "Este nome de usuário já está sendo utilizado"));
+                }
+            }
+
+            if (result.hasErrors()) {
+                return VIEW_EDIT;
+            }
+
             userEdit.setName(user.getName());
             userEdit.setEmail(user.getEmail());
             userEdit.setLastName(user.getLastName());
@@ -105,7 +131,7 @@ public class UserController {
         } else {
             User user = service.findByUserName(principal.getName());
             model.addAttribute("user", user);
-            return "user/edit";
+            return VIEW_EDIT;
         }
         return REDIRECT_USERS + "/account/profile";
     }

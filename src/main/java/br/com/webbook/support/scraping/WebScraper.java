@@ -24,7 +24,7 @@ public class WebScraper {
         }
 
         try {
-            Document doc = Jsoup.connect(url).get();
+            Document doc = Jsoup.connect(url).timeout(5000).get();
 
             String title = doc.title();
             Elements descriptionQuery = doc.select("meta[name=description]");
@@ -42,10 +42,10 @@ public class WebScraper {
 
         } catch (IOException e) {
             Logger.getLogger(WebScraper.class.getName()).log(Level.SEVERE, null, e);
-            return null;
+            return new Bookmark(url);
         } catch (Exception e) {
             Logger.getLogger(WebScraper.class.getName()).log(Level.SEVERE, null, e);
-            return null;
+            return new Bookmark(url);
         }
     }
 }

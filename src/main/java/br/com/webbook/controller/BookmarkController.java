@@ -91,10 +91,11 @@ public class BookmarkController {
 
     @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
     @ResponseBody
-    public Bookmark edit(@PathVariable Long id) {
+    public ResponseEntity<Bookmark> edit(@PathVariable Long id) {
         String principalUserName = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Bookmark bookmark = bookmarkService.findById(id);
+        ResponseEntity<Bookmark> response = new ResponseEntity<Bookmark>(bookmark, HttpStatus.OK);
 
         if (!bookmark.getUser().getUserName().equals(principalUserName)) {
             if (!bookmark.getPrivateBookmark()) {
@@ -102,13 +103,13 @@ public class BookmarkController {
                 Bookmark bookmarkCopy = new Bookmark(bookmark.getUrl());
                 bookmarkCopy.setTitle(bookmark.getTitle());
                 bookmarkCopy.setTags(bookmark.getTags());
-                return bookmarkCopy;
+                response = new ResponseEntity<Bookmark>(bookmarkCopy, HttpStatus.OK);
             } else {
-                return null;
+                response = new ResponseEntity<Bookmark>(HttpStatus.NOT_FOUND);
             }
 
         }
-        return bookmark;
+        return response;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -137,9 +138,6 @@ public class BookmarkController {
     @ResponseBody
     public ResponseEntity<Bookmark> bookmarkPreview(@RequestParam String url) {
         Bookmark bookmark = WebScraper.scrapingHtml(url);
-        if (bookmark == null) {
-            return new ResponseEntity<Bookmark>(HttpStatus.NOT_FOUND);
-        }
 
         //recommendation
         bookmark.setTags(searchService.getTagsSuggest(url));

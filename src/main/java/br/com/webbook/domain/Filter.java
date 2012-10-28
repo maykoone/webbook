@@ -72,6 +72,7 @@ public class Filter implements Serializable {
         this.tags = tags;
     }
 
+
     public User getUser() {
         return user;
     }
