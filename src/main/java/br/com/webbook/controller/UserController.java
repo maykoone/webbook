@@ -73,6 +73,7 @@ public class UserController {
     public String edit(Principal principal, Model model) {
         User user = service.findByUserName(principal.getName());
         model.addAttribute("user", user);
+        model.addAttribute("userInstance", user);
         model.addAttribute("userChangePasswordForm", new UserChangePasswordForm());
         return VIEW_EDIT;
     }

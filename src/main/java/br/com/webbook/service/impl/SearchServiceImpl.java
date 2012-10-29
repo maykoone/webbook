@@ -8,11 +8,14 @@ import br.com.webbook.domain.Bookmark;
 import br.com.webbook.domain.User;
 import br.com.webbook.service.SearchService;
 import br.com.webbook.utils.MD5Util;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Tuple;
@@ -55,7 +58,7 @@ public class SearchServiceImpl implements SearchService {
 
         List<Tuple> result = entityManager.createQuery(query).getResultList();
 
-        Map<String, Long> tagRanking = new HashMap<String, Long>();
+        Map<String, Long> tagRanking = new TreeMap<String, Long>();
 
         for (Tuple t : result) {
             tagRanking.put((String) t.get("tag"), (Long) t.get("count_tags"));
@@ -63,6 +66,7 @@ public class SearchServiceImpl implements SearchService {
 
         return tagRanking;
     }
+    
 
     @Override
     public Set<String> getTagsSuggest(String url) {

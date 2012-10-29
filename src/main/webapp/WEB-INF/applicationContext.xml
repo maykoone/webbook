@@ -33,7 +33,7 @@
         <security:intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
         
 
-        <security:form-login login-page="/login" authentication-failure-url="/login/failure"
+        <security:form-login always-use-default-target="true" login-page="/login" authentication-failure-url="/login/failure"
                          default-target-url="/bookmarks" />
 
         <security:logout invalidate-session="true" logout-success-url="/logout/success"

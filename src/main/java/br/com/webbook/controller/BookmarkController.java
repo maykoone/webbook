@@ -65,12 +65,15 @@ public class BookmarkController {
         if (userName.equals(principal.getName())) {
             return "redirect:/bookmarks";
         }
-        User user = userService.findByUserName(userName);
-        if (user == null) {
-            return "error404";
+        User userSearch = userService.findByUserName(userName);
+        if (userSearch == null) {
+            return "redirect:/error404";
         }
-        Page<Bookmark> pageResult = bookmarkService.listPublicBookmarksByUser(user, page == null ? 1 : page, 10);
-        model.addAttribute("userSearch", user);
+        User userInstance = userService.findByUserName(principal.getName());
+
+        Page<Bookmark> pageResult = bookmarkService.listPublicBookmarksByUser(userSearch, page == null ? 1 : page, 10);
+        model.addAttribute("userSearch", userSearch);
+        model.addAttribute("userInstance", userInstance);
         model.addAttribute("bookmark", new Bookmark());
         model.addAllAttributes(configurePagination(pageResult));
 

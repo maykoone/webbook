@@ -339,9 +339,17 @@ textarea{}
 .error{
     color: #B94A48;
 }
-.field-input input.error { 
-    border: 3px solid #d1c030 !important; 
-    background: #fffdef; 
+.field-input input.error, .field-input select.error, .field-input textarea.error { 
+    border-color: #B94A48;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); 
+}
+.field-input input:focus.error, .field-input select:focus.error, .field-input textarea:focus.error { 
+    border-color: #953B39;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #D59392;
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392;
+    box-shadow: inset 0 1px 1px  rgba(0, 0, 0, 0.075), 0 0 6px #D59392;
 }
 .field-input input,
 .field-input textarea { 
@@ -725,4 +733,11 @@ a.bookmark-title{
 }
 .search-item .user-result .details{
     font-size: 80%;
+}
+/*styles for jquery validation plugin*/
+label.error{
+    color: #B94A48;
+}
+input.error{
+    border-color: #953B39;
 }

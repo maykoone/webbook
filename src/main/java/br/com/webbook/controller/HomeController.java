@@ -30,4 +30,9 @@ public class HomeController {
     public String userHome(@PathVariable String userName){
         return "redirect:/bookmarks/{userName}";
     }
+    
+    @RequestMapping(value="/dashboard", method= RequestMethod.GET)
+    public String dashboard(){
+        return "home/dashboard";
+    }
 }

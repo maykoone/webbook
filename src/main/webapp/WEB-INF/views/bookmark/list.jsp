@@ -40,7 +40,7 @@
                         <li class="wb-font-small"><a href="${pageContext.request.contextPath}/bookmarks" data-placement="bottom"  rel="tooltip" title="Seus favoritos">${bookmarkList.totalElements} Bookmarks</a></li>
                         <li class="wb-font-small"><a href="users/followings"  data-placement="bottom"  rel="tooltip" title="Veja quais amigos você acompanha">${fn:length(userInstance.followings)} Seguindo</a></li>
                         <li class="wb-font-small"><a href="users/followers"data-placement="bottom"  rel="tooltip" title="Veja quais pessoas acompanham você">${fn:length(userInstance.followers)} Seguidores</a></li>
-                        <li class="wb-font-small"><a href="${pageContext.request.contextPath}/filters">10 Filtros</a></li>
+                        <li class="wb-font-small"><a href="${pageContext.request.contextPath}/filters">${filterCount} filtros</a></li>
                         <li class="wb-font-small"><strong><a href="users/account/profile" class="btn btn-mini"><i class="icon-user"></i>Edite seu Perfil</a></strong></li>
                     </ul>
                 </div>
@@ -164,7 +164,7 @@
                                 <label>Título</label>
                             </div>
                             <div class="field-input">
-                                <input class="input-xxlarge" type="text" name="title" id="title">
+                                <input class="input-xxlarge" type="text" name="title" id="title" >
                                 <span class="help-block">Título do link</span>
                             </div>
                         </div>
@@ -387,6 +387,27 @@
                     'height':'auto',
                     'width':'auto',
                     'defaultText':'add uma tag'
+                });
+                
+                $("#modal-form").validate({
+                    rules: {
+                        url:{
+                            required: true,
+                            url: true
+                        },
+                        description: {
+                            maxlength: 140
+                        }
+                    },
+                    messages: {
+                        url: {
+                            required: "URL é um campo obrigatório",
+                            url: "O Valor informado não é uma URL válida"
+                        },
+                        description: {
+                            maxlength: "A descrição deve ter no máximo 140 caracteres"
+                        }
+                    }
                 });
 
             });

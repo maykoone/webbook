@@ -10,13 +10,13 @@ import br.com.webbook.repositories.BookmarkRepository;
 import br.com.webbook.repositories.query.BookmarkSpecifications;
 import br.com.webbook.service.BookmarkService;
 import br.com.webbook.utils.MD5Util;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,13 +63,13 @@ public class BookmarkServiceImpl implements BookmarkService {
 
     @Override
     public Page<Bookmark> list(Integer pageNumber, Integer pageSize) {
-        PageRequest request = new PageRequest(pageNumber - 1, pageSize);
+        PageRequest request = new PageRequest(pageNumber - 1, pageSize, new Sort(Sort.Direction.DESC, "creationDate"));
         return bookmarkRepository.findAll(request);
     }
 
     @Override
     public Page<Bookmark> listByUser(User user, Integer pageNumber, Integer pageSize) {
-        PageRequest request = new PageRequest(pageNumber - 1, pageSize);
+        PageRequest request = new PageRequest(pageNumber - 1, pageSize, new Sort(Sort.Direction.DESC, "creationDate"));
         Page<Bookmark> pageResult = bookmarkRepository.findAll(BookmarkSpecifications.bookmarksByUser(user), request);
 
         return pageResult;
@@ -82,17 +82,15 @@ public class BookmarkServiceImpl implements BookmarkService {
 
     @Override
     public Page<Bookmark> listPublicBookmarksByUser(User user, Integer pageNumber, Integer pageSize) {
-        PageRequest request = new PageRequest(pageNumber - 1, pageSize);
+        PageRequest request = new PageRequest(pageNumber - 1, pageSize, new Sort(Sort.Direction.DESC, "creationDate"));
         Page<Bookmark> pageResult = bookmarkRepository.findAll(BookmarkSpecifications.publicBookmarksByUser(user), request);
-
         return pageResult;
     }
 
     @Override
     public Page<Bookmark> listPublicBookmarksByTags(Set<String> tags, Integer pageNumber, Integer pageSize) {
-        PageRequest request = new PageRequest(pageNumber - 1, pageSize);
+        PageRequest request = new PageRequest(pageNumber - 1, pageSize, new Sort(Sort.Direction.DESC, "creationDate"));
         Page<Bookmark> pageResult = bookmarkRepository.findDistinctByTagsInAndPrivateBookmark(tags, false, request);
-
         return pageResult;
     }
 }
