@@ -5,6 +5,12 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@taglib uri="/WEB-INF/tags/webbook.tld" prefix="wb" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -27,7 +33,7 @@
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#tab1" data-toggle="tab">Populares</a></li>
                         <li><a href="#tab2" data-toggle="tab">Recentes</a></li>
-                        <li><a href="#tab2" data-toggle="tab">Seguidores</a></li>
+                        <li><a href="#tab3" data-toggle="tab">Favoritos de quem você segue</a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab1">
@@ -37,7 +43,10 @@
                             <p>Howdy, I'm in Section 2.</p>
                         </div>
                         <div class="tab-pane" id="tab3">
-                            <p>Howdy, I'm in Section 2.</p>
+                            <c:forEach items="${followingsBookmarks}" var="bookmark">
+                                <p>${bookmark.url}</p>
+                                <p>${bookmark.user.userName}</p>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>

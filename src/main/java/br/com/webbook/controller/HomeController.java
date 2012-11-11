@@ -4,7 +4,15 @@
  */
 package br.com.webbook.controller;
 
+import br.com.webbook.domain.Bookmark;
+import br.com.webbook.domain.User;
+import br.com.webbook.service.BookmarkService;
+import br.com.webbook.service.UserService;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +23,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class HomeController {
+    
+    @Autowired
+    private BookmarkService bookmarkService;
+    @Autowired
+    private UserService userService;
     
     @RequestMapping(value="/home", method = RequestMethod.GET)
     public String index() {
@@ -32,7 +45,14 @@ public class HomeController {
     }
     
     @RequestMapping(value="/dashboard", method= RequestMethod.GET)
-    public String dashboard(){
+    public String dashboard(Model model){
+        String principalUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByUserName(principalUserName);
+        
+        List<Bookmark> bookmarks = bookmarkService.listPublicBookmarksFromFollowingsOfUser(user);
+        
+        model.addAttribute("followingsBookmarks", bookmarks);
+        model.addAttribute("userInstance", user);
         return "home/dashboard";
     }
 }
