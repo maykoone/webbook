@@ -38,7 +38,7 @@
                                         <wb:gravatar email="${user.email}" />
                                     </div>
                                     <h4><a href="${pageContext.request.contextPath}/${user.userName}">${user.userName}</a></h4>
-                                    <div class="details">10 Favoritos | 10 Seguidores | 10 Seguindo</div>
+                                    <div class="details">${fn:length(user.bookmarks)} Favoritos | ${fn:length(user.followers)} Seguidores | ${fn:length(user.followings)} Seguindo</div>
                                 </div>
                             </div>
                         </c:forEach>

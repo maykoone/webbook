@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.validation.groups.Default;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -47,8 +48,10 @@ public class User implements Serializable {
     @SequenceGenerator(name = "wb_user_account_seq", sequenceName = "wb_user_account_seq", allocationSize = 1)
     private Long id;
     @Size(max = 30, message = "O nome deve ter no máximo 30 caracteres.", groups = {ProfileChecks.class})
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     private String name;
     @Size(max = 30, message = "O sobrenome deve ter no máximo 30 caracteres.", groups = {ProfileChecks.class})
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     private String lastName;
     @NotNull(message = "A senha é obrigatória", groups = {Default.class})
     @NotBlank(message = "A senha é obrigatória", groups = {Default.class})
@@ -63,6 +66,7 @@ public class User implements Serializable {
     @NotBlank(message = "O nome de usuário é obrigatório", groups = {Default.class, ProfileChecks.class})
     @NotNull(message = "O nome de usuário é obrigatório", groups = {Default.class, ProfileChecks.class})
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+    @Pattern(regexp="[a-zA-Z0-9_-]+")
     private String userName;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @JsonIgnore

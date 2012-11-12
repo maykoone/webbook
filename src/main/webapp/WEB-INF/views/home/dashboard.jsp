@@ -9,6 +9,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@taglib uri="/WEB-INF/tags/webbook.tld" prefix="wb" %>
 <!DOCTYPE html>
@@ -44,8 +45,18 @@
                         </div>
                         <div class="tab-pane" id="tab3">
                             <c:forEach items="${followingsBookmarks}" var="bookmark">
-                                <p>${bookmark.url}</p>
-                                <p>${bookmark.user.userName}</p>
+                                <div class="search-item">
+                                    <div class="user-result">
+                                        <div class="avatar img-polaroid">
+                                            <wb:gravatar email="${bookmark.user.email}" />
+                                        </div>
+                                            <h4>${bookmark.title}&nbsp;<small><fmt:formatDate value="${bookmark.creationDate}" pattern="d MMM, yyyy"/></small></h4>
+                                        <p><a href=""><small>${bookmark.url}</small></a></p>
+                                        <div class="details">
+                                            <a href="${pageContext.request.contextPath}/${bookmark.user.userName}">${bookmark.user.userName}</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </c:forEach>
                         </div>
                     </div>

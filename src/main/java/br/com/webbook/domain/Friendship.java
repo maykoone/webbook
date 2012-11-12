@@ -20,7 +20,7 @@ import javax.persistence.UniqueConstraint;
  * @author maykoone
  */
 @Entity
-@Table(name = "friendship", uniqueConstraints = {
+@Table(name = "wb_friendship", uniqueConstraints = {
     @UniqueConstraint(name = "unique_friendship", columnNames = {"follower", "followed"})})
 public class Friendship implements Serializable {
 

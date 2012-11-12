@@ -27,7 +27,7 @@ public class UserServiceImplTest {
 
     public UserServiceImplTest() {
         ctx = new ClassPathXmlApplicationContext(
-                "classpath:META-INF/beans.xml");
+                "classpath:META-INF/beans_test.xml");
         service = (UserService) ctx.getBean("userService");
     }
 

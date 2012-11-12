@@ -34,7 +34,7 @@
         <!-- CabeÃ§alho -->
         <header>
             <nav class="container_16">
-                <a class="logo wb-left-float" href="">Webbook</a>
+                <a class="logo wb-left-float" href="${pageContext.request.contextPath}/dashboard">Webbook</a>
                 <sec:authorize access="isAuthenticated()">
                     <form class="form-search" id="searchbox" action="${pageContext.request.contextPath}/search">
                         <div class="input-append">

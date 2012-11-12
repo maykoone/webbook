@@ -27,7 +27,7 @@ public class FilterServiceImplTest {
 
     public FilterServiceImplTest() {
         ctx = new ClassPathXmlApplicationContext(
-                "classpath:META-INF/beans.xml");
+                "classpath:META-INF/beans_test.xml");
         service = (FilterService) ctx.getBean("filterService");
     }
 

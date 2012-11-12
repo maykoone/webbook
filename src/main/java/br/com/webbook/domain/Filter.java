@@ -40,7 +40,7 @@ public class Filter implements Serializable {
     @Size(max = 140, message = "O campo descrição deve ter no máximo 140 caracteres")
     private String description;
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "filter_tags", joinColumns = {
+    @CollectionTable(name = "wb_filter_tags", joinColumns = {
         @JoinColumn(name = "filter_id")})
     private Set<String> tags;
     @ManyToOne

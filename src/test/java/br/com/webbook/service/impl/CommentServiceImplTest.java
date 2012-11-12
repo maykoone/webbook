@@ -27,7 +27,7 @@ public class CommentServiceImplTest {
 
     public CommentServiceImplTest() {
         ctx = new ClassPathXmlApplicationContext(
-                "classpath:META-INF/beans.xml");
+                "classpath:META-INF/beans_test.xml");
         service = (CommentService) ctx.getBean("commentService");
     }
 
