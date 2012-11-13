@@ -29,4 +29,5 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long>, JpaSp
 
     Page<Bookmark> findDistinctByTagsInAndPrivateBookmark(Set<String> tags, boolean privateBookmark, Pageable pageable);
 //    Page<Bookmark> findByUser(String userName, Pageable pageable);
+    Page<Bookmark> findByPrivateBookmark(boolean privateBookmark, Pageable pageable);
 }

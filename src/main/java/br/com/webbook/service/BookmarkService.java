@@ -35,4 +35,6 @@ public interface BookmarkService {
     Page<Bookmark> listPublicBookmarksByTags(Set<String> tags, Integer pageNumber, Integer pageSize);
     
     List<Bookmark> listPublicBookmarksFromFollowingsOfUser(User user);
+    
+    List<Bookmark> listPopularPublicBookmarks();
 }

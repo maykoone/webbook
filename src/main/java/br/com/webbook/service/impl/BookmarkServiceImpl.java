@@ -11,16 +11,17 @@ import br.com.webbook.repositories.BookmarkRepository;
 import br.com.webbook.repositories.query.BookmarkSpecifications;
 import br.com.webbook.service.BookmarkService;
 import br.com.webbook.utils.MD5Util;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Tuple;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,7 +40,6 @@ public class BookmarkServiceImpl implements BookmarkService {
 
     @Autowired
     private BookmarkRepository bookmarkRepository;
-    
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -76,7 +76,7 @@ public class BookmarkServiceImpl implements BookmarkService {
     @Override
     public Page<Bookmark> list(Integer pageNumber, Integer pageSize) {
         PageRequest request = new PageRequest(pageNumber - 1, pageSize, new Sort(Sort.Direction.DESC, "creationDate"));
-        return bookmarkRepository.findAll(request);
+        return bookmarkRepository.findByPrivateBookmark(false, request);
     }
 
     @Override
@@ -110,17 +110,35 @@ public class BookmarkServiceImpl implements BookmarkService {
     public List<Bookmark> listPublicBookmarksFromFollowingsOfUser(User user) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Bookmark> query = cb.createQuery(Bookmark.class);
-        
+
         Root<Bookmark> from = query.from(Bookmark.class);
         Join<Bookmark, User> joinUsers = from.join("user");
         Join<User, Friendship> joinFriendship = joinUsers.join("followers", JoinType.LEFT);
-        
-        
+
+
         query.select(from).where(cb.equal(joinFriendship.get("follower"), user), cb.isFalse(from.<Boolean>get("privateBookmark")));
         query.orderBy(cb.desc(from.get("creationDate")));
-        
-        return entityManager.createQuery(query).getResultList();
+
+        return entityManager.createQuery(query).setMaxResults(15).getResultList();
     }
-    
-    
+
+    @Override
+    public List<Bookmark> listPopularPublicBookmarks() {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Tuple> query = cb.createTupleQuery();
+
+        Root<Bookmark> root = query.from(Bookmark.class);
+        query.select(cb.tuple(cb.count(root), root.<String>get("url")));
+        query.where(cb.not(root.<Boolean>get("privateBookmark")));
+        query.groupBy(root.<String>get("url"));
+        query.orderBy(cb.desc(cb.count(root)));
+
+        List<Tuple> result = entityManager.createQuery(query).setMaxResults(15).getResultList();
+        List<Bookmark> bookmarks = new ArrayList<Bookmark>();
+        for (Tuple t : result) {
+            bookmarks.add(new Bookmark((String) t.get(1)));
+        }
+        
+        return bookmarks;
+    }
 }

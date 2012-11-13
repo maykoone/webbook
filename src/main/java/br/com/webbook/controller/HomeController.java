@@ -49,9 +49,13 @@ public class HomeController {
         String principalUserName = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUserName(principalUserName);
         
-        List<Bookmark> bookmarks = bookmarkService.listPublicBookmarksFromFollowingsOfUser(user);
+        List<Bookmark> followingsBookmarks = bookmarkService.listPublicBookmarksFromFollowingsOfUser(user);
+        List<Bookmark> recentBookmarks = bookmarkService.list(1, 15).getContent();
+        List<Bookmark> popularBookmarks = bookmarkService.listPopularPublicBookmarks();
         
-        model.addAttribute("followingsBookmarks", bookmarks);
+        model.addAttribute("followingsBookmarks", followingsBookmarks);
+        model.addAttribute("recentBookmarks", recentBookmarks);
+        model.addAttribute("popularBookmarks", popularBookmarks);
         model.addAttribute("userInstance", user);
         return "home/dashboard";
     }
