@@ -16,7 +16,9 @@ import java.util.Set;
  */
 public interface SearchService {
 
-    Map<String, Long> tagsByUser(String userName);
+    Map<String, Long> countTagsByUser(String userName);
+    
+    Map<String, Long> countAllTags(int limit);
 
     Set<String> getTagsSuggest(String url);
 

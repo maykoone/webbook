@@ -668,6 +668,7 @@ a.bookmark-title{
     padding: 5px;
     border-bottom: 1px solid #E5E5E5;
     min-height: 60px;
+    position: relative;
 }
 .friendship .avatar{
     float: left;
@@ -675,7 +676,9 @@ a.bookmark-title{
 }
 .friendship-control{
     margin-right: -10px;
-    float: right
+    position: absolute;
+    right: 10px;
+    top: 10px;
 }
 .friendship-control li{
     display: inline;

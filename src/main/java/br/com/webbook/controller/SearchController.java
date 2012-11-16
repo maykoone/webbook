@@ -62,6 +62,6 @@ public class SearchController {
 
     @RequestMapping(value = "/ranking/{userName}", method = RequestMethod.GET)
     public @ResponseBody Map<String, Long> getTagRanking(@PathVariable String userName) {
-        return searchService.tagsByUser(userName);
+        return searchService.countTagsByUser(userName);
     }
 }

@@ -70,23 +70,23 @@
                         </a>
                         <div class="bookmark-info">
                             <p>
-                                <a href="" class="bookmark-title wb-font-medium">${bookmark.title}&nbsp;<c:if test="${bookmark.privateBookmark}"><i class="icon-lock"></i></c:if></a>&nbsp;<small><fmt:formatDate value="${bookmark.creationDate}" pattern="d MMM, yyyy"/></small>
+                                <a href="${bookmark.url}" class="bookmark-title wb-font-medium">${bookmark.title}&nbsp;<c:if test="${bookmark.privateBookmark}"><i class="icon-lock"></i></c:if></a>&nbsp;<small><fmt:formatDate value="${bookmark.creationDate}" pattern="d MMM, yyyy"/></small>
                             <p>
-                                <a href="" class="bookmark-url wb-font-small">${bookmark.url}</a>
+                                <a href="${bookmark.url}" class="bookmark-url wb-font-small">${bookmark.url}</a>
                             <p class="wb-font-small">${bookmark.description}</p>
                             <ul class="bookmark-tag-list">
                                 <c:forEach items="${bookmark.tags}" var="tag">
-                                    <li><a href="${currentUrl}/tags/${tag}"><span class="label label-success">#${tag}</span></a></li>
+                                    <li><a href='${pageContext.request.contextPath}/bookmarks/tag/${tag.replaceAll("[^a-zA-Z 0-9,ã,á,à,â,ê,í,ú,ù,õ,é,ü]+","-").replace("\\s", "")}'><span class="tag">#${tag}</span></a></li>
                                 </c:forEach>
                             </ul>
                         </div>
                         <div class="bookmark-item-control">
                             <ul>
-                                <li><a href="${currentUrl}/${bookmark.id}" id="destroy" onclick="return false;"><i class="icon-remove"></i>Excluir</a></li>
-                                <li><a href="${currentUrl}/${bookmark.id}/edit" id="editMe" onclick="return false;"><i class="icon-edit"></i>Editar</a></li>
+                                <li><a href="${currentUrl}/${bookmark.id}" class="destroy" onclick="return false;"><i class="icon-remove"></i>Excluir</a></li>
+                                <li><a href="${currentUrl}/${bookmark.id}/edit" class="editMe" onclick="return false;"><i class="icon-edit"></i>Editar</a></li>
                                 <c:if test="${not bookmark.privateBookmark}">
                                     <li>
-                                        <a href="${pageContext.request.contextPath}/ajax/bookmarks/${bookmark.id}/comments" data-toggle="modal" onclick="return false;" id="get-comments">
+                                        <a href="${pageContext.request.contextPath}/ajax/bookmarks/${bookmark.id}/comments" data-toggle="modal" onclick="return false;" class="get-comments">
                                             <i class="icon-comment"></i>Comentários
                                         </a>
                                     </li>
@@ -289,7 +289,7 @@
                     });
                 }
                 
-                $(".share-button").click(function(){
+                $(".share-button").on('click', function(){
                     var shareUrl = $(this).data('url');
                     var shareUrlText = $(this).data('title');
                     var gplusUrl = "https://plus.google.com/share?url=" + shareUrl;
@@ -332,9 +332,9 @@
                 }
                 
                 
-                $("#editMe").live('click',loadData);
-                $("#get-comments").live('click',loadComments);
-                $("#destroy").live('click',destroy);
+                $(".editMe").on('click',loadData);
+                $(".get-comments").live('click',loadComments);
+                $(".destroy").on('click',destroy);
                 
                 $.getJSON("${pageContext.request.contextPath}/search/ranking/${userInstance.userName}", function(data) {
                     var items = [];

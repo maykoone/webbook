@@ -26,7 +26,15 @@
             <section id="" class="wb-box-with-shadow popular-content">
                 <div class="list-header">
                     <wb:message messageBean="${message}" />
-                    <h4>Amigos que você segue</h4>
+                    <c:choose>
+                        <c:when test="${userSearch != null}">
+                            <h4>Amigos que ${userSearch} segue</h4>
+                        </c:when>
+                        <c:otherwise>
+                            <h4>Amigos que você segue</h4>
+                        </c:otherwise>
+                    </c:choose>
+
                 </div>
                 <c:forEach items="${followings}" var="following">
                     <div class="friendship">
@@ -43,10 +51,27 @@
                                     <a href="${rootUrl}/bookmarks/${following.followed.userName}" ><i class="icon-bookmark"></i> Favoritos (${fn:length(following.followed.bookmarks)})</a>
                                 </li>
                                 <li>
-                                    <form:form action="${rootUrl}/users/${following.followed.userName}/unfollow" method="delete">
-                                        <input type="hidden" name="friendship" value="${following.id}">
-                                        <button class="btn btn-mini btn-danger">Parar de seguir</button>
-                                    </form:form>
+                                    <c:choose>
+                                        <c:when test="${userSearch != null}">
+                                            <c:choose>
+                                                <c:when test="${userInstance.isFollowing(following.followed)}">
+                                                    <span class="label label-info">Seguindo</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:if test="${following.followed ne userInstance }">
+                                                        <a href="${rootUrl}/users/${following.followed.userName}/follow" class="btn btn-mini btn-primary">Seguir</a>
+                                                    </c:if>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <form:form action="${rootUrl}/users/${following.followed.userName}/unfollow" method="delete">
+                                                <input type="hidden" name="friendship" value="${following.id}">
+                                                <button class="btn btn-mini btn-danger">Parar de seguir</button>
+                                            </form:form>
+                                        </c:otherwise>
+                                    </c:choose>
+
                                 </li>
                             </ul>
                         </div>

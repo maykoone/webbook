@@ -48,8 +48,8 @@
                         <wb:message messageBean="${messageBookmarks}" />
                         <c:forEach items="${bookmarksResults}" var="bookmark">
                             <div class="search-item">
-                                <p><a href="" class="bookmark-title wb-font-medium">${bookmark.title}</a><p>
-                                    <a href="" class="bookmark-url wb-font-small">${bookmark.url}</a>
+                                <p><a href="${bookmark.url}" class="bookmark-title wb-font-medium">${bookmark.title}</a><p>
+                                    <a href="${bookmark.url}" class="bookmark-url wb-font-small">${bookmark.url}</a>
                                 <p class="wb-font-small">${bookmark.description}</p>
                             </div>
                         </c:forEach>

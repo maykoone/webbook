@@ -170,8 +170,6 @@ public class UserController {
 
         attributes.addFlashAttribute("message", new MessageBean("Você deixou de acompanhar o " + user.getUserName(), MessageBean.TYPE.SUCESS));
         return REDIRECT_USERS + "/followings";
-
-
     }
 
     @RequestMapping(value = "/followers", method = RequestMethod.GET)
@@ -182,11 +180,39 @@ public class UserController {
         return "user/followers";
     }
 
+    @RequestMapping(value = "/{userName}/followers", method = RequestMethod.GET)
+    public String getFollowers(@PathVariable String userName, Principal principal, Model model) {
+        if (userName.equals(principal.getName())) {
+            return REDIRECT_USERS + "/followers";
+        }
+        User user = service.findByUserName(principal.getName());
+        model.addAttribute("userInstance", user);
+        User userSearch = service.findByUserName(userName);
+        model.addAttribute("userSearch", userSearch);
+        model.addAttribute("followers", userSearch.getFollowers());
+        return "user/followers";
+    }
+
     @RequestMapping(value = "/followings", method = RequestMethod.GET)
     public String getFollowings(Principal principal, Model model) {
         User user = service.findByUserName(principal.getName());
         model.addAttribute("userInstance", user);
         model.addAttribute("followings", user.getFollowings());
+
+        return "user/followings";
+    }
+
+    @RequestMapping(value = "/{userName}/followings", method = RequestMethod.GET)
+    public String getFollowings(@PathVariable String userName, Principal principal, Model model) {
+        if (userName.equals(principal.getName())) {
+            return REDIRECT_USERS + "/followings";
+        }
+        User user = service.findByUserName(principal.getName());
+        model.addAttribute("userInstance", user);
+        User userSearch = service.findByUserName(userName);
+        model.addAttribute("userSearch", userSearch);
+        model.addAttribute("followings", userSearch.getFollowings());
+
         return "user/followings";
     }
 }

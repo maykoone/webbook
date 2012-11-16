@@ -23,8 +23,12 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
+import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -101,8 +105,23 @@ public class BookmarkServiceImpl implements BookmarkService {
 
     @Override
     public Page<Bookmark> listPublicBookmarksByTags(Set<String> tags, Integer pageNumber, Integer pageSize) {
-        PageRequest request = new PageRequest(pageNumber - 1, pageSize, new Sort(Sort.Direction.DESC, "creationDate"));
-        Page<Bookmark> pageResult = bookmarkRepository.findDistinctByTagsInAndPrivateBookmark(tags, false, request);
+//        PageRequest request = new PageRequest(pageNumber - 1, pageSize, new Sort(Sort.Direction.DESC, "creationDate"));
+//        Page<Bookmark> pageResult = bookmarkRepository.findDistinctByTagsInAndPrivateBookmark(tags, false, request);
+
+        PageRequest request = new PageRequest(pageNumber - 1, pageSize);
+        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
+        QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Bookmark.class).get();
+
+        //query nativa do apache lucene
+        org.apache.lucene.search.Query query = qb.keyword().onFields("tags").matching(tags).createQuery();
+        javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(query, Bookmark.class);
+
+        int maxResults = jpaQuery.getMaxResults();
+        jpaQuery.setFirstResult(request.getOffset());
+        jpaQuery.setMaxResults(request.getPageSize());
+
+        Page<Bookmark> pageResult = new PageImpl<Bookmark>(jpaQuery.getResultList(), request, maxResults);
+
         return pageResult;
     }
 
@@ -138,7 +157,7 @@ public class BookmarkServiceImpl implements BookmarkService {
         for (Tuple t : result) {
             bookmarks.add(new Bookmark((String) t.get(1)));
         }
-        
+
         return bookmarks;
     }
 }

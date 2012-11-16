@@ -81,6 +81,7 @@
                                     <div class="field-input">
                                         <form:errors path="email" cssClass="error"/>
                                         <input class=""type="text" name="email" value="${user.email}">
+                                        <span class="help-block">Seu e-mail é utilizado para obter seu avatar no <a href="http://gravatar.com" target="_blank">Gravatar. (Saiba Mais)</a></span>
                                     </div>
                                 </div>
 

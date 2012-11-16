@@ -38,7 +38,7 @@
                     </c:if>
                     <ul class="user-stats">
                         <li class="wb-font-small"><a href="" data-placement="bottom"  rel="tooltip" title="favoritos de ${userSearch.userName}"><strong>${bookmarkList.totalElements}</strong> Bookmarks</a></li>
-                        <li class="wb-font-small"><a href="${rootUrl}/users/${userSearch.userName}/following" data-placement="bottom"  rel="tooltip" title="Pessoas que ${userSearch.userName} está seguindo"><strong>${fn:length(userSearch.followings)}</strong> seguindo</a></li>
+                        <li class="wb-font-small"><a href="${rootUrl}/users/${userSearch.userName}/followings" data-placement="bottom"  rel="tooltip" title="Pessoas que ${userSearch.userName} está seguindo"><strong>${fn:length(userSearch.followings)}</strong> seguindo</a></li>
                         <li class="wb-font-small"><a href="${rootUrl}/users/${userSearch.userName}/followers" data-placement="bottom"  rel="tooltip" title="Pessoas que seguem ${userSearch.userName}"><strong>${fn:length(userSearch.followers)}</strong> seguidores</a></li>
                         <c:choose>
                             <c:when test="${userInstance.isFollowing(userSearch)}">
@@ -74,15 +74,19 @@
                             <p class="wb-font-small">${bookmark.description}</p>
                             <ul class="bookmark-tag-list">
                                 <c:forEach items="${bookmark.tags}" var="tag">
-                                    <li><a href="${currentUrl}/tags/${fn:replace(tag, " ", "-")}"><span class="tag">#${tag}</span></a></li>
+                                    <li><a href='${pageContext.request.contextPath}/bookmarks/tag/${tag.replaceAll("[^a-zA-Z 0-9,ã,á,à,â,ê,í,ú,ù,õ,é,ü]+","-").replace("\\s", "")}'><span class="tag">#${tag}</span></a></li>
                                 </c:forEach>
                             </ul>
                         </div>
                         <div class="bookmark-item-control">
                             <ul>
-                                <li><a href="${rootUrl}/bookmarks/${bookmark.id}/edit" id="editMe" onclick="return false;" title="Adicione ao seus favoritos"><i class="icon-bookmark"></i>Salvar</a></li>
-                                <li><a href=""><i class="icon-comment"></i>${fn:length(bookmark.comments)} Comentários</a></li>
-                                <li><a href=""><i class="icon-share"></i>Compartilhar</a></li>
+                                <li><a href="${rootUrl}/bookmarks/${bookmark.id}/edit" class="editMe" onclick="return false;" title="Adicione ao seus favoritos"><i class="icon-bookmark"></i>Salvar</a></li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/ajax/bookmarks/${bookmark.id}/comments" data-toggle="modal" onclick="return false;" class="get-comments">
+                                        <i class="icon-comment"></i>Comentários
+                                    </a>
+                                </li>
+                                <li><a href="#" class="share-button" data-url="${bookmark.url}" data-title="${bookmark.title}" data-username="${userSearch.userName}"><i class="icon-share"></i>Compartilhar</a></li>
                             </ul>
                         </div>
                     </div>
@@ -130,78 +134,124 @@
         </div>
         <div class="grid_4">
             <div class="wb-box-with-shadow popular-content">
-                <h4><i class="icon-tags"></i>Tags Usadas</h4>
+                <div class="top-tags">
+                    <h4><i class="icon-tags"></i> Tags usadas</h4>
+                    <ul></ul>
+                </div>
+
             </div>
         </div>
 
         <div id="add-bookmark-modal" class="modal hide fade" style="display: none">
+
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">×</button>
                 <h4>Adicionar Favorito</h4>
+
             </div>
-            <div class="modal-body">
-                <form:form action="${rootUrl}/bookmarks" commandName="bookmark" method="post" id="add-bookmark-form">
-                    <form:hidden path="id" id="id" />
-                    <div class="loading" style="display: none"><img class="ajax-loader" src="resources/img/ajax-loader.gif" /></div>
-                    <div class="modal-body">
-                        <fieldset class="bookmark-form">
-                            <form:hidden path="id" id="id" />
-                            <div class="field-block">
-                                <div class="field-title">
-                                    <label>Título</label>
-                                </div>
-                                <div class="field-input">
-                                    <input class="input-xxlarge" type="text" name="title" id="title">
-                                    <span class="help-block">Título do link</span>
-                                </div>
+            <form:form action="${currentUrl}" commandName="bookmark" method="post" id="modal-form">
+                <div class="loading" style="display: none"><img class="ajax-loader" src="resources/img/ajax-loader.gif" /></div>
+                <div class="modal-body">
+                    <fieldset class="bookmark-form">
+                        <form:hidden path="id" id="id" />
+                        <div class="field-block">
+                            <div class="field-title">
+                                <label>Título</label>
                             </div>
-                            <div class="field-block">
-                                <div class="field-title">
-                                    <label>Url</label>
-                                </div>
-                                <div class="field-input">
-                                    <form:errors path="url" />
-                                    <input class="input-xxlarge" type="text" name="url" id="url">
-                                </div>
-                            </div>
-                            <div class="field-block">
-                                <div class="field-title">
-                                    <label>Descrição</label>
-                                </div>
-                                <div class="field-input">
-                                    <span class="char-counter">0</span>
-                                    <textarea maxlength="140" class="input-xxlarge" name="description" id="description" rows="3"></textarea>
-                                    <span class="help-block">Se quiser informe uma descrição com no máximo 140 caracteres</span>
-                                </div>
-                            </div>
-                            <div class="field-block">
-                                <div class="field-title">
-                                    <label>Tags</label>
-                                </div>
-                                <div class="field-input">
-                                    <input class="input-xxlarge" type="text" name="tags" id="tags">
-                                    <span class="help-block">Tags são palavras chaves, informe quantas quiser separadas por vírgula</span>
-                                </div>
-                            </div>
-
-                            <div class="field-block">							
-
-                                <label class="wb-font-small checkbox">
-                                    <form:checkbox path="privateBookmark" id="privateBookmark"/>
-                                    <strong>Privado</strong><i class="icon-lock"></i>
-                                </label>
-                            </div>
-                        </fieldset>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="controls">
-                            <div class="control">
-                                <button id="btn-bookmark-modal-cancel" class="btn" data-dismiss="modal" type="reset">Cancelar</button>
-                                <button id="btn-bookmark-modal-post" type="submit" class="btn btn-primary">Adicionar favorito</button>
+                            <div class="field-input">
+                                <input class="input-xxlarge" type="text" name="title" id="title" >
+                                <span class="help-block">Título do link</span>
                             </div>
                         </div>
+                        <div class="field-block">
+                            <div class="field-title">
+                                <label>Url</label>
+                            </div>
+                            <div class="field-input">
+                                <form:errors path="url" />
+                                <input class="input-xxlarge" type="text" name="url" id="url">
+                            </div>
+                        </div>
+                        <div class="field-block">
+                            <div class="field-title">
+                                <label>Descrição</label>
+                            </div>
+                            <div class="field-input">
+                                <span class="char-counter">0</span>
+                                <textarea maxlength="140" class="input-xxlarge" name="description" id="description" rows="3"></textarea>
+                                <span class="help-block">Se quiser informe uma descrição com no máximo 140 caracteres</span>
+                            </div>
+                        </div>
+                        <div class="field-block">
+                            <div class="field-title">
+                                <label>Tags</label>
+                            </div>
+                            <div class="field-input">
+                                <input class="input-xxlarge" type="text" name="tags" id="tags">
+                                <span class="help-block">Tags são palavras chaves, informe quantas quiser separadas por vírgula</span>
+                            </div>
+                        </div>
+
+                        <div class="field-block">							
+
+                            <label class="wb-font-small checkbox">
+                                <form:checkbox path="privateBookmark" id="privateBookmark"/>
+                                <strong>Privado</strong><i class="icon-lock"></i>
+                            </label>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <div class="controls">
+                        <div class="control">
+                            <button id="btn-bookmark-modal-cancel" class="btn" data-dismiss="modal" type="reset">Cancelar</button>
+                            <button id="btn-bookmark-modal-post" type="submit" class="btn btn-primary">Adicionar favorito</button>
+                        </div>
                     </div>
-                </form:form>
+                </div>
+            </form:form>
+        </div>
+        <div id="comments-modal" class="modal hide fade">  
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4>Comentários</h4>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" type="reset">Fechar</button>
+            </div>
+        </div>
+        <div id="share-modal" class="modal hide fade">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4>Compartilhar Favorito</h4>
+            </div>
+            <div class="modal-body">
+                <h5><span class="share-bookmark-title"></span></h5>
+                <p><a href="" class="share-bookmark-url"></a></p>
+                <hr />
+                <ul class="share-actions">
+                    <li id="twitter-share"></li>
+                    <hr />
+                    <li id="gplus-share">
+                        <a class="gplus-share-button" href="" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+                            <img  src="https://www.gstatic.com/images/icons/gplus-32.png" alt="Share on Google+"/>
+                        </a>
+                        <p>Compartilhar isto no Google+</p>
+                    </li>
+                    <hr />
+                    <li>
+                        <iframe class="facebook-share-button" src="" scrolling="no" frameborder="0" style="border:none; width:450px; height:80px"></iframe>
+                    </li>
+                    <hr />
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <div class="controls">
+                    <div class="control">
+                        <button id="btn-bookmark-modal-cancel" class="btn" data-dismiss="modal" type="reset">Cancelar</button>
+                    </div>
+                </div>
             </div>
         </div>
         <!--        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
@@ -215,28 +265,96 @@
                 function openModal(){
                     $('#add-bookmark-modal').modal();
                 }
+                
+                function openCommentsModal(){
+                    $("#comments-modal").modal()
+                }
 
                 function loadData(){
                     var url = $(this).attr("href");
-                    $.get(url, {}, function (data){
-                        $("#id").val(data.id);
+                    $.get(url, function(data){
                         $("#title").val(data.title);
                         $("#url").val(data.url);
                         $("#description").val(data.description);
                         $("#tags").val(data.tags);
-                        data.privateBookmark?$("#privateBookmark").attr("checked", "checked"):$("privateBookmark").removeAttr("checked");
+                        $("#tags").importTags(data.tags.toString());
+                        data.privateBookmark?$("#privateBookmark").attr("checked", "checked"):$("#privateBookmark").removeAttr("checked");
                         openModal();
                     });
                 }
                 
+                $(".share-button").on('click', function(){
+                    var shareUrl = $(this).data('url');
+                    var shareUrlText = $(this).data('title');
+                    var gplusUrl = "https://plus.google.com/share?url=" + shareUrl;
+                    var facebookUrl = "https://www.facebook.com/plugins/like.php?href=" + shareUrl;
+                    
+                    $("#twitter-share").html('<a href="https://twitter.com/share" data-text="'+shareUrlText+'" data-url="'+ shareUrl +'" class="twitter-share-button" data-lang="pt" data-size="large" data-hashtags="bookmark">Tweetar</a>');
+                    
+                    $(".gplus-share-button").attr('href', gplusUrl);
+                    $(".facebook-share-button").attr('src', facebookUrl);
+                    $(".share-bookmark-title").text(shareUrlText);
+                    $(".share-bookmark-url").text(shareUrl);
+                    $(".share-bookmark-url").attr("href", shareUrl);
+                    
+                    twttr.widgets.load();
+                    $("#share-modal").modal();
+                    
+                });
+                
+               
+                
+                function loadComments(){
+                    var url = $(this).attr("href");
+                    $("#comments-modal .modal-body").load(url);
+                    openCommentsModal();
+                }
                 
                 
-                $("#editMe").live('click',loadData);
+                $(".editMe").on('click',loadData);
+                $(".get-comments").live('click',loadComments);
+                
+                
+                $("textarea#description").keyup(function(){
+                    $(".char-counter").text($(this).val().length);
+                });
                 
                 $("#tags").tagsInput({
                     'height':'auto',
                     'width':'auto',
                     'defaultText':'add uma tag'
+                });
+                
+                $.getJSON("${pageContext.request.contextPath}/search/ranking/${userSearch.userName}", function(data) {
+                    var items = [];
+
+                    $.each(data, function(key, val) {
+                        
+                        $('div.top-tags ul').prepend('<li><span class="label label-success">'+ key +'</span> <span class="badge">'+ val + '</span></li>');
+                    });
+
+                    
+                });
+                
+                $("#modal-form").validate({
+                    rules: {
+                        url:{
+                            required: true,
+                            url: true
+                        },
+                        description: {
+                            maxlength: 140
+                        }
+                    },
+                    messages: {
+                        url: {
+                            required: "URL é um campo obrigatório",
+                            url: "O Valor informado não é uma URL válida"
+                        },
+                        description: {
+                            maxlength: "A descrição deve ter no máximo 140 caracteres"
+                        }
+                    }
                 });
 
             });

@@ -25,7 +25,14 @@
         <div class="grid_12">
             <section id="" class="wb-box-with-shadow popular-content">
                 <div class="list-header">
-                    <h4 class="wb-left-float">Amigos que seguem você</h4>
+                    <c:choose>
+                        <c:when test="${userSearch != null}">
+                            <h4 class="wb-left-float">Amigos que seguem @${userSearch}</h4>
+                        </c:when>
+                        <c:otherwise>
+                            <h4 class="wb-left-float">Amigos que seguem você</h4>
+                        </c:otherwise>
+                    </c:choose>
                     <wb:message messageBean="${message}" />
                 </div>
                 <c:forEach items="${followers}" var="follower">
@@ -48,14 +55,18 @@
                                             <span class="label label-info">Seguindo</span>
                                         </c:when>
                                         <c:otherwise>
-                                            <a href="${rootUrl}/users/${follower.follower.userName}/follow" class="btn btn-mini btn-primary">Seguir</a>
+                                            <c:if test="${follower.follower ne userInstance }">
+                                                <a href="${rootUrl}/users/${follower.follower.userName}/follow" class="btn btn-mini btn-primary">Seguir</a>
+                                            </c:if>
                                         </c:otherwise>
                                     </c:choose>
 
                                 </li>
-                                <li>
-                                    <a href="${rootUrl}/users/${follower.follower.userName}/block" class="btn btn-warning btn-mini">Bloquear</a>
-                                </li>
+                                <c:if test="${follower.follower ne userInstance }">
+                                    <li>
+                                        <a href="${rootUrl}/users/${follower.follower.userName}/block" class="btn btn-warning btn-mini">Bloquear</a>
+                                    </li>
+                                </c:if>
                             </ul>
                         </div>
                     </div>

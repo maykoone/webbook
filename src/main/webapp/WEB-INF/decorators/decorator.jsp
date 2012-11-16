@@ -25,6 +25,7 @@
         <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.tagsinput.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.validate.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.tagcloud.js"></script>
 
 
         <decorator:head />
@@ -60,8 +61,9 @@
                                     <span class="caret-inner"></span>
                                 </li>
                                 <li><a href="<%= request.getContextPath()%>/bookmarks"><i class="icon-bookmark"></i>Meus favoritos</a></li>
+                                <li><a href="<%= request.getContextPath()%>/dashboard"><i class="icon-globe"></i>Descubra</a></li>
                                 <li><a href="${pageContext.request.contextPath}/filters">Meus filtros</a></li>
-                                <li><a href="#">Meus amigos</a></li>
+                                <li><a href="${pageContext.request.contextPath}/users/followings">Meus amigos</a></li>
                                 <li class="dropdown-divider"></li>
                                 <li><a href="${pageContext.request.contextPath}/users/account/profile"><i class="icon-user"></i>Meu Perfil</a></li>
                                 <li class="dropdown-divider"></li>

@@ -20,19 +20,21 @@
         <div class="grid_12">
             <section class="user-details wb-box-with-shadow popular-content">
                 <a href="" class="avatar">
-                    <!-- <img src="http://springpad.com/api/users/maykoone/photo?w=80&h=80" alt="avatar" /> -->
                     <wb:gravatar email="${userInstance.email}" />
                 </a>
                 <div class="user-info">
                     <a hreaf="" class="wb-font-big">
                         <strong>@<sec:authentication property="principal.username" /></strong>
-                    </a>&nbsp;<span class="wb-font-big">[${userInstance.name}]</span>
+                    </a>&nbsp;
+                    <c:if test="${not empty userInstance.name}">
+                        <span class="wb-font-big">[${userInstance.name}]</span>
+                    </c:if>
                     <ul class="user-stats">
                         <li class="wb-font-small"><a href="${pageContext.request.contextPath}/bookmarks" rel="tooltip" title="first tooltip">${bookmarksCount} Bookmarks</a></li>
-                        <li class="wb-font-small"><a href="users/following">${fn:length(userInstance.followings)} Amigos que você acompanha</a></li>
-                        <li class="wb-font-small"><a href="users/followers">${fn:length(userInstance.followers)} Amigos que te acompanham</a></li>
-                        <li class="wb-font-small"><a href="users/filters">${filterList.totalElements} Filtros</a></li>
-                        <li class="wb-font-small"><strong><a href="users/account/profile" class="btn btn-mini">Edite seu Perfil</a></strong></li>
+                        <li class="wb-font-small"><a href="${pageContext.request.contextPath}/users/followings">${fn:length(userInstance.followings)} Amigos que você acompanha</a></li>
+                        <li class="wb-font-small"><a href="${pageContext.request.contextPath}/users/followers">${fn:length(userInstance.followers)} Amigos que te acompanham</a></li>
+                        <li class="wb-font-small"><a href="${pageContext.request.contextPath}/filters">${filterList.totalElements} Filtros</a></li>
+                        <li class="wb-font-small"><strong><a href="${pageContext.request.contextPath}/users/account/profile" class="btn btn-mini">Edite seu Perfil</a></strong></li>
                     </ul>
                 </div>
             </section>
@@ -60,7 +62,7 @@
 
                         <ul class="filter-tag-list">
                             <c:forEach items="${filter.tags}" var="tag">
-                                <li><a href="tags/${tag}"><span class="tag">#${tag}</span></a></li>
+                                <li><a href="${pageContext.request.contextPath}/bookmarks/tag/${tag.replaceAll("[^a-zA-Z 0-9,ã,á,à,â,ê,í,ú,ù,õ,é,ü]+","-").replace("\\s", "")}"><span class="tag">#${tag}</span></a></li>
                             </c:forEach>
                         </ul>
                         <div class="filter-control">

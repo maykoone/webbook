@@ -39,7 +39,7 @@ public class SearchServiceImpl implements SearchService {
     private EntityManager entityManager;
 
     @Override
-    public Map<String, Long> tagsByUser(String userName) {
+    public Map<String, Long> countTagsByUser(String userName) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Tuple> query = cb.createTupleQuery();
 
@@ -52,8 +52,9 @@ public class SearchServiceImpl implements SearchService {
         query.select(cb.tuple(tagsJoin.alias("tag"), cb.count(tagsJoin).alias("count_tags")));
         query.where(cb.equal(userJoin.get("userName"), userName));
         query.groupBy(tagsJoin);
+        query.orderBy(cb.desc(cb.count(tagsJoin)));
 
-        List<Tuple> result = entityManager.createQuery(query).getResultList();
+        List<Tuple> result = entityManager.createQuery(query).setMaxResults(30).getResultList();
 
         Map<String, Long> tagRanking = new TreeMap<String, Long>();
 
@@ -63,7 +64,6 @@ public class SearchServiceImpl implements SearchService {
 
         return tagRanking;
     }
-    
 
     @Override
     public Set<String> getTagsSuggest(String url) {
@@ -120,5 +120,31 @@ public class SearchServiceImpl implements SearchService {
 
         //@TODO: paginação
         return jpaQuery.getResultList();
+    }
+
+    @Override
+    public Map<String, Long> countAllTags(int limit) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Tuple> query = cb.createTupleQuery();
+
+        Root<Bookmark> root = query.from(Bookmark.class);
+        //joins
+        SetJoin<Bookmark, String> tagsJoin = root.joinSet("tags");
+        Join<Bookmark, User> userJoin = root.join("user");
+
+
+        query.select(cb.tuple(tagsJoin.alias("tag"), cb.count(tagsJoin).alias("count_tags")));
+        query.groupBy(tagsJoin);
+        query.orderBy(cb.desc(cb.count(tagsJoin)));
+
+        List<Tuple> result = entityManager.createQuery(query).setMaxResults(limit).getResultList();
+
+        Map<String, Long> tagRanking = new TreeMap<String, Long>();
+
+        for (Tuple t : result) {
+            tagRanking.put((String) t.get("tag"), (Long) t.get("count_tags"));
+        }
+
+        return tagRanking;
     }
 }

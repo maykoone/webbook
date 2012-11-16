@@ -13,7 +13,9 @@ import br.com.webbook.service.UserService;
 import br.com.webbook.support.scraping.WebScraper;
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -145,6 +147,21 @@ public class BookmarkController {
         //recommendation
         bookmark.setTags(searchService.getTagsSuggest(url));
         return new ResponseEntity<Bookmark>(bookmark, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/tag/{tag}")
+    public String listByTag(@PathVariable String tag, @RequestParam(required = false) Integer page, Model model) {
+        User userInstance = userService.findByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+        Set<String> tags = new HashSet<String>();
+        tags.add(tag);
+
+        Page<Bookmark> pageResult = bookmarkService.listPublicBookmarksByTags(tags, page == null ? 1 : page, 10);
+        model.addAttribute("userInstance", userInstance);
+        model.addAllAttributes(configurePagination(pageResult));
+        model.addAttribute("tagSearch", tag == null ? "" : tag);
+        model.addAttribute("bookmark", new Bookmark());
+
+        return "bookmark/list-by-tag";
     }
 
     private User loadCurrentUser() {
