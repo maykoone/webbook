@@ -11,6 +11,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@taglib uri="/WEB-INF/tags/webbook.tld" prefix="wb" %>
+<%@ taglib prefix="html" tagdir="/WEB-INF/tags/support" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -76,7 +78,7 @@
                             <p class="wb-font-small">${bookmark.description}</p>
                             <ul class="bookmark-tag-list">
                                 <c:forEach items="${bookmark.tags}" var="tag">
-                                    <li><a href='${pageContext.request.contextPath}/bookmarks/tag/${tag.replaceAll("[^a-zA-Z 0-9,ã,á,à,â,ê,í,ú,ù,õ,é,ü]+","-").replace("\\s", "")}'><span class="tag">#${tag}</span></a></li>
+                                    <li><html:tagLink tag="${tag}"/></li>
                                 </c:forEach>
                             </ul>
                         </div>

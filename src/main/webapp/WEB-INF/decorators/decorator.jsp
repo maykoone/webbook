@@ -52,7 +52,7 @@
                         <li class="dropdown" id="dropdow-user">
                             <a href="#dropdow-user" class="dropdown-toggle" data-toggle="dropdown">
                                 @<sec:authentication property="principal.username" />
-                                <span class="caret"></span>
+                                <span class="caret" style="border-top: 4px solid white;"></span>
                             </a>
 
                             <ul class="dropdown-menu" id="user-dropdown">

@@ -12,6 +12,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@taglib uri="/WEB-INF/tags/webbook.tld" prefix="wb" %>
+<%@ taglib prefix="html" tagdir="/WEB-INF/tags/support" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -40,7 +41,7 @@
                 <hr>
                 <div id="tag-cloud" style="display: none">
                     <c:forEach items="${countTags}" var="tag">
-                        <a href="${pageContext.request.contextPath}/bookmarks/tag/${tag.key.replaceAll("[^a-zA-Z 0-9,ã,á,à,â,ê,í,ú,ù,õ,é,ü]+","-").replaceAll("\\s", "")}" title="${tag.value} bookmarks" rel="${tag.value}">${tag.key}</a>
+                        <a href="${pageContext.request.contextPath}/bookmarks/tag/${tag.key.replaceAll("[^a-zA-Z 0-9,ã,á,à,â,ê,í,ú,ù,õ,é,ü]+","-").replaceAll("\\s", "-")}" title="${tag.value} bookmarks" rel="${tag.value}">${tag.key}</a>
                     </c:forEach>
                 </div>
             </section>

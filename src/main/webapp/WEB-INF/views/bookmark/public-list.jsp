@@ -10,6 +10,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@taglib uri="/WEB-INF/tags/webbook.tld" prefix="wb" %>
+<%@ taglib prefix="html" tagdir="/WEB-INF/tags/support" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -74,7 +75,7 @@
                             <p class="wb-font-small">${bookmark.description}</p>
                             <ul class="bookmark-tag-list">
                                 <c:forEach items="${bookmark.tags}" var="tag">
-                                    <li><a href='${pageContext.request.contextPath}/bookmarks/tag/${tag.replaceAll("[^a-zA-Z 0-9,ã,á,à,â,ê,í,ú,ù,õ,é,ü]+","-").replace("\\s", "")}'><span class="tag">#${tag}</span></a></li>
+                                    <li><html:tagLink tag="${tag}"/></li>
                                 </c:forEach>
                             </ul>
                         </div>
@@ -149,7 +150,7 @@
                 <h4>Adicionar Favorito</h4>
 
             </div>
-            <form:form action="${currentUrl}" commandName="bookmark" method="post" id="modal-form">
+            <form:form action="${pageContext.request.contextPath}/bookmarks" commandName="bookmark" method="post" id="modal-form">
                 <div class="loading" style="display: none"><img class="ajax-loader" src="resources/img/ajax-loader.gif" /></div>
                 <div class="modal-body">
                     <fieldset class="bookmark-form">

@@ -1,4 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Lato|Metrophobic|Patua+One);
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans);
 /*Base styles*/
 * {
     margin:0px;
@@ -9,6 +10,7 @@ body{
     line-height: 1.5;
     font-size: 12px;
     color: #515151;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
 }
 
 a{
@@ -20,6 +22,7 @@ ul{
 h1, h2, h3, h4 , h5, h6{
     color:#515151;
     font-family: 'Metrophobic', sans-serif;
+    /*font-family: 'Droid Sans', sans-serif;*/
     /*margin: 0*/
 }
 hr{
@@ -127,6 +130,7 @@ footer li a {
     display: block;
     float: left;
     font-family: 'Metrophobic', sans-serif;
+    /*font-family: 'Droid Sans', sans-serif;*/
     font-weight: bolder;
     font-size: 20px;
     height: 40px;
@@ -210,6 +214,7 @@ footer li a {
 }
 /*buttons*/
 #button-sign{
+    background: #f1d80a;
     background-image: -webkit-linear-gradient(#f1d80a, #f1a833);
     background-image: -moz-linear-gradient(#f1d80a, #f1a833);
     background-image: -o-linear-gradient(#f1d80a, #f1a833);
@@ -241,6 +246,7 @@ footer li a {
     font-weight:bold;
     color: #787878;
     padding: 7px 10px;
+    background: #f0f0f0;
     background: -moz-linear-gradient(
         top,
         #f0f0f0 0%,
@@ -249,6 +255,10 @@ footer li a {
         linear, left top, left bottom, 
         from(#f0f0f0),
         to(#b5b5b5));
+    background: -o-linear-gradient(
+        top,
+        #f0f0f0 0%,
+        #b5b5b5);
 
     border: 1px solid #bcbcbc;
     -moz-box-shadow:
@@ -262,6 +272,7 @@ footer li a {
 #button-register{
     background: #6cbb6b;
     background-image: -moz-linear-gradient(#95d788, #6cbb6b);
+    background-image: -o-linear-gradient(#95d788, #6cbb6b);
     background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #6cbb6b),color-stop(1, #95d788));
 
     -moz-border-radius: 3px;
@@ -323,7 +334,7 @@ textarea{}
 
 .field-block {
     margin-bottom: 10px;
-    font-family: 'Metrophobic', sans-serif;
+    /*font-family: 'Metrophobic', sans-serif;*/
     color: #4d4d4d;
 }
 .field-title {
