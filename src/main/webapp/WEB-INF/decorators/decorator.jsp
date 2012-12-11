@@ -60,14 +60,14 @@
                                     <span class="caret-outer"></span>
                                     <span class="caret-inner"></span>
                                 </li>
-                                <li><a href="<%= request.getContextPath()%>/bookmarks"><i class="icon-bookmark"></i>Meus favoritos</a></li>
-                                <li><a href="<%= request.getContextPath()%>/dashboard"><i class="icon-globe"></i>Descubra</a></li>
-                                <li><a href="${pageContext.request.contextPath}/filters">Meus filtros</a></li>
-                                <li><a href="${pageContext.request.contextPath}/users/followings">Meus amigos</a></li>
+                                <li><a href="<%= request.getContextPath()%>/bookmarks"><i class="icon-bookmark"></i> Meus favoritos</a></li>
+                                <li><a href="<%= request.getContextPath()%>/dashboard"><i class="icon-globe"></i> Descubra</a></li>
+                                <li><a href="${pageContext.request.contextPath}/filters"><i class="icon-filter"></i> Meus filtros</a></li>
+                                <li><a href="${pageContext.request.contextPath}/users/followings"><i class="icon-heart"></i> Meus amigos</a></li>
                                 <li class="dropdown-divider"></li>
-                                <li><a href="${pageContext.request.contextPath}/users/account/profile"><i class="icon-user"></i>Meu Perfil</a></li>
+                                <li><a href="${pageContext.request.contextPath}/users/account/profile"><i class="icon-user"></i> Meu Perfil</a></li>
                                 <li class="dropdown-divider"></li>
-                                <li><a href="${pageContext.request.contextPath}/logout" class="">Sair</a></li>
+                                <li><a href="${pageContext.request.contextPath}/logout" class=""> Sair</a></li>
                             </ul>
                         </li>
                         <li><a href="${pageContext.request.contextPath}/logout" class="">Sair</a></li>
