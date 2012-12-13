@@ -40,7 +40,7 @@
                                 <wb:gravatar email="${comment.user.email}" />
                             </a>   
                             <div class="comment-text">
-                                <h6>Comentário por <a href="${pageContext.request.contextPath}/bookmarks/${comment.user.userName}">${comment.user.userName}</a></h6>
+                                <h6>Comentário por <a href="<c:url value="/bookmarks/${comment.user.userName}"/>">${comment.user.userName}</a></h6>
                                 <p>${comment.text}</p>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
         
         $("#comment-form").submit(function() {
             var comment = $(this).serialize();
-            $.post("${pageContext.request.contextPath}/ajax/comments", comment, function(data){
+            $.post('<c:url value="/ajax/comments" />', comment, function(data){
                 $('ul#comments-list').prepend(data).slideDown("slow");
             });
             return false;

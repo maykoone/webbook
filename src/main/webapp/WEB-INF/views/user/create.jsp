@@ -39,7 +39,7 @@
         <div class="grid_8" >
             <div class="wb-box-with-shadow popular-content" id="login-form-container">
                 <h4>Descubra, Colecione e Compartilhe novos conteúdos da Web</h4>
-                <form:form action="${pageContext.request.contextPath}/users/create_account" commandName="user" id="login-form" method="post">
+                <form:form action="create_account" commandName="user" id="login-form" method="post">
 
                     <div class="field-block">
                         <div class="field-title">

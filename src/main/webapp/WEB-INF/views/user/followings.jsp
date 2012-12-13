@@ -14,13 +14,9 @@
 <html>
     <head>
         <title>Amigos que você segue</title>
-        <!--<link rel="stylesheet" href="css/tagify-style.css" />-->
-        <!--<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/base/jquery-ui.css" />-->
-        <!--<link rel="stylesheet" href="resources/css/bootstrap.css" />-->
 
 
     </head>
-    <c:set var="rootUrl" value="${pageContext.request.contextPath}" />
     <body>
         <div class="grid_12">
             <section id="" class="wb-box-with-shadow popular-content">
@@ -38,17 +34,17 @@
                 </div>
                 <c:forEach items="${followings}" var="following">
                     <div class="friendship">
-                        <a href="${rootUrl}/users/${following.followed.userName}" class="avatar img-polaroid">
+                        <a href="<c:url value="/users/${following.followed.userName}" />" class="avatar img-polaroid">
                             <wb:gravatar email="${following.followed.email}" />
                         </a>
                         <div class="friendship-info">
-                            <h4><a href="${rootUrl}/users/${following.followed.userName}" class="">@${following.followed.userName}</a></h4>
+                            <h4><a href="<c:url value="/users/${following.followed.userName}" />" class="">@${following.followed.userName}</a></h4>
                             <a href="" >${following.followed.name}</a>
                         </div>
                         <div class="friendship-control">
                             <ul>
                                 <li>
-                                    <a href="${rootUrl}/bookmarks/${following.followed.userName}" ><i class="icon-bookmark"></i> Favoritos (${fn:length(following.followed.bookmarks)})</a>
+                                    <a href="<c:url value="/bookmarks/${following.followed.userName}" />" ><i class="icon-bookmark"></i> Favoritos (${fn:length(following.followed.bookmarks)})</a>
                                 </li>
                                 <li>
                                     <c:choose>
@@ -59,13 +55,14 @@
                                                 </c:when>
                                                 <c:otherwise>
                                                     <c:if test="${following.followed ne userInstance }">
-                                                        <a href="${rootUrl}/users/${following.followed.userName}/follow" class="btn btn-mini btn-primary">Seguir</a>
+                                                        <a href="<c:url value="/users/${following.followed.userName}/follow" />" class="btn btn-mini btn-primary">Seguir</a>
                                                     </c:if>
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:when>
                                         <c:otherwise>
-                                            <form:form action="${rootUrl}/users/${following.followed.userName}/unfollow" method="delete">
+                                            <c:url value="/users/${following.followed.userName}/unfollow" var="unfollow"/>
+                                            <form:form action="${unfollow}" method="delete">
                                                 <input type="hidden" name="friendship" value="${following.id}">
                                                 <button class="btn btn-mini btn-danger">Parar de seguir</button>
                                             </form:form>

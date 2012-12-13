@@ -24,7 +24,6 @@
 
     </head>
     <c:url var="currentUrl" value="bookmarks" />
-    <c:url var="rootUrl" value="${pageContext.request.contextPath}" />
     <body>
         <div class="grid_12">
             <section class="user-details wb-box-with-shadow popular-content">
@@ -39,10 +38,10 @@
                         <span class="wb-font-big">[${userInstance.name}]</span>
                     </c:if>
                     <ul class="user-stats">
-                        <li class="wb-font-small"><a href="${pageContext.request.contextPath}/bookmarks" data-placement="bottom"  rel="tooltip" title="Seus favoritos">${bookmarkList.totalElements} Bookmarks</a></li>
+                        <li class="wb-font-small"><a href="bookmarks" data-placement="bottom"  rel="tooltip" title="Seus favoritos">${bookmarkList.totalElements} Bookmarks</a></li>
                         <li class="wb-font-small"><a href="users/followings"  data-placement="bottom"  rel="tooltip" title="Veja quais amigos você acompanha">${fn:length(userInstance.followings)} Seguindo</a></li>
-                        <li class="wb-font-small"><a href="users/followers"data-placement="bottom"  rel="tooltip" title="Veja quais pessoas acompanham você">${fn:length(userInstance.followers)} Seguidores</a></li>
-                        <li class="wb-font-small"><a href="${pageContext.request.contextPath}/filters">${filterCount} filtros</a></li>
+                        <li class="wb-font-small"><a href="users/followers" data-placement="bottom"  rel="tooltip" title="Veja quais pessoas acompanham você">${fn:length(userInstance.followers)} Seguidores</a></li>
+                        <li class="wb-font-small"><a href="filters">${filterCount} filtros</a></li>
                         <li class="wb-font-small"><strong><a href="users/account/profile" class="btn btn-mini"><i class="icon-user"></i>Edite seu Perfil</a></strong></li>
                     </ul>
                 </div>
@@ -88,7 +87,7 @@
                                 <li><a href="${currentUrl}/${bookmark.id}/edit" class="editMe" onclick="return false;"><i class="icon-edit"></i>Editar</a></li>
                                 <c:if test="${not bookmark.privateBookmark}">
                                     <li>
-                                        <a href="${pageContext.request.contextPath}/ajax/bookmarks/${bookmark.id}/comments" data-toggle="modal" onclick="return false;" class="get-comments">
+                                        <a href="ajax/bookmarks/${bookmark.id}/comments" data-toggle="modal" onclick="return false;" class="get-comments">
                                             <i class="icon-comment"></i>Comentários
                                         </a>
                                     </li>
@@ -317,10 +316,6 @@
                         url: url,
                         type: "DELETE"
                     }).done(function(data){
-                        if(console && console.log){
-                            console.log($(caller).parents("div.bookmark-item"))
-                            console.log(caller)
-                        }
                         $(caller).parents("div.bookmark-item").fadeOut("slow", function(){
                             $(this).remove();
                         });
@@ -338,7 +333,7 @@
                 $(".get-comments").live('click',loadComments);
                 $(".destroy").on('click',destroy);
                 
-                $.getJSON("${pageContext.request.contextPath}/search/ranking/${userInstance.userName}", function(data) {
+                $.getJSON("search/ranking/${userInstance.userName}", function(data) {
                     var items = [];
 
                     $.each(data, function(key, val) {
@@ -360,7 +355,7 @@
                         
                     openModal();
                     
-                    $.getJSON('${pageContext.request.contextPath}/bookmarks/scraping',{url: url} , function(data){
+                    $.getJSON('bookmarks/scraping',{url: url} , function(data){
                         
                         $("#title").val(data.title);
                         $("#url").val(data.url);

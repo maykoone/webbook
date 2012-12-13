@@ -31,11 +31,11 @@
                         <span class="wb-font-big">[${userInstance.name}]</span>
                     </c:if>
                     <ul class="user-stats">
-                        <li class="wb-font-small"><a href="${pageContext.request.contextPath}/bookmarks" rel="tooltip" title="first tooltip">${bookmarksCount} Bookmarks</a></li>
-                        <li class="wb-font-small"><a href="${pageContext.request.contextPath}/users/followings">${fn:length(userInstance.followings)} Amigos que você acompanha</a></li>
-                        <li class="wb-font-small"><a href="${pageContext.request.contextPath}/users/followers">${fn:length(userInstance.followers)} Amigos que te acompanham</a></li>
-                        <li class="wb-font-small"><a href="${pageContext.request.contextPath}/filters">${filterList.totalElements} Filtros</a></li>
-                        <li class="wb-font-small"><strong><a href="${pageContext.request.contextPath}/users/account/profile" class="btn btn-mini">Edite seu Perfil</a></strong></li>
+                        <li class="wb-font-small"><a href="<c:url value='/bookmarks'/>" data-placement="bottom"  rel="tooltip" title="Seus favoritos">${bookmarksCount} Bookmarks</a></li>
+                        <li class="wb-font-small"><a href="<c:url value='/users/followings'/>" data-placement="bottom"  rel="tooltip" title="Veja quais amigos você acompanha">${fn:length(userInstance.followings)} Amigos que você acompanha</a></li>
+                        <li class="wb-font-small"><a href="<c:url value='/users/followers'/>" data-placement="bottom"  rel="tooltip" title="Veja quais amigos você acompanha">${fn:length(userInstance.followers)} Amigos que te acompanham</a></li>
+                        <li class="wb-font-small"><a href="<c:url value='/filters'/>">${filterList.totalElements} Filtros</a></li>
+                        <li class="wb-font-small"><strong><a href="<c:url value='/users/account/profile'/>" class="btn btn-mini">Edite seu Perfil</a></strong></li>
                     </ul>
                 </div>
             </section>
@@ -127,10 +127,6 @@
                         url: url,
                         type: "DELETE"
                     }).done(function(data){
-                        if(console && console.log){
-                            console.log($(caller).parents("section.filter-item"))
-                            console.log(caller)
-                        }
                         $(caller).parents("section.filter-item").fadeOut("slow", function(){
                             $(this).remove();
                             $("#filter-list-container").masonry( 'reload' );

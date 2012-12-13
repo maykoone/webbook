@@ -12,7 +12,7 @@
             <wb:gravatar email="${comment.user.email}" />
         </a>   
         <div class="comment-text">
-            <h6>Comentário por <a href="${pageContext.request.contextPath}/bookmarks/${comment.user.userName}">${comment.user.userName}</a></h6>
+            <h6>Comentário por <a href="<c:url value="/bookmarks/${comment.user.userName}"/>">${comment.user.userName}</a></h6>
             <p>${comment.text}</p>
             <div class="arrow"></div>
         </div>

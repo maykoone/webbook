@@ -6,11 +6,11 @@
 
 <%@tag description="put the tag description here" pageEncoding="UTF-8"%>
 <%@taglib uri="/WEB-INF/tags/functions.tld" prefix="util" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%-- The list of normal or fragment attributes can be specified here: --%>
 <%@attribute name="tag" required="true"%>
 <%@attribute name="frequency" required="false"%>
 
 <%-- any content can be specified here e.g.: --%>
-<!--<a href='${pageContext.request.contextPath}/bookmarks/tag/${tag.replaceAll("[^a-zA-Z 0-9,ã,á,à,â,ê,í,ú,ù,õ,ô,é,ü]+","-").replaceAll("\\s", "-")}' rel="${frequency}"><span class="tag">#${tag}</span></a>-->
-<a href='${pageContext.request.contextPath}/bookmarks/tag/${util:urlEncode(tag)}' rel="${frequency}"><span class="tag">#${tag}</span></a>
+<a href='<c:url value="/bookmarks/tag/${util:urlEncode(tag)}"/>' rel="${frequency}"><span class="tag">#${tag}</span></a>

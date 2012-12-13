@@ -42,7 +42,7 @@
                 <hr>
                 <div id="tag-cloud" style="display: none">
                     <c:forEach items="${countTags}" var="tag">
-                        <a href="${pageContext.request.contextPath}/bookmarks/tag/${util:urlEncode(tag.key)}" title="${tag.value} bookmarks" rel="${tag.value}">${tag.key}</a>
+                        <a href="<c:url value="/bookmarks/tag/${util:urlEncode(tag.key)}" />" title="${tag.value} bookmarks" rel="${tag.value}">${tag.key}</a>
                     </c:forEach>
                 </div>
             </section>
@@ -77,7 +77,7 @@
                                         <h4>${bookmark.title}&nbsp;<small><fmt:formatDate value="${bookmark.creationDate}" pattern="d MMM, yyyy"/></small></h4>
                                         <p><a href=""><small>${bookmark.url}</small></a></p>
                                         <div class="details">
-                                            <a href="${pageContext.request.contextPath}/${bookmark.user.userName}">@${bookmark.user.userName}</a>
+                                            <a href="<c:url value="${bookmark.user.userName}" />">@${bookmark.user.userName}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -94,7 +94,7 @@
                                         <h4>${bookmark.title}&nbsp;<small><fmt:formatDate value="${bookmark.creationDate}" pattern="d MMM, yyyy"/></small></h4>
                                         <p><a href=""><small>${bookmark.url}</small></a></p>
                                         <div class="details">
-                                            <a href="${pageContext.request.contextPath}/${bookmark.user.userName}">@${bookmark.user.userName}</a>
+                                            <a href="<c:url value="${bookmark.user.userName}" />">@${bookmark.user.userName}</a>
                                         </div>
                                     </div>
                                 </div>

@@ -20,7 +20,6 @@
 
 
     </head>
-    <c:set var="rootUrl" value="${pageContext.request.contextPath}" />
     <body>
         <div class="grid_12">
             <section id="" class="wb-box-with-shadow popular-content">
@@ -37,17 +36,17 @@
                 </div>
                 <c:forEach items="${followers}" var="follower">
                     <div class="friendship">
-                        <a href="${rootUrl}/users/${follower.follower.userName}" class="avatar img-polaroid">
+                        <a href="<c:url value="/users/${follower.follower.userName}"/>" class="avatar img-polaroid">
                             <wb:gravatar email="${follower.follower.email}" />
                         </a>
                         <div class="friendship-info">
-                            <h4><a href="${rootUrl}/users/${follower.follower.userName}" class="">@${follower.follower.userName}</a></h4>
+                            <h4><a href="<c:url value="/users/${follower.follower.userName}" />" class="">@${follower.follower.userName}</a></h4>
                             <p></p>
                         </div>
                         <div class="friendship-control">
                             <ul>
                                 <li>
-                                    <a href="${rootUrl}/bookmarks/${follower.follower.userName}" >${fn:length(follower.follower.bookmarks)} Favoritos<i class="icon-bookmark"></i></a>
+                                    <a href="<c:url value="/bookmarks/${follower.follower.userName}" />" >${fn:length(follower.follower.bookmarks)} Favoritos<i class="icon-bookmark"></i></a>
                                 </li>
                                 <li>
                                     <c:choose>
@@ -56,7 +55,7 @@
                                         </c:when>
                                         <c:otherwise>
                                             <c:if test="${follower.follower ne userInstance }">
-                                                <a href="${rootUrl}/users/${follower.follower.userName}/follow" class="btn btn-mini btn-primary">Seguir</a>
+                                                <a href="<c:url value="/users/${follower.follower.userName}/follow" />" class="btn btn-mini btn-primary">Seguir</a>
                                             </c:if>
                                         </c:otherwise>
                                     </c:choose>
@@ -64,7 +63,7 @@
                                 </li>
                                 <c:if test="${follower.follower ne userInstance }">
                                     <li>
-                                        <a href="${rootUrl}/users/${follower.follower.userName}/block" class="btn btn-warning btn-mini">Bloquear</a>
+                                        <a href="" class="btn btn-warning btn-mini">Bloquear</a>
                                     </li>
                                 </c:if>
                             </ul>

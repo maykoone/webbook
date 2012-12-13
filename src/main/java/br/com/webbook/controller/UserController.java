@@ -5,6 +5,8 @@
 package br.com.webbook.controller;
 
 import br.com.webbook.domain.User;
+import br.com.webbook.service.BookmarkService;
+import br.com.webbook.service.FilterService;
 import br.com.webbook.service.UserService;
 import br.com.webbook.tags.MessageBean;
 import br.com.webbook.validation.ProfileChecks;
@@ -37,6 +39,10 @@ public class UserController {
     public static final String VIEW_EDIT = "user/edit";
     @Autowired
     private UserService service;
+    @Autowired
+    private FilterService filterService;
+    @Autowired
+    private BookmarkService bookmarkService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String list() {
@@ -75,6 +81,8 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("userInstance", user);
         model.addAttribute("userChangePasswordForm", new UserChangePasswordForm());
+        model.addAttribute("filterCount", filterService.countByUser(user));
+        model.addAttribute("bookmarkCount", bookmarkService.countByUser(user));
         return VIEW_EDIT;
     }
 

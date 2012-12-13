@@ -37,11 +37,11 @@
                         <span class="wb-font-big">[${userInstance.name}]</span>
                     </c:if>
                     <ul class="user-stats">
-                        <li class="wb-font-small"><a href="${pageContext.request.contextPath}/bookmarks" data-placement="bottom"  rel="tooltip" title="Seus favoritos">${bookmarkCount} Bookmarks</a></li>
-                        <li class="wb-font-small"><a href="${pageContext.request.contextPath}/users/followings"  data-placement="bottom"  rel="tooltip" title="Veja quais amigos você acompanha">${fn:length(userInstance.followings)} Seguindo</a></li>
-                        <li class="wb-font-small"><a href="${pageContext.request.contextPath}/users/followers"data-placement="bottom"  rel="tooltip" title="Veja quais pessoas acompanham você">${fn:length(userInstance.followers)} Seguidores</a></li>
-                        <li class="wb-font-small"><a href="${pageContext.request.contextPath}/filters">${filterCount} filtros</a></li>
-                        <li class="wb-font-small"><strong><a href="${pageContext.request.contextPath}/users/account/profile" class="btn btn-mini"><i class="icon-user"></i>Edite seu Perfil</a></strong></li>
+                        <li class="wb-font-small"><a href="<c:url value="/bookmarks" />" data-placement="bottom"  rel="tooltip" title="Seus favoritos">${bookmarkCount} Bookmarks</a></li>
+                        <li class="wb-font-small"><a href="<c:url value="/users/followings" />"  data-placement="bottom"  rel="tooltip" title="Veja quais amigos você acompanha">${fn:length(userInstance.followings)} Seguindo</a></li>
+                        <li class="wb-font-small"><a href="<c:url value="/users/followers" />" data-placement="bottom"  rel="tooltip" title="Veja quais pessoas acompanham você">${fn:length(userInstance.followers)} Seguidores</a></li>
+                        <li class="wb-font-small"><a href="<c:url value="/filters" />">${filterCount} filtros</a></li>
+                        <li class="wb-font-small"><strong><a href="<c:url value="/users/account/profile" />" class="btn btn-mini"><i class="icon-user"></i>Edite seu Perfil</a></strong></li>
                     </ul>
                 </div>
                 <wb:message messageBean="${message}" />
@@ -52,7 +52,7 @@
             <section id="user-list-bookmark" class="wb-box-with-shadow popular-content">
                 <div class="list-header">
                     <h4 class="wb-left-float">Favoritos do filtro ${filterInstance.title}</h4>
-                    <a href="${pageContext.request.contextPath}/filters/${filterInstance.id}/edit" class="btn btn-primary btn-mini wb-right-float">
+                    <a href="<c:url value="/filters/${filterInstance.id}/edit" />" class="btn btn-primary btn-mini wb-right-float">
                         <i class="icon-plus icon-white"></i>Editar filtro
                     </a>
                 </div>
@@ -74,7 +74,7 @@
                         <div class="bookmark-item-control">
                             <ul>
                                 <li>
-                                    <a href="${pageContext.request.contextPath}/ajax/bookmarks/${bookmark.id}/comments" data-toggle="modal" onclick="return false;" class="get-comments">
+                                    <a href="<c:url value="/ajax/bookmarks/${bookmark.id}/comments" />" data-toggle="modal" onclick="return false;" class="get-comments">
                                         <i class="icon-comment"></i>Comentários
                                     </a>
                                 </li>
