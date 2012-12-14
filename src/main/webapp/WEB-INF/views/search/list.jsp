@@ -36,7 +36,7 @@
                                     <div class="avatar img-polaroid">
                                         <wb:gravatar email="${user.email}" />
                                     </div>
-                                        <h4><a href="<c:url value="/${user.userName}" />">${user.userName}</a></h4>
+                                        <h4><a href="/${user.userName}">${user.userName}</a></h4>
                                     <div class="details">${fn:length(user.bookmarks)} Favoritos | ${fn:length(user.followers)} Seguidores | ${fn:length(user.followings)} Seguindo</div>
                                 </div>
                             </div>

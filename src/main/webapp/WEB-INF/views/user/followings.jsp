@@ -34,17 +34,17 @@
                 </div>
                 <c:forEach items="${followings}" var="following">
                     <div class="friendship">
-                        <a href="<c:url value="/users/${following.followed.userName}" />" class="avatar img-polaroid">
+                        <a href="/users/${following.followed.userName}" class="avatar img-polaroid">
                             <wb:gravatar email="${following.followed.email}" />
                         </a>
                         <div class="friendship-info">
-                            <h4><a href="<c:url value="/users/${following.followed.userName}" />" class="">@${following.followed.userName}</a></h4>
+                            <h4><a href="/users/${following.followed.userName}" class="">@${following.followed.userName}</a></h4>
                             <a href="" >${following.followed.name}</a>
                         </div>
                         <div class="friendship-control">
                             <ul>
                                 <li>
-                                    <a href="<c:url value="/bookmarks/${following.followed.userName}" />" ><i class="icon-bookmark"></i> Favoritos (${fn:length(following.followed.bookmarks)})</a>
+                                    <a href="/bookmarks/${following.followed.userName}" ><i class="icon-bookmark"></i> Favoritos (${fn:length(following.followed.bookmarks)})</a>
                                 </li>
                                 <li>
                                     <c:choose>
@@ -55,14 +55,13 @@
                                                 </c:when>
                                                 <c:otherwise>
                                                     <c:if test="${following.followed ne userInstance }">
-                                                        <a href="<c:url value="/users/${following.followed.userName}/follow" />" class="btn btn-mini btn-primary">Seguir</a>
+                                                        <a href="/users/${following.followed.userName}/follow" class="btn btn-mini btn-primary">Seguir</a>
                                                     </c:if>
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:when>
                                         <c:otherwise>
-                                            <c:url value="/users/${following.followed.userName}/unfollow" var="unfollow"/>
-                                            <form:form action="${unfollow}" method="delete">
+                                            <form:form action="/users/${following.followed.userName}/unfollow" method="delete">
                                                 <input type="hidden" name="friendship" value="${following.id}">
                                                 <button class="btn btn-mini btn-danger">Parar de seguir</button>
                                             </form:form>

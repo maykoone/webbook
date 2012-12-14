@@ -9,6 +9,24 @@
         <class>br.com.webbook.domain.Friendship</class>
         <properties>
             <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <!--<property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>-->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="javax.persistence.validation.mode" value="none"/>
+            <!--Hibernate Search-->
+            <property name="hibernate.search.default.directory_provider" value="ram"/> 
+            <!--<property name="hibernate.search.default.indexBase" value="/home/maykoone/lucene/indexes"/>--> 
+        </properties>
+    </persistence-unit>
+    <persistence-unit name="test" transaction-type="RESOURCE_LOCAL">
+        <!--<provider>org.hibernate.ejb.HibernatePersistence</provider>-->
+        <class>br.com.webbook.domain.User</class>
+        <class>br.com.webbook.domain.Bookmark</class>
+        <class>br.com.webbook.domain.Comment</class>
+        <class>br.com.webbook.domain.Filter</class>
+        <class>br.com.webbook.domain.Friendship</class>
+        <properties>
+            <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
             <!--<property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>-->
             <property name="hibernate.show_sql" value="true"/>

@@ -27,11 +27,11 @@
                         <strong>@<sec:authentication property="principal.username" /></strong>
                     </a>&nbsp;<span class="wb-font-big">[${userInstance.name}]</span>
                     <ul class="user-stats">
-                       <li class="wb-font-small"><a href="<c:url value='/bookmarks'/>" data-placement="bottom"  rel="tooltip" title="Seus favoritos">${bookmarkCount} Bookmarks</a></li>
-                        <li class="wb-font-small"><a href="<c:url value='/users/followings'/>" data-placement="bottom"  rel="tooltip" title="Veja quais amigos você acompanha">${fn:length(userInstance.followings)} Amigos que você acompanha</a></li>
-                        <li class="wb-font-small"><a href="<c:url value='/users/followers'/>" data-placement="bottom"  rel="tooltip" title="Veja quais amigos você acompanha">${fn:length(userInstance.followers)} Amigos que te acompanham</a></li>
-                        <li class="wb-font-small"><a href="<c:url value='/filters'/>">${filterCount} Filtros</a></li>
-                        <li class="wb-font-small"><strong><a href="<c:url value='/users/account/profile'/>" class="btn btn-mini">Edite seu Perfil</a></strong></li>
+                       <li class="wb-font-small"><a href="/bookmarks" data-placement="bottom"  rel="tooltip" title="Seus favoritos">${bookmarkCount} Bookmarks</a></li>
+                        <li class="wb-font-small"><a href="/users/followings" data-placement="bottom"  rel="tooltip" title="Veja quais amigos você acompanha">${fn:length(userInstance.followings)} Amigos que você acompanha</a></li>
+                        <li class="wb-font-small"><a href="/users/followers" data-placement="bottom"  rel="tooltip" title="Veja quais amigos você acompanha">${fn:length(userInstance.followers)} Amigos que te acompanham</a></li>
+                        <li class="wb-font-small"><a href="/filters">${filterCount} Filtros</a></li>
+                        <li class="wb-font-small"><strong><a href="/users/account/profile" class="btn btn-mini">Edite seu Perfil</a></strong></li>
                     </ul>
                 </div>
             </section>
@@ -39,8 +39,7 @@
         <div class="clear"></div>
         <div class="grid_8" >
             <div class="wb-box-with-shadow">
-                <c:url var="filterCreate" value="/filters" />
-                <form:form action="${filterCreate}" commandName="filterInstance" method="${formMethod}" cssClass="form-horizontal form">
+                <form:form action="/filters" commandName="filterInstance" method="${formMethod}" cssClass="form-horizontal form">
                     <legend>Cadastro de filtro</legend>
                     <div class="loading" style="display: none"><img class="ajax-loader" src="" /></div>
                     <input type="hidden" name="id" id="id"/>
@@ -98,7 +97,7 @@
                 });
             <c:if test="${filterId ne null}">
                 
-                $.get('<c:url value="/filters/${filterId}" />', function(data){
+                $.get('/filters/${filterId}', function(data){
                     $("#id").val(data.id);
                     $("#title").val(data.title);
                     $("#description").val(data.description);

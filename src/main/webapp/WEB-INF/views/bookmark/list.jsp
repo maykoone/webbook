@@ -11,7 +11,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@taglib uri="/WEB-INF/tags/webbook.tld" prefix="wb" %>
-<%@ taglib prefix="html" tagdir="/WEB-INF/tags/support" %>
+<%@taglib prefix="html" tagdir="/WEB-INF/tags/support" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="s"%>
 
 <!DOCTYPE html>
 <html>
@@ -29,6 +30,7 @@
             <section class="user-details wb-box-with-shadow popular-content">
                 <a href="" class="avatar">
                     <wb:gravatar email="${userInstance.email}" />
+                    
                 </a>
                 <div class="user-info">
                     <a hreaf="" class="wb-font-big">

@@ -37,20 +37,19 @@
                     </c:if>
                     <ul class="user-stats">
                         <li class="wb-font-small"><a href="" data-placement="bottom"  rel="tooltip" title="favoritos de ${userSearch.userName}"><strong>${bookmarkList.totalElements}</strong> Bookmarks</a></li>
-                        <li class="wb-font-small"><a href="<c:url value="/users/${userSearch.userName}/followings" />" data-placement="bottom"  rel="tooltip" title="Pessoas que ${userSearch.userName} está seguindo"><strong>${fn:length(userSearch.followings)}</strong> seguindo</a></li>
-                        <li class="wb-font-small"><a href="<c:url value="/users/${userSearch.userName}/followers" />" data-placement="bottom"  rel="tooltip" title="Pessoas que seguem ${userSearch.userName}"><strong>${fn:length(userSearch.followers)}</strong> seguidores</a></li>
+                        <li class="wb-font-small"><a href="/users/${userSearch.userName}/followings" data-placement="bottom"  rel="tooltip" title="Pessoas que ${userSearch.userName} está seguindo"><strong>${fn:length(userSearch.followings)}</strong> seguindo</a></li>
+                        <li class="wb-font-small"><a href="/users/${userSearch.userName}/followers" data-placement="bottom"  rel="tooltip" title="Pessoas que seguem ${userSearch.userName}"><strong>${fn:length(userSearch.followers)}</strong> seguidores</a></li>
                         <c:choose>
                             <c:when test="${userInstance.isFollowing(userSearch)}">
                                 <li>
-                                    <c:url  value="/users/${userSearch.userName}/unfollow" var="unfollowLink"/>
-                                    <form:form action="${unfollowLink}" method="delete">
+                                    <form:form action="/users/${userSearch.userName}/unfollow" method="delete">
                                         <input type="hidden" name="friendship" value="${userSearch.id}">
                                         <button class="btn btn-mini btn-danger">Parar de seguir</button>
                                     </form:form>
                                 </li>
                             </c:when>
                             <c:otherwise>
-                                <li class="wb-font-small"><strong><a href="<c:url value="/users/${userSearch.userName}/follow" />" class="btn btn-info btn-mini">Seguir</a></strong></li>
+                                <li class="wb-font-small"><strong><a href="/users/${userSearch.userName}/follow" class="btn btn-info btn-mini">Seguir</a></strong></li>
                             </c:otherwise>
                         </c:choose>
                     </ul>
@@ -70,7 +69,7 @@
                         </a>
                         <div class="bookmark-info">
                             <h3><a href="" class="bookmark-title wb-font-medium">${bookmark.title}</a></h3>
-                            <a href="" class="bookmark-url wb-font-small">${bookmark.url}</a>
+                            <a href="${bookmark.url}" class="bookmark-url wb-font-small">${bookmark.url}</a>
                             <p class="wb-font-small">${bookmark.description}</p>
                             <ul class="bookmark-tag-list">
                                 <c:forEach items="${bookmark.tags}" var="tag">
@@ -80,9 +79,9 @@
                         </div>
                         <div class="bookmark-item-control">
                             <ul>
-                                <li><a href="<c:url value="/bookmarks/${bookmark.id}/edit" />" class="editMe" onclick="return false;" title="Adicione ao seus favoritos"><i class="icon-bookmark"></i>Salvar</a></li>
+                                <li><a href="/bookmarks/${bookmark.id}/edit" class="editMe" onclick="return false;" title="Adicione ao seus favoritos"><i class="icon-bookmark"></i>Salvar</a></li>
                                 <li>
-                                    <a href="<c:url value="/ajax/bookmarks/${bookmark.id}/comments" />" data-toggle="modal" onclick="return false;" class="get-comments">
+                                    <a href="/ajax/bookmarks/${bookmark.id}/comments" data-toggle="modal" onclick="return false;" class="get-comments">
                                         <i class="icon-comment"></i>Comentários
                                     </a>
                                 </li>
@@ -149,8 +148,7 @@
                 <h4>Adicionar Favorito</h4>
 
             </div>
-            <c:url value="/bookmarks" var="bookmarkCreate" />
-            <form:form action="${bookmarkCreate}" commandName="bookmark" method="post" id="modal-form">
+            <form:form action="/bookmarks" commandName="bookmark" method="post" id="modal-form">
                 <div class="loading" style="display: none"><img class="ajax-loader" src="resources/img/ajax-loader.gif" /></div>
                 <div class="modal-body">
                     <fieldset class="bookmark-form">
@@ -326,7 +324,7 @@
                     'defaultText':'add uma tag'
                 });
                 
-                $.getJSON('<c:url value="/search/ranking/${userSearch.userName}" />', function(data) {
+                $.getJSON('/search/ranking/${userSearch.userName}', function(data) {
                     var items = [];
 
                     $.each(data, function(key, val) {

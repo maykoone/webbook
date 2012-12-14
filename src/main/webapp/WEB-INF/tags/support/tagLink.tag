@@ -13,4 +13,4 @@
 <%@attribute name="frequency" required="false"%>
 
 <%-- any content can be specified here e.g.: --%>
-<a href='<c:url value="/bookmarks/tag/${util:urlEncode(tag)}"/>' rel="${frequency}"><span class="tag">#${tag}</span></a>
+<a href="/bookmarks/tag/${util:urlEncode(tag)}" rel="${frequency}"><span class="tag">#${tag}</span></a>

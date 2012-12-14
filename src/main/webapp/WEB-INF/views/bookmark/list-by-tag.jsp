@@ -39,9 +39,9 @@
                         <span class="wb-font-big">[${userInstance.name}]</span>
                     </c:if>
                     <ul class="user-stats">
-                        <li class="wb-font-small"><a href="<c:url value="/bookmarks" />" data-placement="bottom"  rel="tooltip" title="favoritos de ${userInstance.userName}"><strong>${fn:length(userInstance.bookmarks)}</strong> Bookmarks</a></li>
-                        <li class="wb-font-small"><a href="<c:url value="/users/${userInstance.userName}/following" />" data-placement="bottom"  rel="tooltip" title="Pessoas que ${userInstance.userName} está seguindo"><strong>${fn:length(userInstance.followings)}</strong> seguindo</a></li>
-                        <li class="wb-font-small"><a href="<c:url value="/users/${userInstance.userName}/followers" />" data-placement="bottom"  rel="tooltip" title="Pessoas que seguem ${userInstance.userName}"><strong>${fn:length(userInstance.followers)}</strong> seguidores</a></li>
+                        <li class="wb-font-small"><a href="/bookmarks" data-placement="bottom"  rel="tooltip" title="favoritos de ${userInstance.userName}"><strong>${fn:length(userInstance.bookmarks)}</strong> Bookmarks</a></li>
+                        <li class="wb-font-small"><a href="/users/${userInstance.userName}/following" data-placement="bottom"  rel="tooltip" title="Pessoas que ${userInstance.userName} está seguindo"><strong>${fn:length(userInstance.followings)}</strong> seguindo</a></li>
+                        <li class="wb-font-small"><a href="/users/${userInstance.userName}/followers" data-placement="bottom"  rel="tooltip" title="Pessoas que seguem ${userInstance.userName}"><strong>${fn:length(userInstance.followers)}</strong> seguidores</a></li>
 
                     </ul>
                 </div>
@@ -70,9 +70,9 @@
                         </div>
                         <div class="bookmark-item-control">
                             <ul>
-                                <li><a href="<c:url value="/bookmarks/${bookmark.id}/edit" />" class="editMe" onclick="return false;" title="Adicione ao seus favoritos"><i class="icon-bookmark"></i>Salvar</a></li>
+                                <li><a href="/bookmarks/${bookmark.id}/edit" class="editMe" onclick="return false;" title="Adicione ao seus favoritos"><i class="icon-bookmark"></i>Salvar</a></li>
                                 <li>
-                                    <a href="<c:url value="/ajax/bookmarks/${bookmark.id}/comments" />" data-toggle="modal" onclick="return false;" class="get-comments">
+                                    <a href="/ajax/bookmarks/${bookmark.id}/comments" data-toggle="modal" onclick="return false;" class="get-comments">
                                         <i class="icon-comment"></i>Comentários
                                     </a>
                                 </li>
@@ -135,8 +135,7 @@
                 <h4>Adicionar Favorito</h4>
 
             </div>
-            <c:url value="/bookmarks" var="bookmarkCreate" />
-            <form:form action="" commandName="bookmark" method="post" id="modal-form">
+            <form:form action="/bookmarks" commandName="bookmark" method="post" id="modal-form">
                 <div class="loading" style="display: none"><img class="ajax-loader" src="resources/img/ajax-loader.gif" /></div>
                 <div class="modal-body">
                     <fieldset class="bookmark-form">

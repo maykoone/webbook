@@ -24,10 +24,10 @@
                 <div class="user-info">
                     <a hreaf="" class="wb-font-big"><strong><sec:authentication property="principal.username" /></strong></a>&nbsp;<span class="wb-font-big">${userInstance.name}</span>
                     <ul class="user-stats">
-                        <li class="wb-font-small"><a href="<c:url value='/bookmarks'/>" data-placement="bottom"  rel="tooltip" title="Seus favoritos">${bookmarkCount} Bookmarks</a></li>
-                        <li class="wb-font-small"><a href="<c:url value='/users/followings'/>"  data-placement="bottom"  rel="tooltip" title="Veja quais amigos você acompanha">${fn:length(userInstance.followings)} Seguindo</a></li>
-                        <li class="wb-font-small"><a href="<c:url value='/users/followers'/>"data-placement="bottom"  rel="tooltip" title="Veja quais pessoas acompanham você">${fn:length(userInstance.followers)} Seguidores</a></li>
-                        <li class="wb-font-small"><a href="<c:url value='/filters'/>">${filterCount} filtros</a></li>
+                        <li class="wb-font-small"><a href="/bookmarks" data-placement="bottom"  rel="tooltip" title="Seus favoritos">${bookmarkCount} Bookmarks</a></li>
+                        <li class="wb-font-small"><a href="/users/followings"  data-placement="bottom"  rel="tooltip" title="Veja quais amigos você acompanha">${fn:length(userInstance.followings)} Seguindo</a></li>
+                        <li class="wb-font-small"><a href="/users/followers"data-placement="bottom"  rel="tooltip" title="Veja quais pessoas acompanham você">${fn:length(userInstance.followers)} Seguidores</a></li>
+                        <li class="wb-font-small"><a href="/filters">${filterCount} filtros</a></li>
                     </ul>
                 </div>
             </section>
@@ -44,8 +44,7 @@
                         <div class="tab-pane active" id="tab1">
                             <h4>Seu Perfil</h4>
                             <wb:message messageBean="${message}" />
-                            <c:url value="/users/edit" var="usersEdit"/>
-                            <form:form action="${usersEdit}" method="put" id="login-form" commandName="user">
+                            <form:form action="/users/edit" method="put" id="login-form" commandName="user">
                                 <form:hidden path="id" />
                                 <div class="field-block">
                                     <div class="field-title">
@@ -98,8 +97,7 @@
                         </div>
                         <div class="tab-pane" id="tab2">
                             <h4>Altere sua Senha</h4>
-                            <c:url value="/users/edit/password" var="usersEditPassword"/>
-                            <form:form action="${usersEditPassword}" id="login-form" commandName="userChangePasswordForm" method="put">
+                            <form:form action="/users/edit/password" id="login-form" commandName="userChangePasswordForm" method="put">
                                 <div class="field-block">
                                     <div class="field-title">
                                         <label>Senha Antiga</label>

@@ -31,11 +31,11 @@
                         <span class="wb-font-big">[${userInstance.name}]</span>
                     </c:if>
                     <ul class="user-stats">
-                        <li class="wb-font-small"><a href="<c:url value='/bookmarks'/>" data-placement="bottom"  rel="tooltip" title="Seus favoritos">${bookmarksCount} Bookmarks</a></li>
-                        <li class="wb-font-small"><a href="<c:url value='/users/followings'/>" data-placement="bottom"  rel="tooltip" title="Veja quais amigos você acompanha">${fn:length(userInstance.followings)} Amigos que você acompanha</a></li>
-                        <li class="wb-font-small"><a href="<c:url value='/users/followers'/>" data-placement="bottom"  rel="tooltip" title="Veja quais amigos você acompanha">${fn:length(userInstance.followers)} Amigos que te acompanham</a></li>
-                        <li class="wb-font-small"><a href="<c:url value='/filters'/>">${filterList.totalElements} Filtros</a></li>
-                        <li class="wb-font-small"><strong><a href="<c:url value='/users/account/profile'/>" class="btn btn-mini">Edite seu Perfil</a></strong></li>
+                        <li class="wb-font-small"><a href="/bookmarks" data-placement="bottom"  rel="tooltip" title="Seus favoritos">${bookmarksCount} Bookmarks</a></li>
+                        <li class="wb-font-small"><a href="/users/followings" data-placement="bottom"  rel="tooltip" title="Veja quais amigos você acompanha">${fn:length(userInstance.followings)} Amigos que você acompanha</a></li>
+                        <li class="wb-font-small"><a href="/users/followers" data-placement="bottom"  rel="tooltip" title="Veja quais amigos você acompanha">${fn:length(userInstance.followers)} Amigos que te acompanham</a></li>
+                        <li class="wb-font-small"><a href="/filters">${filterList.totalElements} Filtros</a></li>
+                        <li class="wb-font-small"><strong><a href="/users/account/profile" class="btn btn-mini">Edite seu Perfil</a></strong></li>
                     </ul>
                 </div>
             </section>
@@ -45,7 +45,7 @@
             <div class="wb-box-with-shadow popular-content">
                 <div class="list-header">
                     <h4 class="wb-left-float">Seus filtros</h4>
-                    <a href="filters/create" class="btn btn-primary btn-mini wb-right-float"><i class="icon-plus icon-white"></i>Adicionar filtro</a>
+                    <a href="/filters/create" class="btn btn-primary btn-mini wb-right-float"><i class="icon-plus icon-white"></i>Adicionar filtro</a>
                 </div>
                 <wb:message messageBean="${message}"/>
             </div>
