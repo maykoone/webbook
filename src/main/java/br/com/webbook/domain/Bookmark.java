@@ -42,7 +42,7 @@ import org.hibernate.validator.constraints.URL;
  */
 @Entity
 @Table(name = "wb_bookmark")
-@Indexed(interceptor = IndexPublicBookmarkInterceptor.class)
+@Indexed(index = "Bookmarks", interceptor = IndexPublicBookmarkInterceptor.class)
 public class Bookmark implements Serializable {
 
     private static final long serialVersionUID = 1L;

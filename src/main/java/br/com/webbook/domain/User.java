@@ -39,7 +39,7 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name = "wb_user_account", uniqueConstraints = {
     @UniqueConstraint(name = "unique_username", columnNames = "username"),
     @UniqueConstraint(name = "unique_email", columnNames = "email")})
-@Indexed
+@Indexed(index="Users")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;

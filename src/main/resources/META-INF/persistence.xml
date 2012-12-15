@@ -14,7 +14,8 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="javax.persistence.validation.mode" value="none"/>
             <!--Hibernate Search-->
-            <property name="hibernate.search.default.directory_provider" value="ram"/> 
+            <!--<property name="hibernate.search.default.directory_provider" value="ram"/>--> 
+            <property name="hibernate.search.default.directory_provider" value="br.com.webbook.search.store.MongoDbDirectoryProvider"/> 
             <!--<property name="hibernate.search.default.indexBase" value="/home/maykoone/lucene/indexes"/>--> 
         </properties>
     </persistence-unit>
