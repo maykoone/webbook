@@ -19,7 +19,7 @@
         <div class="grid_12">
             <section class="user-details wb-box-with-shadow popular-content">
                 <a href="" class="avatar">
-                   <wb:gravatar email="${userInstance.email}" />
+                    <wb:gravatar email="${userInstance.email}" />
                 </a>
                 <div class="user-info">
                     <a hreaf="" class="wb-font-big"><strong><sec:authentication property="principal.username" /></strong></a>&nbsp;<span class="wb-font-big">${userInstance.name}</span>
@@ -97,13 +97,14 @@
                         </div>
                         <div class="tab-pane" id="tab2">
                             <h4>Altere sua Senha</h4>
-                            <form:form action="/users/edit/password" id="login-form" commandName="userChangePasswordForm" method="put">
+                            <form:form action="/users/edit/password" id="password-form" commandName="userChangePasswordForm" method="put">
                                 <div class="field-block">
                                     <div class="field-title">
                                         <label>Senha Antiga</label>
                                     </div>
                                     <div class="field-input">
-                                        <input class=""type="password" name="oldPassword">
+                                        <form:errors path="oldPassword" cssClass="error" />
+                                        <input class=""type="password" name="oldPassword" id="oldPassword">
                                     </div>
                                 </div>
                                 <div class="field-block">
@@ -111,7 +112,8 @@
                                         <label>Nova Senha</label>
                                     </div>
                                     <div class="field-input">
-                                        <input class=""type="password" name="newPassword">
+                                        <form:errors path="newPassword" cssClass="error" />
+                                        <input class=""type="password" name="newPassword" id="newPassword">
                                     </div>
                                 </div>
                                 <div class="field-block">
@@ -119,7 +121,8 @@
                                         <label>Nova Senha novamente</label>
                                     </div>
                                     <div class="field-input">
-                                        <input class=""type="password" name="passwordVerification">
+                                        <form:errors path="passwordVerification" cssClass="error" />
+                                        <input class=""type="password" name="passwordVerification"  id="passwordVerification">
                                     </div>
                                 </div>
 
@@ -139,5 +142,81 @@
             </div>
         </div>
         <div class="clear"></div>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                
+                $("#login-form").validate({
+                    rules: {
+                        userName :{
+                            required: true,
+                            rangelenth: [3, 20]
+                        },
+                        name: {
+                            maxlength: 30
+                        },
+                        lastName: {
+                            maxlength: 30
+                        },
+                        email: {
+                            required: true,
+                            email: true
+                        }
+                    },
+                    messages: {
+                        userName :{
+                            required: "O nome de usuário é obrigatório",
+                            rangelenth: "O nome de usuário deve ter no mínimo 3 e no máximo 20 caracteres"
+                        },
+                        name: {
+                            maxlength: "O nome deve ter no máximo 30 caracteres."
+                        },
+                        lastName: {
+                            maxlength: "O sobrenome deve ter no máximo 30 caracteres."
+                        },
+                        email: {
+                            required: "O email é obrigatório",
+                            email: "digite um email válido"
+                        }
+                    },
+                    errorPlacement: function(error, element) {
+                        error.insertBefore(element);
+                    }
+                });
+                $("#password-form").validate({
+                    rules: {
+                        oldPassword :{
+                            required: true,
+                            minlength: 3
+                        },
+                        newPassword: {
+                            required: true,
+                            minlength: 3
+                        },
+                        passwordVerification: {
+                            required: true,
+                            equalTo: "#newPassword"
+                        }
+                    },
+                    messages: {
+                        oldPassword :{
+                            required: "A senha atual é obrigatória",
+                            minlength: "A senha deve ter no mínimo 3 caracteres."
+                        },
+                        newPassword: {
+                            required: "A nova senha é obrigatória",
+                            minlength: "A nova senha deve ter no mínimo 3 caracteres."
+                        },
+                        passwordVerification: {
+                            required: "A senha de verificação é obrigatória",
+                            equalTo: "A nova senha não corresponde com a senha de verificação"
+                        }
+                    },
+                    errorPlacement: function(error, element) {
+                        error.insertBefore(element);
+                    }
+                });
+                
+            })
+        </script>
     </body>
 </html>

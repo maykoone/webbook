@@ -5,6 +5,7 @@
 package br.com.webbook.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -27,7 +30,10 @@ public class Comment implements Serializable {
     @GeneratedValue(generator = "wb_comment_seq", strategy = GenerationType.AUTO)
     @SequenceGenerator(name = "wb_comment_seq", sequenceName = "wb_comment_seq", allocationSize = 1)
     private Long id;
+    @Size(max = 140, message = "O comentário pode ter no máximo 140 caracteres")
     private String text;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date creationDate;
     @ManyToOne
 //    @JsonIgnore
     private Bookmark bookmark;
@@ -74,6 +80,14 @@ public class Comment implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     @Override

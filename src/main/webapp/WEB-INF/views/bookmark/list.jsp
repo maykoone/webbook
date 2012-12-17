@@ -30,7 +30,7 @@
             <section class="user-details wb-box-with-shadow popular-content">
                 <a href="" class="avatar">
                     <wb:gravatar email="${userInstance.email}" />
-                    
+
                 </a>
                 <div class="user-info">
                     <a hreaf="" class="wb-font-big">
@@ -56,10 +56,12 @@
                 <div class="list-header">
                     <h4>Seus favoritos</h4>
                     <div class="bookmark-preview">
-                        <div class="input-append">
-                            <input class="input-xxlarge" id="input-bookmark-preview" placeholder="Cole uma url" type="text">
-                            <button id="btn-bookmark-preview" class="btn btn-primary" rel="tooltip" title="Adicione um favorito" type="button"><i class="icon-plus icon-white"></i></button>
-                        </div>
+                        <form action="#" id="preview-bookmark">
+                            <div class="input-append">
+                                <input class="input-xxlarge assist" name="previewurl" id="input-bookmark-preview" placeholder="Cole uma url" type="text" data-title="Adicionar favorito" data-content="Cole ou digite uma url (http://example.com) para adicionar um favorito" data-placement="left">
+                                <button id="btn-bookmark-preview" type="submit" class="btn btn-primary" rel="tooltip" title="Adicione um favorito" type="button"><i class="icon-plus icon-white"></i></button>
+                            </div>
+                        </form>
                     </div>
                     <!--                    <a href="#add-bookmark-modal" class="btn btn-primary btn-mini wb-right-float" id="add-bookmark" data-toggle="modal">
                                             <i class="icon-plus icon-white"></i>Adicionar Favorito
@@ -268,6 +270,10 @@
         <!--<script type="text/javascript" src="js/jquery.simplemodal.1.4.2.min.js"></script>-->
         <script type="text/javascript">
             $(document).ready(function() {
+                $(".assist").focus(function(){
+                    $(this).popover({delay: { show: 500, hide: 100 }});
+                });
+                
 
                 //twitter bootstrap modal
                 function openModal(){
@@ -346,7 +352,9 @@
                     
                 });
                 
-                $("#btn-bookmark-preview").click(function(){
+                
+                function previewBookmark(){
+                
                     var url =  $("#input-bookmark-preview").val();
                     
                     $("fieldset.bookmark-form").hide();
@@ -376,8 +384,29 @@
                         $("#btn-bookmark-modal-post").text("Adicionar Favorito");
                         
                     });
-                   
+                }
+                
+                //$("#btn-bookmark-preview").click(previewBookmark);
+                
+                $("#preview-bookmark").validate({
+                    rules: {
+                        previewurl :{
+                            required: true,
+                            url: true
+                        }
+                    },
+                    messages: {
+                        previewurl: {
+                            required: "Você precisa postar uma URL para adicionar um favorito!",
+                            url: "Esse valor não parece uma URL válida."
+                        }
+                    },
+                    submitHandler: previewBookmark,
+                    errorPlacement: function(error, element) {
+                        error.insertBefore(element);
+                    }
                 });
+                
                 $("textarea#description").keyup(function(){
                     $(".char-counter").text($(this).val().length);
                 });

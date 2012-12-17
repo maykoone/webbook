@@ -9,6 +9,7 @@ import br.com.webbook.domain.Comment;
 import br.com.webbook.repositories.CommentRepository;
 import br.com.webbook.repositories.query.CommentSpecifications;
 import br.com.webbook.service.CommentService;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public Comment save(Comment comment) {
+        comment.setCreationDate(new Date());
         return commentRepository.save(comment);
     }
 

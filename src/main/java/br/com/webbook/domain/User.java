@@ -39,7 +39,7 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name = "wb_user_account", uniqueConstraints = {
     @UniqueConstraint(name = "unique_username", columnNames = "username"),
     @UniqueConstraint(name = "unique_email", columnNames = "email")})
-@Indexed(index="Users")
+@Indexed(index = "Users")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -66,7 +66,7 @@ public class User implements Serializable {
     @NotBlank(message = "O nome de usuário é obrigatório", groups = {Default.class, ProfileChecks.class})
     @NotNull(message = "O nome de usuário é obrigatório", groups = {Default.class, ProfileChecks.class})
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
-    @Pattern(regexp="[a-zA-Z0-9_-]+")
+    @Pattern(regexp = "[a-zA-Z0-9_-]+")
     private String userName;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @JsonIgnore
@@ -185,9 +185,8 @@ public class User implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 47 * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = 47 * hash + (this.userName != null ? this.userName.hashCode() : 0);
+        int hash = 7;
+        hash = 97 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 
@@ -201,9 +200,6 @@ public class User implements Serializable {
         }
         final User other = (User) obj;
         if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
-            return false;
-        }
-        if ((this.userName == null) ? (other.userName != null) : !this.userName.equals(other.userName)) {
             return false;
         }
         return true;

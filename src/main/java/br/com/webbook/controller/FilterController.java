@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -71,16 +72,23 @@ public class FilterController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String save(@Valid Filter filter, BindingResult results, Principal principal, RedirectAttributes redirectAttributes) {
+    public String save(@Valid Filter filterInstance, BindingResult results, Principal principal, RedirectAttributes redirectAttributes, Model model) {
+        User user = userService.findByUserName(principal.getName());
+        if (filterInstance.getTags() == null || filterInstance.getTags().isEmpty()) {
+            results.addError(new FieldError("filterInstance", "tags", "Adicione pelo menos uma tag esse filtro"));
+        }
         if (results.hasErrors()) {
+            model.addAttribute("filterInstance", filterInstance);
+            model.addAttribute("userInstance", user);
+            model.addAttribute("filterCount", filterService.countByUser(user));
+            model.addAttribute("bookmarkCount", bookmarkService.countByUser(user));
             return "filter/form";
         }
 
-        User user = userService.findByUserName(principal.getName());
-        filter.setUser(user);
+        filterInstance.setUser(user);
 
-        filterService.save(filter);
-        redirectAttributes.addFlashAttribute("message", new MessageBean("O filtro " + filter.getTitle() + " foi criado com sucesso."));
+        filterService.save(filterInstance);
+        redirectAttributes.addFlashAttribute("message", new MessageBean("O filtro " + filterInstance.getTitle() + " foi criado com sucesso."));
         return "redirect:/filters";
     }
 
@@ -110,22 +118,34 @@ public class FilterController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public String update(@Valid Filter filter, BindingResult results, Principal principal, RedirectAttributes redirectAttributes) {
+    public String update(@Valid Filter filterInstance, BindingResult results, Principal principal, RedirectAttributes redirectAttributes, Model model) {
+        User user = userService.findByUserName(principal.getName());
+
+        if (filterInstance.getTags() == null || filterInstance.getTags().isEmpty()) {
+            results.addError(new FieldError("filterInstance", "tags", "Adicione pelo menos uma tag a esse filtro"));
+        }
+
         if (results.hasErrors()) {
+            model.addAttribute("filterInstance", filterInstance);
+            model.addAttribute("userInstance", user);
+            model.addAttribute("filterCount", filterService.countByUser(user));
+            model.addAttribute("bookmarkCount", bookmarkService.countByUser(user));
+            model.addAttribute("filterId", filterInstance.getId());
+            model.addAttribute("formMethod", "put");
             return "filter/form";
         }
 
-        Filter filterEdit = filterService.findById(filter.getId());
+        Filter filterEdit = filterService.findById(filterInstance.getId());
         if (!filterEdit.getUser().getUserName().equals(principal.getName())) {
             return "auth/deniedAccess";
         }
 
-        filterEdit.setTags(filter.getTags());
-        filterEdit.setTitle(filter.getTitle());
-        filterEdit.setDescription(filter.getDescription());
+        filterEdit.setTags(filterInstance.getTags());
+        filterEdit.setTitle(filterInstance.getTitle());
+        filterEdit.setDescription(filterInstance.getDescription());
         filterService.save(filterEdit);
 
-        redirectAttributes.addFlashAttribute("message", new MessageBean("O filtro " + filter.getTitle() + " foi atualizado com sucesso."));
+        redirectAttributes.addFlashAttribute("message", new MessageBean("O filtro " + filterInstance.getTitle() + " foi atualizado com sucesso."));
         return "redirect:/filters";
 
     }

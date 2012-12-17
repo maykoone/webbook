@@ -87,11 +87,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
-    public String update(@Validated({ProfileChecks.class}) User user, BindingResult result, Principal principal, RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()) {
-            return VIEW_EDIT;
-        }
-
+    public String update(@Validated({ProfileChecks.class}) User user, BindingResult result, Principal principal, RedirectAttributes redirectAttributes, Model model) {
         //carrega os dados do usuário logado.
         User userEdit = service.findByUserName(principal.getName());
 
@@ -110,6 +106,11 @@ public class UserController {
             }
 
             if (result.hasErrors()) {
+                model.addAttribute("user", user);
+                model.addAttribute("userInstance", user);
+                model.addAttribute("userChangePasswordForm", new UserChangePasswordForm());
+                model.addAttribute("filterCount", filterService.countByUser(user));
+                model.addAttribute("bookmarkCount", bookmarkService.countByUser(user));
                 return VIEW_EDIT;
             }
 
@@ -140,6 +141,10 @@ public class UserController {
         } else {
             User user = service.findByUserName(principal.getName());
             model.addAttribute("user", user);
+            model.addAttribute("userInstance", user);
+            model.addAttribute("userChangePasswordForm", userChangePasswordForm);
+            model.addAttribute("filterCount", filterService.countByUser(user));
+            model.addAttribute("bookmarkCount", bookmarkService.countByUser(user));
             return VIEW_EDIT;
         }
         return REDIRECT_USERS + "/account/profile";

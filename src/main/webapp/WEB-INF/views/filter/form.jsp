@@ -27,7 +27,7 @@
                         <strong>@<sec:authentication property="principal.username" /></strong>
                     </a>&nbsp;<span class="wb-font-big">[${userInstance.name}]</span>
                     <ul class="user-stats">
-                       <li class="wb-font-small"><a href="/bookmarks" data-placement="bottom"  rel="tooltip" title="Seus favoritos">${bookmarkCount} Bookmarks</a></li>
+                        <li class="wb-font-small"><a href="/bookmarks" data-placement="bottom"  rel="tooltip" title="Seus favoritos">${bookmarkCount} Bookmarks</a></li>
                         <li class="wb-font-small"><a href="/users/followings" data-placement="bottom"  rel="tooltip" title="Veja quais amigos você acompanha">${fn:length(userInstance.followings)} Amigos que você acompanha</a></li>
                         <li class="wb-font-small"><a href="/users/followers" data-placement="bottom"  rel="tooltip" title="Veja quais amigos você acompanha">${fn:length(userInstance.followers)} Amigos que te acompanham</a></li>
                         <li class="wb-font-small"><a href="/filters">${filterCount} Filtros</a></li>
@@ -39,7 +39,7 @@
         <div class="clear"></div>
         <div class="grid_8" >
             <div class="wb-box-with-shadow">
-                <form:form action="/filters" commandName="filterInstance" method="${formMethod}" cssClass="form-horizontal form">
+                <form:form action="/filters" commandName="filterInstance" method="${formMethod}" id="add-filter-form" cssClass="form-horizontal form">
                     <legend>Cadastro de filtro</legend>
                     <div class="loading" style="display: none"><img class="ajax-loader" src="" /></div>
                     <input type="hidden" name="id" id="id"/>
@@ -48,14 +48,14 @@
                             <label>Título</label>
                         </div>
                         <div class="field-input">
-                            <form:errors path="title" />
-                            <input class="input-xxlarge" type="text" id="title" name="title" />
+                            <form:errors path="title" cssClass="error" />
+                            <input class="input-xxlarge" type="text" id="title" name="title" value="${filterInstance.title}" />
                             <span class="help-block">Dê um título ao seu filtro (Obrigatório)</span>
                         </div>
                     </div>
                     <div class="field-block">
                         <div class="field-title">
-                            <form:errors path="description" />
+                            <form:errors path="description" cssClass="error" />
                             <label>Descrição</label>
                         </div>
                         <div class="field-input">
@@ -68,6 +68,7 @@
                             <label>Tags</label>
                         </div>
                         <div class="field-input">
+                            <form:errors path="tags" cssClass="error" />
                             <input class="input-xxlarge"type="text" name="tags" id="tags" id="tags" />
                             <span class="help-block">Todos os links que correspondem a essas tags serão visualizadas através desse filtro</span>
                         </div>
@@ -97,20 +98,52 @@
                 });
             <c:if test="${filterId ne null}">
                 
-                $.get('/filters/${filterId}', function(data){
-                    $("#id").val(data.id);
-                    $("#title").val(data.title);
-                    $("#description").val(data.description);
-                    $("#tags").val(data.tags);
-                    $("#tags").importTags(data.tags.toString());
-                });
+                    $.get('/filters/${filterId}', function(data){
+                        $("#id").val(data.id);
+                        $("#title").val(data.title);
+                        $("#description").val(data.description);
+                        $("#tags").val(data.tags);
+                        $("#tags").importTags(data.tags.toString());
+                    });
             </c:if>
-                $("#tags").tagsInput({
-                    'height':'auto',
-                    'width':'530px',
-                    'defaultText':'add uma tag'
-                });
-        })
+                    $("#tags").tagsInput({
+                        'height':'auto',
+                        'width':'530px',
+                        'defaultText':'add uma tag'
+                    });
+                
+                
+                    $("#add-filter-form").validate({
+                        rules: {
+                            title :{
+                                required: true,
+                                maxlength: 50
+                            },
+                            description:{
+                                maxlength: 140
+                            },
+                            tags: {
+                                required: true
+                            }
+                        },
+                        messages: {
+                            title :{
+                                required: "O campo título não pode ser vazio",
+                                maxlength: "O tamanho máximo do título é de 50 caracteres"
+                            },
+                            description:{
+                                maxlength: "O campo descrição deve ter no máximo 140 caracteres"
+                            },
+                            tags: {
+                                required: "Adicione pelo menos uma tag esse filtro"
+                            }
+                        },
+                        errorPlacement: function(error, element) {
+                            error.insertBefore(element);
+                        }
+                    });
+                
+                })
         </script>
     </body>
 </html>
