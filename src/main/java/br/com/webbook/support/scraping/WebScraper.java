@@ -32,13 +32,18 @@ public class WebScraper {
             if (descriptionQuery != null && !descriptionQuery.isEmpty()) {
                 desc = descriptionQuery.first().attr("content");
             }
+            Elements links = doc.select("link[rel*=icon]");
+            String iconPath = "";
+            if(links != null && !links.isEmpty()){
+                iconPath = links.first().absUrl("href");
+            }
 //            Elements tagsQuery = doc.select("meta[name=keywords]");
 //            String tags = "";
 //            if (tagsQuery != null && !tagsQuery.isEmpty()) {
 //                tags = tagsQuery.first().attr("content");
 //            }
 
-            return new Bookmark(title, url, desc);
+            return new Bookmark(title, url, desc, iconPath);
 
         } catch (IOException e) {
             Logger.getLogger(WebScraper.class.getName()).log(Level.SEVERE, null, e);

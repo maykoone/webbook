@@ -56,10 +56,10 @@
                 <c:forEach items="${bookmarkList.content}" var="bookmark">
                     <div class="bookmark-item">
                         <a href="" class="bookmark-thumbnail">
-                            <div class="default-thumb"></div>
-                        </a>
-                        <div class="bookmark-info">
-                            <h3><a href="${bookmark.url}" class="bookmark-title wb-font-medium">${bookmark.title}</a></h3>
+                            <div class="default-thumb"  <c:if test="${not empty bookmark.iconPath}">style="background-image:url('${bookmark.iconPath}')"</c:if>></div>
+                            </a>
+                            <div class="bookmark-info">
+                                <h3><a href="${bookmark.url}" class="bookmark-title wb-font-medium">${bookmark.title}</a></h3>
                             <a href="${bookmark.url}" class="bookmark-url wb-font-small">${bookmark.url}</a>
                             <p class="wb-font-small">${bookmark.description}</p>
                             <ul class="bookmark-tag-list">
@@ -136,7 +136,7 @@
 
             </div>
             <form:form action="/bookmarks" commandName="bookmark" method="post" id="modal-form">
-                <div class="loading" style="display: none"><img class="ajax-loader" src="resources/img/ajax-loader.gif" /></div>
+                <div class="loading" style="display: none"><img class="ajax-loader" src="/resources/img/ajax-loader.gif" /></div>
                 <div class="modal-body">
                     <fieldset class="bookmark-form">
                         <form:hidden path="id" id="id" />

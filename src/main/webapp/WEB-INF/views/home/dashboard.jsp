@@ -18,7 +18,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Descubra</title>
         <style type="text/css">
             #tag-cloud {
                 margin: 25px auto;
@@ -61,8 +61,8 @@
                             <c:forEach items="${popularBookmarks}" var="bookmark">
                                 <div class="search-item">
                                     <div class="user-result">
-                                        <h4><a href="">${bookmark.url}</a></h4>
-                                    </div>
+                                        <i class="fav" <c:if test="${not empty bookmark.iconPath}">style="background-image:url('${bookmark.iconPath}')"</c:if>></i> <a href="${bookmark.url}" target="_blank">${bookmark.url}</a>
+                                    </div> 
                                 </div>
                                 <hr />
                             </c:forEach>
@@ -74,7 +74,7 @@
                                         <div class="avatar img-polaroid">
                                             <wb:gravatar email="${bookmark.user.email}" />
                                         </div>
-                                        <h4>${bookmark.title}&nbsp;<small><fmt:formatDate value="${bookmark.creationDate}" pattern="d MMM, yyyy"/></small></h4>
+                                        <h4><i class="fav" <c:if test="${not empty bookmark.iconPath}">style="background-image:url('${bookmark.iconPath}')"</c:if>></i> ${bookmark.title}&nbsp;<small><fmt:formatDate value="${bookmark.creationDate}" pattern="d MMM, yyyy"/></small></h4>
                                         <p><a href=""><small>${bookmark.url}</small></a></p>
                                         <div class="details">
                                             <a href="/${bookmark.user.userName}">@${bookmark.user.userName}</a>
@@ -91,7 +91,7 @@
                                         <div class="avatar img-polaroid">
                                             <wb:gravatar email="${bookmark.user.email}" />
                                         </div>
-                                        <h4>${bookmark.title}&nbsp;<small><fmt:formatDate value="${bookmark.creationDate}" pattern="d MMM, yyyy"/></small></h4>
+                                        <h4><i class="fav" <c:if test="${not empty bookmark.iconPath}">style="background-image:url('${bookmark.iconPath}')"</c:if>></i> ${bookmark.title}&nbsp;<small><fmt:formatDate value="${bookmark.creationDate}" pattern="d MMM, yyyy"/></small></h4>
                                         <p><a href=""><small>${bookmark.url}</small></a></p>
                                         <div class="details">
                                             <a href="/${bookmark.user.userName}">@${bookmark.user.userName}</a>

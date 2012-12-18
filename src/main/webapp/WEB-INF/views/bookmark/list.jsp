@@ -18,9 +18,6 @@
 <html>
     <head>
         <title>Lista de favoritos</title>
-        <!--<link rel="stylesheet" href="css/tagify-style.css" />-->
-        <!--<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/base/jquery-ui.css" />-->
-        <!--<link rel="stylesheet" href="resources/css/bootstrap.css" />-->
 
 
     </head>
@@ -71,13 +68,13 @@
                 <c:forEach items="${bookmarkList.content}" var="bookmark">
                     <div class="bookmark-item">
                         <a href="" class="bookmark-thumbnail">
-                            <div class="default-thumb"></div>
+                            <div class="default-thumb" <c:if test="${not empty bookmark.iconPath}">style="background-image:url('${bookmark.iconPath}')"</c:if>></div>
                         </a>
                         <div class="bookmark-info">
                             <p>
-                                <a href="${bookmark.url}" class="bookmark-title wb-font-medium">${bookmark.title}&nbsp;<c:if test="${bookmark.privateBookmark}"><i class="icon-lock"></i></c:if></a>&nbsp;<small><fmt:formatDate value="${bookmark.creationDate}" pattern="d MMM, yyyy"/></small>
+                                <a href="${bookmark.url}" target="_blank" class="bookmark-title wb-font-medium">${bookmark.title}&nbsp;<c:if test="${bookmark.privateBookmark}"><i class="icon-lock"></i></c:if></a>&nbsp;<small><fmt:formatDate value="${bookmark.creationDate}" pattern="d MMM, yyyy"/></small>
                             <p>
-                                <a href="${bookmark.url}" class="bookmark-url wb-font-small">${bookmark.url}</a>
+                                <a href="${bookmark.url}" target="_blank" class="bookmark-url wb-font-small">${bookmark.url}</a>
                             <p class="wb-font-small">${bookmark.description}</p>
                             <ul class="bookmark-tag-list">
                                 <c:forEach items="${bookmark.tags}" var="tag">
@@ -160,10 +157,11 @@
 
             </div>
             <form:form action="${currentUrl}" commandName="bookmark" method="post" id="modal-form">
-                <div class="loading" style="display: none"><img class="ajax-loader" src="resources/img/ajax-loader.gif" /></div>
+                <div class="loading" style="display: none"><img class="ajax-loader" src="/resources/img/ajax-loader.gif" /></div>
                 <div class="modal-body">
                     <fieldset class="bookmark-form">
                         <form:hidden path="id" id="id" />
+                        <form:hidden path="iconPath" id="icon" />
                         <div class="field-block">
                             <div class="field-title">
                                 <label>Título</label>
@@ -288,6 +286,7 @@
                     var url = $(this).attr("href");
                     $.get(url, function(data){
                         $("#id").val(data.id);
+                        $("#icon").val(data.iconPath);
                         $("#title").val(data.title);
                         $("#url").val(data.url);
                         $("#description").val(data.description);
@@ -367,6 +366,7 @@
                     
                     $.getJSON('bookmarks/scraping',{url: url} , function(data){
                         
+                        $("#icon").val(data.iconPath);
                         $("#title").val(data.title);
                         $("#url").val(data.url);
                         $("#description").val(data.description);

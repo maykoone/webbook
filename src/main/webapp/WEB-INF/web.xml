@@ -77,6 +77,9 @@
         <servlet-name>spring</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file></welcome-file>
+    </welcome-file-list>
     <error-page>
         <error-code>404</error-code>
         <location>/WEB-INF/views/errors/error404.jsp</location>

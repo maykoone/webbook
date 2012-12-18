@@ -47,7 +47,7 @@
                         <wb:message messageBean="${messageBookmarks}" />
                         <c:forEach items="${bookmarksResults}" var="bookmark">
                             <div class="search-item">
-                                <p><a href="${bookmark.url}" class="bookmark-title wb-font-medium">${bookmark.title}</a><p>
+                                <p><i class="fav" <c:if test="${not empty bookmark.iconPath}">style="background-image:url('${bookmark.iconPath}')"</c:if>></i> <a href="${bookmark.url}" class="bookmark-title wb-font-medium">${bookmark.title}</a><p>
                                     <a href="${bookmark.url}" class="bookmark-url wb-font-small">${bookmark.url}</a>
                                 <p class="wb-font-small">${bookmark.description}</p>
                             </div>

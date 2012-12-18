@@ -76,6 +76,7 @@ public class Bookmark implements Serializable {
     private Set<Comment> comments;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date creationDate;
+    private String iconPath;
 
     //<editor-fold defaultstate="collapsed" desc="constructors">
     public Bookmark(String url) {
@@ -86,6 +87,13 @@ public class Bookmark implements Serializable {
         this.title = title;
         this.url = url;
         this.description = description;
+    }
+
+    public Bookmark(String title, String url, String description, String iconPath) {
+        this.title = title;
+        this.url = url;
+        this.description = description;
+        this.iconPath = iconPath;
     }
 
     public Bookmark() {
@@ -171,6 +179,14 @@ public class Bookmark implements Serializable {
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public String getIconPath() {
+        return iconPath;
+    }
+
+    public void setIconPath(String iconPath) {
+        this.iconPath = iconPath;
     }
 
     @Override

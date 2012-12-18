@@ -48,7 +48,7 @@ public class HomeController {
         return "redirect:/bookmarks/{userName}";
     }
 
-    @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+    @RequestMapping(value = {"/dashboard", "/"}, method = RequestMethod.GET)
     public String dashboard(Model model) {
         String principalUserName = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUserName(principalUserName);

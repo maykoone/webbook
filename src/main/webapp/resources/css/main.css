@@ -545,7 +545,7 @@ a.bookmark-title{
 }
 #add-bookmark-modal{
     width: 600px;
-    margin: -400px 0 0 -280px;
+    margin: -45% 0 0 -280px;
     /*padding: 15px;*/
 }
 #add-bookmark-modal .modal-body{
@@ -754,4 +754,18 @@ label.error{
 }
 input.error{
     border-color: #953B39;
+}
+i.fav {
+    background-image: url(http://icons.iconarchive.com/icons/sekkyumu/developpers/32/Web-Browser-icon.png);
+    margin: -2px 2px 0 0;
+    background-repeat: no-repeat;
+    line-height: 16px;
+    background-position: 0px 0px;
+    background-size: 16px;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    display: inline-block;
+    border-radius: 1px;
+    vertical-align: middle;
 }
