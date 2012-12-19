@@ -104,7 +104,7 @@ public class BookmarkServiceImpl implements BookmarkService {
     }
 
     @Override
-    public Page<Bookmark> listPublicBookmarksByTags(Set<String> tags, Integer pageNumber, Integer pageSize) {
+    public List<Bookmark> listPublicBookmarksByTags(Set<String> tags, Integer pageNumber, Integer pageSize) {
 //        PageRequest request = new PageRequest(pageNumber - 1, pageSize, new Sort(Sort.Direction.DESC, "creationDate"));
 //        Page<Bookmark> pageResult = bookmarkRepository.findDistinctByTagsInAndPrivateBookmark(tags, false, request);
 
@@ -116,13 +116,11 @@ public class BookmarkServiceImpl implements BookmarkService {
         org.apache.lucene.search.Query query = qb.keyword().onFields("tags").matching(tags).createQuery();
         javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(query, Bookmark.class);
 
-        int maxResults = jpaQuery.getMaxResults();
         jpaQuery.setFirstResult(request.getOffset());
         jpaQuery.setMaxResults(request.getPageSize());
 
-        Page<Bookmark> pageResult = new PageImpl<Bookmark>(jpaQuery.getResultList(), request, maxResults);
+        return jpaQuery.getResultList();
 
-        return pageResult;
     }
 
     @Override

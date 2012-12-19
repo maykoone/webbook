@@ -12,7 +12,7 @@
         <div class="span4">
 
             <div id="bookmark-summary">
-                <h5>${bookmark.title}</h5>
+                <h5><i class="fav" <c:if test="${not empty bookmark.iconPath}">style="background-image:url('${bookmark.iconPath}')"</c:if>></i> ${bookmark.title}</h5>
                 <p><a href="">${bookmark.url}<a/></p>
             </div> 
         </div>

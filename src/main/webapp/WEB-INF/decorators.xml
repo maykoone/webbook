@@ -15,6 +15,10 @@
         <pattern>*.xml</pattern>
         <pattern>/rest/*</pattern>
         <pattern>/ajax/*</pattern>
+        <pattern>/bookmarks/api/*</pattern>
+        <pattern>/users/api/*</pattern>
+        <pattern>/search/api/*</pattern>
+        <pattern>/filters/api/*</pattern>
 
     </excludes>
 

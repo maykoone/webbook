@@ -14,6 +14,7 @@ import br.com.webbook.support.scraping.WebScraper;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.validation.Valid;
@@ -150,18 +151,28 @@ public class BookmarkController {
     }
 
     @RequestMapping(value = "/tag/{tag}")
-    public String listByTag(@PathVariable String tag, @RequestParam(required = false) Integer page, Model model) {
+    public String loadViewListByTag(@PathVariable String tag, @RequestParam(required = false) Integer page, Model model) {
         User userInstance = userService.findByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
         Set<String> tags = new HashSet<String>();
         tags.add(tag);
 
-        Page<Bookmark> pageResult = bookmarkService.listPublicBookmarksByTags(tags, page == null ? 1 : page, 10);
+        List<Bookmark> pageResult = bookmarkService.listPublicBookmarksByTags(tags, page == null ? 1 : page, 10);
         model.addAttribute("userInstance", userInstance);
-        model.addAllAttributes(configurePagination(pageResult));
+        model.addAttribute("bookmarks", pageResult);
         model.addAttribute("tagSearch", tag == null ? "" : tag);
         model.addAttribute("bookmark", new Bookmark());
 
         return "bookmark/list-by-tag";
+    }
+
+    @RequestMapping(value = "/api/tag/{tag}")
+    public String listByTag(@PathVariable String tag, @RequestParam(required = false) Integer page, Model model) {
+        Set<String> tags = new HashSet<String>();
+        tags.add(tag);
+
+        List<Bookmark> pageResult = bookmarkService.listPublicBookmarksByTags(tags, page == null ? 1 : page, 10);
+        model.addAttribute("bookmarks", pageResult);
+        return "bookmark/list-by-tag-fragment";
     }
 
     private User loadCurrentUser() {

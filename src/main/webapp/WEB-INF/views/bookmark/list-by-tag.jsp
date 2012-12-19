@@ -53,73 +53,37 @@
                 <div class="list-header">
                     <h4 class="wb-left-float">Favoritos marcados como ${tagSearch}</h4>
                 </div>
-                <c:forEach items="${bookmarkList.content}" var="bookmark">
-                    <div class="bookmark-item">
-                        <a href="" class="bookmark-thumbnail">
-                            <div class="default-thumb"  <c:if test="${not empty bookmark.iconPath}">style="background-image:url('${bookmark.iconPath}')"</c:if>></div>
+                <div id="list-content">
+                    <c:forEach items="${bookmarks}" var="bookmark">
+                        <div class="bookmark-item">
+                            <a href="" class="bookmark-thumbnail">
+                                <div class="default-thumb"  <c:if test="${not empty bookmark.iconPath}">style="background-image:url('${bookmark.iconPath}')"</c:if>></div>
                             </a>
                             <div class="bookmark-info">
                                 <h3><a href="${bookmark.url}" class="bookmark-title wb-font-medium">${bookmark.title}</a></h3>
-                            <a href="${bookmark.url}" class="bookmark-url wb-font-small">${bookmark.url}</a>
-                            <p class="wb-font-small">${bookmark.description}</p>
-                            <ul class="bookmark-tag-list">
-                                <c:forEach items="${bookmark.tags}" var="tag">
-                                    <li><html:tagLink tag="${tag}"/></li>
-                                </c:forEach>
-                            </ul>
+                                <a href="${bookmark.url}" class="bookmark-url wb-font-small">${bookmark.url}</a>
+                                <p class="wb-font-small">${bookmark.description}</p>
+                                <ul class="bookmark-tag-list">
+                                    <c:forEach items="${bookmark.tags}" var="tag">
+                                        <li><html:tagLink tag="${tag}"/></li>
+                                    </c:forEach>
+                                </ul>
+                            </div>
+                            <div class="bookmark-item-control">
+                                <ul>
+                                    <li><a href="/bookmarks/${bookmark.id}/edit" class="editMe" onclick="return false;" title="Adicione ao seus favoritos"><i class="icon-bookmark"></i>Salvar</a></li>
+                                    <li>
+                                        <a href="/ajax/bookmarks/${bookmark.id}/comments" data-toggle="modal" onclick="return false;" class="get-comments">
+                                            <i class="icon-comment"></i>Comentários
+                                        </a>
+                                    </li>
+                                    <li><a href="#" class="share-button" data-url="${bookmark.url}" data-title="${bookmark.title}" data-username="${userInstance.userName}"><i class="icon-share"></i>Compartilhar</a></li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="bookmark-item-control">
-                            <ul>
-                                <li><a href="/bookmarks/${bookmark.id}/edit" class="editMe" onclick="return false;" title="Adicione ao seus favoritos"><i class="icon-bookmark"></i>Salvar</a></li>
-                                <li>
-                                    <a href="/ajax/bookmarks/${bookmark.id}/comments" data-toggle="modal" onclick="return false;" class="get-comments">
-                                        <i class="icon-comment"></i>Comentários
-                                    </a>
-                                </li>
-                                <li><a href="#" class="share-button" data-url="${bookmark.url}" data-title="${bookmark.title}" data-username="${userInstance.userName}"><i class="icon-share"></i>Compartilhar</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </c:forEach>
-                <c:url var="firstUrl" value="${userInstance.userName}?page=1" />
-                <c:url var="lastUrl" value="${userInstance.userName}?page=${bookmarkList.totalPages}" />
-                <c:url var="prevUrl" value="${userInstance.userName}?page=${currentIndex - 1}" />
-                <c:url var="nextUrl" value="${userInstance.userName}?page=${currentIndex + 1}" />
-                <div class="pagination">
-                    <ul>
-                        <c:choose>
-                            <c:when test="${currentIndex == 1}">
-                                <li class="disabled"><a href="#">&lt;&lt;</a></li>
-                                <li class="disabled"><a href="#">&lt;</a></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li><a href="${firstUrl}">&lt;&lt;</a></li>
-                                <li><a href="${prevUrl}">&lt;</a></li>
-                            </c:otherwise>
-                        </c:choose>
-                        <c:forEach var="i" begin="${beginIndex}" end="${endIndex}">
-                            <c:url var="pageUrl" value="${userInstance.userName}?page=${i}" />
-                            <c:choose>
-                                <c:when test="${i == currentIndex}">
-                                    <li class="active"><a href="${pageUrl}"><c:out value="${i}" /></a></li>
-                                </c:when>
-                                <c:otherwise>
-                                    <li><a href="${pageUrl}"><c:out value="${i}" /></a></li>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:forEach>
-                        <c:choose>
-                            <c:when test="${currentIndex == bookmarkList.totalPages}">
-                                <li class="disabled"><a href="#">&gt;</a></li>
-                                <li class="disabled"><a href="#">&gt;&gt;</a></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li><a href="${nextUrl}">&gt;</a></li>
-                                <li><a href="${lastUrl}">&gt;&gt;</a></li>
-                            </c:otherwise>
-                        </c:choose>
-                    </ul>
+                    </c:forEach>
                 </div>
+                <div id="loading" style="display: none"><img class="ajax-loader" src="/resources/img/ajax-loader.gif" /></div>
             </section>
         </div>
         <div class="grid_4">
@@ -269,7 +233,7 @@
                     });
                 }
                 
-                $(".share-button").on('click', function(){
+                $(".share-button").live('click', function(){
                     var shareUrl = $(this).data('url');
                     var shareUrlText = $(this).data('title');
                     var gplusUrl = "https://plus.google.com/share?url=" + shareUrl;
@@ -297,7 +261,7 @@
                 }
                 
                 
-                $(".editMe").on('click',loadData);
+                $(".editMe").live('click',loadData);
                 $(".get-comments").live('click',loadComments);
                 
                 
@@ -329,6 +293,29 @@
                         description: {
                             maxlength: "A descrição deve ter no máximo 140 caracteres"
                         }
+                    }
+                });
+
+            });
+        </script>
+        <script type="text/javascript">
+            $(function(){
+                var listContent = $('#list-content');
+                $(window).scroll(function(){
+                    if($(window).scrollTop() == $(document).height() - $(window).height()){
+                        $('#loading').show();
+                        $.ajax({
+                            url: "/bookmarks/api/tag/${tagSearch}",
+                            data: {page: parseInt(listContent.children().size() / 10) + 1},
+                            success: function(html) {
+                                if(html){
+                                    listContent.append(html);
+                                    $('#loading').hide();
+                                }else{
+                                    $('#loading').html('<center>Não há mais resultados</center>');
+                                }
+                            }
+                        });
                     }
                 });
 

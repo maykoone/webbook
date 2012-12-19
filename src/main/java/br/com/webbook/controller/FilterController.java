@@ -13,6 +13,7 @@ import br.com.webbook.service.UserService;
 import br.com.webbook.tags.MessageBean;
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -166,31 +167,41 @@ public class FilterController {
     }
 
     @RequestMapping(value = "/{id}/bookmarks", method = RequestMethod.GET)
-    public String show(@PathVariable Long id, @RequestParam(required = false) Integer page, Model model, Principal principal) {
+    public String loadViewShow(@PathVariable Long id, @RequestParam(required = false) Integer page, Model model, Principal principal) {
         Filter filter = filterService.findById(id);
         if (filter == null) {
             return "errors/error404";
         } else if (!filter.getUser().getUserName().equals(principal.getName())) {
-            return "foward:/denied";
+            return "forward:/denied";
         }
 
-        Page<Bookmark> pageResult = bookmarkService.listPublicBookmarksByTags(filter.getTags(), page == null ? 1 : page, 10);
-        //pagination
-        int current = pageResult.getNumber() + 1;
-        int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, pageResult.getTotalPages());
+        List<Bookmark> pageResult = bookmarkService.listPublicBookmarksByTags(filter.getTags(), page == null ? 1 : page, 10);
 
         model.addAttribute("filterInstance", filter);
         model.addAttribute("bookmarkList", pageResult);
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
 
         model.addAttribute("userInstance", filter.getUser());
         model.addAttribute("filterCount", filterService.countByUser(filter.getUser()));
         model.addAttribute("bookmarkCount", bookmarkService.countByUser(filter.getUser()));
 
         return "filter/show";
+    }
+
+    @RequestMapping(value = "/api/{id}/bookmarks", method = RequestMethod.GET)
+    public String show(@PathVariable Long id, @RequestParam(required = false) Integer page, Model model, Principal principal) {
+        Filter filter = filterService.findById(id);
+        if (filter == null) {
+            return "errors/error404";
+        } else if (!filter.getUser().getUserName().equals(principal.getName())) {
+            return "forward:/denied";
+        }
+
+        List<Bookmark> pageResult = bookmarkService.listPublicBookmarksByTags(filter.getTags(), page == null ? 1 : page, 10);
+
+        model.addAttribute("bookmarkList", pageResult);
+
+
+        return "filter/show-fragment";
     }
 
     private Map<String, Object> configurePagination(Page<Filter> pageResult) {
