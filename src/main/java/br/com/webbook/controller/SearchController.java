@@ -11,7 +11,9 @@ import br.com.webbook.service.SearchService;
 import br.com.webbook.service.UserService;
 import br.com.webbook.tags.MessageBean;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,19 +43,23 @@ public class SearchController {
     @RequestMapping(method = RequestMethod.GET)
     public String search(@RequestParam String q, Principal principal, Model model) {
         User user = userService.findByUserName(principal.getName());
+        if (q == null || q.isEmpty()) {
+            model.addAttribute("messageGlobal", new MessageBean("Escreva a sua busca para encontrar favoritos e usuários.", MessageBean.TYPE.INFO));
+        } else {
+            List<Bookmark> bookmarkResults = new ArrayList<Bookmark>(searchService.searchBookmarks(q));
+            if (bookmarkResults == null || bookmarkResults.isEmpty()) {
+                model.addAttribute("messageBookmarks", new MessageBean("Não encontrado nenhum resultado de favorito com esse termo.", MessageBean.TYPE.INFO));
+            }
+            model.addAttribute("bookmarksResults", bookmarkResults);
 
-        Set<Bookmark> bookmarkResults = new HashSet<Bookmark>(searchService.searchBookmarks(q));
-        if (bookmarkResults == null || bookmarkResults.isEmpty()) {
-            model.addAttribute("messageBookmarks", new MessageBean("Não encontrado nenhum resultado de favorito com esse termo.", MessageBean.TYPE.INFO));
+            List<User> userResults = new ArrayList<User>(searchService.searchUsers(q));
+            if (userResults == null || userResults.isEmpty()) {
+                model.addAttribute("messageUsers", new MessageBean("Não encontrado nenhum resultado de usuário com esse termo.", MessageBean.TYPE.INFO));
+            }
+            model.addAttribute("userResults", userResults);
+
+
         }
-        model.addAttribute("bookmarksResults", bookmarkResults);
-
-        Set<User> userResults = new HashSet<User>(searchService.searchUsers(q));
-        if (userResults == null || userResults.isEmpty()) {
-            model.addAttribute("messageUsers", new MessageBean("Não encontrado nenhum resultado de usuário com esse termo.", MessageBean.TYPE.INFO));
-        }
-        model.addAttribute("userResults", userResults);
-
         model.addAttribute("userInstance", user);
         model.addAttribute("querySearch", q);
 
@@ -61,7 +67,8 @@ public class SearchController {
     }
 
     @RequestMapping(value = "/ranking/{userName}", method = RequestMethod.GET)
-    public @ResponseBody Map<String, Long> getTagRanking(@PathVariable String userName) {
+    public @ResponseBody
+    Map<String, Long> getTagRanking(@PathVariable String userName) {
         return searchService.countTagsByUser(userName);
     }
 }

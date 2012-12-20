@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>JSP Page</title>
+        <title>Cadastro de Filtro</title>
     </head>
     <body>
         <div class="grid_12">

@@ -55,7 +55,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/create_account", method = RequestMethod.POST)
-    public String save(@Validated({Default.class}) User user, BindingResult result, RedirectAttributes attributes) {
+    public String save(@Validated({Default.class}) User user, BindingResult result, RedirectAttributes attributes, Model model) {
         if (!service.isUniqueUserName(user.getUserName())) {
             result.addError(new FieldError("user", "userName", "Este nome de usuário já está sendo utilizado"));
         }
@@ -63,6 +63,7 @@ public class UserController {
             result.addError(new FieldError("user", "email", "Este email já está registrado para outro usuário"));
         }
         if (result.hasErrors()) {
+            model.addAttribute("user", user);
             return VIEW_CREATE;
         }
         service.save(user);

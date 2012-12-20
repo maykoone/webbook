@@ -81,10 +81,10 @@
                         </div>
                     </div>
                 </c:forEach>
-                <c:url var="firstUrl" value="${userInstance.userName}?page=1" />
-                <c:url var="lastUrl" value="${userInstance.userName}?page=${bookmarkList.totalPages}" />
-                <c:url var="prevUrl" value="${userInstance.userName}?page=${currentIndex - 1}" />
-                <c:url var="nextUrl" value="${userInstance.userName}?page=${currentIndex + 1}" />
+                <c:url var="firstUrl" value="${tagSearch}?page=1" />
+                <c:url var="lastUrl" value="${tagSearch}?page=${bookmarkList.totalPages}" />
+                <c:url var="prevUrl" value="${tagSearch}?page=${currentIndex - 1}" />
+                <c:url var="nextUrl" value="${tagSearch}?page=${currentIndex + 1}" />
                 <div class="pagination">
                     <ul>
                         <c:choose>
@@ -98,7 +98,7 @@
                             </c:otherwise>
                         </c:choose>
                         <c:forEach var="i" begin="${beginIndex}" end="${endIndex}">
-                            <c:url var="pageUrl" value="${userInstance.userName}?page=${i}" />
+                            <c:url var="pageUrl" value="${tagSearch}?page=${i}" />
                             <c:choose>
                                 <c:when test="${i == currentIndex}">
                                     <li class="active"><a href="${pageUrl}"><c:out value="${i}" /></a></li>

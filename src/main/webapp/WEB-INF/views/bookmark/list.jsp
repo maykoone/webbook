@@ -55,7 +55,7 @@
                     <div class="bookmark-preview">
                         <form action="#" id="preview-bookmark">
                             <div class="input-append">
-                                <input class="input-xxlarge assist" name="previewurl" id="input-bookmark-preview" placeholder="Cole uma url" type="text" data-title="Adicionar favorito" data-content="Cole ou digite uma url (http://example.com) para adicionar um favorito" data-placement="left">
+                                <input class="input-xxlarge assist" name="previewurl" id="input-bookmark-preview" placeholder="Cole uma url" type="text" data-title="Adicionar favorito" data-content="Cole ou digite uma url (http://example.com) para adicionar um favorito" data-placement="bottom">
                                 <button id="btn-bookmark-preview" type="submit" class="btn btn-primary" rel="tooltip" title="Adicione um favorito" type="button"><i class="icon-plus icon-white"></i></button>
                             </div>
                         </form>

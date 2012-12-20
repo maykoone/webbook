@@ -24,7 +24,8 @@
         <div class="grid_12">
             <section id="" class="wb-box-with-shadow popular-content">
                 <div class="list-header">
-                    <h4 class="wb-left-float">Resultados para pesquisa: ${querySearch}</h4>
+                    <wb:message messageBean="${messageGlobal}" />
+                    <h4>Resultados para pesquisa: ${querySearch}</h4>
                 </div>
                 <div class="row-fluid">
                     <div class="span6">

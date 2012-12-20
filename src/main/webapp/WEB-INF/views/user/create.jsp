@@ -47,7 +47,7 @@
                         </div>
                         <div class="field-input">
                             <form:errors path="userName" cssClass="error" />
-                            <input class="" type="text" name="userName" />
+                            <input class="" type="text" name="userName" value="${user.userName}"/>
                         </div>
                     </div>
                     <div class="field-block">
@@ -56,7 +56,7 @@
                         </div>
                         <div class="field-input">
                             <form:errors path="email" cssClass="error" />
-                            <input class=""type="text" name="email" />
+                            <input class=""type="text" name="email" value="${user.email}"/>
                         </div>
                     </div>
                     <div class="field-block">
@@ -68,15 +68,6 @@
                             <input class=""type="password" name="password" />
                         </div>
                     </div>
-
-                    <!--                    <div class="field-block">
-                                            <div class="field-title">
-                                                <label>Senha novamente</label>
-                                            </div>
-                                            <div class="field-input">
-                                                <input class="" type="password">
-                                            </div>
-                                        </div>-->
                     <span class="wb-font-medium"><a href="">Leia o Termo de Uso antes de se Cadastrar</a></span>
                     <div class="field-block">
 

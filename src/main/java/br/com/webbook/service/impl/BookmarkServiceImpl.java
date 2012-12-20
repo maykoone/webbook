@@ -24,7 +24,9 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
+import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -114,9 +116,10 @@ public class BookmarkServiceImpl implements BookmarkService {
 
         //query nativa do apache lucene
         org.apache.lucene.search.Query query = qb.keyword().onFields("tags").matching(tags).createQuery();
-        javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(query, Bookmark.class);
 
-        int maxResults = jpaQuery.getMaxResults();
+        FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(query, Bookmark.class);
+
+        int maxResults = jpaQuery.getResultSize();
         jpaQuery.setFirstResult(request.getOffset());
         jpaQuery.setMaxResults(request.getPageSize());
 

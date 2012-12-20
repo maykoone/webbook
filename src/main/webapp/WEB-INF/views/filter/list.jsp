@@ -43,11 +43,15 @@
         <div class="clear"></div>
         <div class="grid_12">
             <div class="wb-box-with-shadow popular-content">
+                <div class="alert alert-info">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <i class="icon-exclamation-sign"></i> <strong>Uma forma prática de encontrar novos favoritos.</strong> O Filtro te ajuda a encontrar favoritos específicos sem que você precise ficar realizando uma pesquisa para isso. Apenas nomeie seu filtro, adicione as palavras chaves do seu interesse e visualize os favoritos relacionados.
+                </div>
+                <wb:message messageBean="${message}"/>
                 <div class="list-header">
                     <h4 class="wb-left-float">Seus filtros</h4>
                     <a href="/filters/create" class="btn btn-primary btn-mini wb-right-float"><i class="icon-plus icon-white"></i>Adicionar filtro</a>
                 </div>
-                <wb:message messageBean="${message}"/>
             </div>
         </div>
         <div class="clear"></div>

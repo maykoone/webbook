@@ -59,7 +59,7 @@
                 <c:forEach items="${bookmarkList.content}" var="bookmark">
                     <div class="bookmark-item">
                         <a href="" class="bookmark-thumbnail">
-                            <div class="default-thumb"></div>
+                            <div class="default-thumb"  <c:if test="${not empty bookmark.iconPath}">style="background-image:url('${bookmark.iconPath}')"</c:if>></div>
                         </a>
                         <div class="bookmark-info">
                             <h3><a href="" class="bookmark-title wb-font-medium">${bookmark.title}</a></h3>

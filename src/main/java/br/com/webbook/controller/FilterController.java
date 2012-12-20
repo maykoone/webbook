@@ -88,7 +88,7 @@ public class FilterController {
         filterInstance.setUser(user);
 
         filterService.save(filterInstance);
-        redirectAttributes.addFlashAttribute("message", new MessageBean("O filtro " + filterInstance.getTitle() + " foi criado com sucesso."));
+        redirectAttributes.addFlashAttribute("message", new MessageBean("O filtro " + filterInstance.getTitle() + " foi criado com sucesso.", MessageBean.TYPE.SUCESS));
         return "redirect:/filters";
     }
 
