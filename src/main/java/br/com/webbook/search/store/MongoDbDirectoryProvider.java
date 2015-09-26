@@ -4,8 +4,8 @@
  */
 package br.com.webbook.search.store;
 
-import com.mongodb.Mongo;
-import com.mongodb.MongoURI;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -58,8 +58,8 @@ public class MongoDbDirectoryProvider implements DirectoryProvider<DistributedDi
     protected DistributedDirectory createDirectory() {
         DistributedDirectory d = null;
         try {
-            MongoURI uri = new MongoURI(System.getenv("MONGOHQ_URL"));
-            Mongo mongo = new Mongo(uri);
+            MongoClientURI uri = new MongoClientURI(System.getenv("MONGOHQ_URL"));
+            MongoClient mongo = new MongoClient(uri);
             d = new DistributedDirectory(new MongoDirectory(mongo, uri.getDatabase(), indexName));
         } catch (IOException ex) {
             Logger.getLogger(MongoDbDirectoryProvider.class.getName()).log(Level.SEVERE, "Unable to create directory abstraction", ex);

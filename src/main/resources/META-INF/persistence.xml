@@ -42,7 +42,7 @@
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
             <!--<property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>-->
             <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
+            <!--<property name="hibernate.format_sql" value="true"/>-->
             <property name="javax.persistence.validation.mode" value="none"/>
             <!--Hibernate Search-->
             <property name="hibernate.search.default.directory_provider" value="ram"/> 
