@@ -335,7 +335,7 @@
         <dependency>
             <groupId>org.lumongo</groupId>
             <artifactId>lumongo-storage</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.31</version>
             <type>jar</type>
             <exclusions>
                 <exclusion>

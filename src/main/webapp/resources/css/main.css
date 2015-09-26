@@ -545,7 +545,7 @@ a.bookmark-title{
 }
 #add-bookmark-modal{
     width: 600px;
-    margin: -45% 0 0 -280px;
+    margin: -25% 0 0 -280px;
     /*padding: 15px;*/
 }
 #add-bookmark-modal .modal-body{

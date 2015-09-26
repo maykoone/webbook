@@ -8,14 +8,21 @@
         <class>br.com.webbook.domain.Filter</class>
         <class>br.com.webbook.domain.Friendship</class>
         <properties>
+            <property name="hibernate.connection.username" value="postgres"/>
+            <property name="hibernate.connection.password" value="postgres"/>
+            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/webbook"/>
             <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
+
+            <!--validate | update | create | create-drop-->
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <!--<property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>-->
             <property name="hibernate.show_sql" value="true"/>
+            
             <property name="javax.persistence.validation.mode" value="none"/>
             <!--Hibernate Search-->
-            <!--<property name="hibernate.search.default.directory_provider" value="ram"/>--> 
-            <property name="hibernate.search.default.directory_provider" value="br.com.webbook.search.store.MongoDbDirectoryProvider"/> 
+            <property name="hibernate.search.default.directory_provider" value="ram"/> 
+            <!--<property name="hibernate.search.default.directory_provider" value="br.com.webbook.search.store.MongoDbDirectoryProvider"/>--> 
             <!--<property name="hibernate.search.default.indexBase" value="/home/maykoone/lucene/indexes"/>--> 
         </properties>
     </persistence-unit>
@@ -27,10 +34,15 @@
         <class>br.com.webbook.domain.Filter</class>
         <class>br.com.webbook.domain.Friendship</class>
         <properties>
+            <property name="hibernate.connection.username" value="postgres"/>
+            <property name="hibernate.connection.password" value="postgres"/>
+            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/webbook_test"/>
             <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
             <!--<property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>-->
             <property name="hibernate.show_sql" value="true"/>
+            <!--<property name="hibernate.format_sql" value="true"/>-->
             <property name="javax.persistence.validation.mode" value="none"/>
             <!--Hibernate Search-->
             <property name="hibernate.search.default.directory_provider" value="ram"/> 
