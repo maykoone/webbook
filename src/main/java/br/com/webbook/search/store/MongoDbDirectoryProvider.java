@@ -10,10 +10,10 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.hibernate.search.indexes.impl.DirectoryBasedIndexManager;
+import org.hibernate.search.indexes.spi.DirectoryBasedIndexManager;
 import org.hibernate.search.spi.BuildContext;
 import org.hibernate.search.store.DirectoryProvider;
-import org.hibernate.search.store.impl.DirectoryProviderHelper;
+import org.hibernate.search.store.spi.DirectoryHelper;
 import org.lumongo.storage.lucene.DistributedDirectory;
 import org.lumongo.storage.lucene.MongoDirectory;
 
@@ -38,7 +38,8 @@ public class MongoDbDirectoryProvider implements DirectoryProvider<DistributedDi
 
     @Override
     public void start(DirectoryBasedIndexManager dbim) {
-        DirectoryProviderHelper.initializeIndexIfNeeded(directory);
+        DirectoryHelper.initializeIndexIfNeeded(directory);
+//        DirectoryProviderHelper.initializeIndexIfNeeded(directory);
     }
 
     @Override
@@ -62,6 +63,8 @@ public class MongoDbDirectoryProvider implements DirectoryProvider<DistributedDi
             MongoClient mongo = new MongoClient(uri);
             d = new DistributedDirectory(new MongoDirectory(mongo, uri.getDatabase(), indexName));
         } catch (IOException ex) {
+            Logger.getLogger(MongoDbDirectoryProvider.class.getName()).log(Level.SEVERE, "Unable to create directory abstraction", ex);
+        } catch (Exception ex) {
             Logger.getLogger(MongoDbDirectoryProvider.class.getName()).log(Level.SEVERE, "Unable to create directory abstraction", ex);
         }
         return d;
